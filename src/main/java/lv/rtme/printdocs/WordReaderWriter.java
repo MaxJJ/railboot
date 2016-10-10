@@ -7,20 +7,12 @@ package lv.rtme.printdocs;
 
 
 import java.io.FileOutputStream;
-import org.apache.poi.hwpf.HWPFDocument;
-import org.apache.poi.poifs.filesystem.DirectoryNode;
-import org.apache.poi.poifs.filesystem.OPOIFSFileSystem;
-import org.apache.poi.poifs.property.DirectoryProperty;
-import static org.apache.poi.sl.draw.binding.STRectAlignment.CTR;
+import org.apache.poi.hslf.usermodel.HSLFTextBox;
 import org.apache.poi.xwpf.model.XWPFHeaderFooterPolicy;
 import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
-import static org.openxmlformats.schemas.drawingml.x2006.main.STPenAlignment.CTR;
-import static org.openxmlformats.schemas.drawingml.x2006.main.STTextAlignType.CTR;
-import static org.openxmlformats.schemas.drawingml.x2006.main.STTextAnchoringType.CTR;
-import static org.openxmlformats.schemas.drawingml.x2006.main.STTextFontAlignType.CTR;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTP;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTR;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTSectPr;
@@ -40,7 +32,7 @@ public class WordReaderWriter {
             CTSectPr ctSectPr = docxModel.getDocument().getBody().addNewSectPr();
             // получаем экземпляр XWPFHeaderFooterPolicy для работы с колонтитулами
             XWPFHeaderFooterPolicy headerFooterPolicy = new XWPFHeaderFooterPolicy(docxModel, ctSectPr);
- 
+            
             // создаем верхний колонтитул Word файла
             CTP ctpHeaderModel = createHeaderModel(
             "Верхний колонтитул - создано с помощью Apache POI на Java :)"
@@ -63,6 +55,9 @@ public class WordReaderWriter {
                     new XWPFParagraph[]{footerParagraph}
             );
  
+            HSLFTextBox textBox = new HSLFTextBox();
+            textBox.appendText("test text from HSLFTextBox!", true);
+           
             // создаем обычный параграф, который будет расположен слева,
             // будет синим курсивом со шрифтом 25 размера
             XWPFParagraph bodyParagraph = docxModel.createParagraph();
@@ -77,7 +72,7 @@ public class WordReaderWriter {
             );
  
             // сохраняем модель docx документа в файл
-            FileOutputStream outputStream = new FileOutputStream("C:/Users/User/Desktop/Apache POI Word Test.docx");
+            FileOutputStream outputStream = new FileOutputStream("WordTest.docx");
             docxModel.write(outputStream);
             outputStream.close();
         } catch (Exception e) {
