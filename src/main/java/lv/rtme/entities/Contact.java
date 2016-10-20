@@ -21,10 +21,10 @@ public class Contact implements Serializable {
     @Column
     private String name;
 
-    @Column(unique = true)
+    @Column(unique = false)
     private String phone;
 
-    @Column(unique = true)
+    @Column(unique = false)
     private String email;
 
     public Contact() {

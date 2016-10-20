@@ -15,10 +15,10 @@ import org.springframework.context.annotation.Configuration;
  * @author Ruslan Molchanov (ruslanys@gmail.com)
  * @author http://mruslan.com
  */
-@Configuration
+//@Configuration
 public class ConfigurationControllers {
 
-    @Bean(name = "mainView")
+//    @Bean(name = "mainView")
     public View getMainView() throws IOException {
         return loadView("fxml/main.fxml");
     }
@@ -27,7 +27,7 @@ public class ConfigurationControllers {
      * Именно благодаря этому методу мы добавили контроллер в контекст спринга,
      * и заставили его сделать произвести все необходимые инъекции.
      */
-    @Bean
+//    @Bean
     public MainController getMainController() throws IOException {
         return (MainController) getMainView().getController();
     }
