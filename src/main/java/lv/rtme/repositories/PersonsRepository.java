@@ -5,15 +5,13 @@
  */
 package lv.rtme.repositories;
 
-import lv.rtme.entities.Points;
+import lv.rtme.entities.Persons;
 import org.springframework.data.repository.CrudRepository;
 
 /**
  *
  * @author Maksims
  */
-public interface PointsRepository extends CrudRepository<Points, Long> {
-    
-    
+public interface PersonsRepository extends CrudRepository<Persons, Long> {
     
 }

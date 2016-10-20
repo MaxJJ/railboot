@@ -1,5 +1,6 @@
 package lv.rtme.entities;
 
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -20,6 +21,29 @@ public class CodesOrders {
     @OneToOne
     @PrimaryKeyJoinColumn
     private  Station stationOfDestination;
+    @OneToOne
+    @PrimaryKeyJoinColumn
+    private Persons consignee;
+    
+    private String cargo;
+    private String weight;
+    
+    private String wagon;
+    
+    private String provider;
+    
+    private Integer rate;
+    private String rateCurrency;
+    private String unit;
+    
+    private String roadsToPay;
+    
+    private boolean isOrdered;
+    
+    private Date orderedOnDate;
+    
+    
+    
     
     
     
@@ -80,6 +104,97 @@ public class CodesOrders {
     public void setReservationName(String reservationName) {
         this.reservationName = reservationName;
     }
+
+    public Persons getConsignee() {
+        return consignee;
+    }
+
+    public void setConsignee(Persons consignee) {
+        this.consignee = consignee;
+    }
+
+    public String getCargo() {
+        return cargo;
+    }
+
+    public void setCargo(String cargo) {
+        this.cargo = cargo;
+    }
+
+    public String getWeight() {
+        return weight;
+    }
+
+    public void setWeight(String weight) {
+        this.weight = weight;
+    }
+
+    public String getWagon() {
+        return wagon;
+    }
+
+    public void setWagon(String wagon) {
+        this.wagon = wagon;
+    }
+
+    public String getProvider() {
+        return provider;
+    }
+
+    public void setProvider(String provider) {
+        this.provider = provider;
+    }
+
+    public Integer getRate() {
+        return rate;
+    }
+
+    public void setRate(Integer rate) {
+        this.rate = rate;
+    }
+
+    public String getRateCurrency() {
+        return rateCurrency;
+    }
+
+    public void setRateCurrency(String rateCurrency) {
+        this.rateCurrency = rateCurrency;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public String getRoadsToPay() {
+        return roadsToPay;
+    }
+
+    public void setRoadsToPay(String roadsToPay) {
+        this.roadsToPay = roadsToPay;
+    }
+
+    public boolean isIsOrdered() {
+        return isOrdered;
+    }
+
+    public void setIsOrdered(boolean isOrdered) {
+        this.isOrdered = isOrdered;
+    }
+
+    public Date getOrderedOnDate() {
+        return orderedOnDate;
+    }
+
+    public void setOrderedOnDate(Date orderedOnDate) {
+        this.orderedOnDate = orderedOnDate;
+    }
+    
+    
+    
 
     
 }

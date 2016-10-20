@@ -15,6 +15,7 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 /**
@@ -22,6 +23,7 @@ import org.springframework.stereotype.Component;
  * @author User
  */
 @Component
+@Scope("prototype")
 public class XclReader {
     
     @Value("${excl.url}")
@@ -29,7 +31,7 @@ public class XclReader {
     
     private XSSFWorkbook myExcelBook;
     private XSSFSheet myExcelSheet;
-    private Set<String> stations = new LinkedHashSet<>();
+//    private Set<String> stations = new LinkedHashSet<>();
     
     public XclReader() {
        
@@ -37,6 +39,9 @@ public class XclReader {
     }
     
     public Set<String> getSetFromColumn(int column){
+       Set<String> stations = new LinkedHashSet<>(); 
+        System.out.println(myExcelSheet.getSheetName());
+        System.out.println(myExcelSheet.getRow(10).getCell(2).getStringCellValue());
       for (int i = 2; i <= 190; i++) {
                  
              stations.add(myExcelSheet.getRow(i).getCell(column).getStringCellValue());
@@ -50,7 +55,7 @@ public class XclReader {
 	public void init() throws Exception {
 	 
          myExcelBook = new XSSFWorkbook(new FileInputStream(filePath)); 
-                     
+         myExcelSheet = myExcelBook.getSheet("ДАННЫЕ");            
 	}
         
 
@@ -59,8 +64,9 @@ public class XclReader {
         
        public  void readFromExcel() throws IOException {
                
+      Set<String> stations = new LinkedHashSet<>(); 
       
-      myExcelSheet = myExcelBook.getSheet("ДАННЫЕ");
+      
       
       
         XSSFRow row = myExcelSheet.getRow(2);
