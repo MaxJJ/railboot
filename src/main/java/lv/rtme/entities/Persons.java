@@ -13,12 +13,13 @@ public class Persons {
     private String reservationName;
     
     private String sampleName;
+    private String searchName;
 
     @Override
     public String toString() {
-        return "A reservation{"
+      return "A reservation{"
                 + "id:" + id
-                + ", reservationName='" + reservationName + '\''
+                + ", reservationName='" + searchName + '\''
                 + '}';
     }
 
@@ -44,6 +45,15 @@ public class Persons {
     public void setSampleName(String sampleName) {
         this.sampleName = sampleName;
     }
+
+    public String getSearchName() {
+        return searchName;
+    }
+
+    public void setSearchName(String searchName) {
+        this.searchName = searchName;
+    }
+    
     
     
 }

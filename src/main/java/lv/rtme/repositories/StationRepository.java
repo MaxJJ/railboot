@@ -6,8 +6,8 @@
 package lv.rtme.repositories;
 
 import java.util.List;
-import org.springframework.data.repository.CrudRepository;
 import lv.rtme.entities.Station;
+import org.springframework.data.repository.CrudRepository;
 
 /**
  *
@@ -16,5 +16,6 @@ import lv.rtme.entities.Station;
 public interface StationRepository extends CrudRepository<Station, Long> {
     
      List<Station> findAll();
+     List<Station> findByStationName(String name);
     
 }

@@ -4,8 +4,9 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity
 public class CodesOrders {
@@ -15,16 +16,20 @@ public class CodesOrders {
     private Long id;
     
     private  String fileID;
+    
     @OneToOne
-    @PrimaryKeyJoinColumn
+    @JoinColumn(name = "dispatchstation_fk")
     private Station stationOfDispatch;
+
     @OneToOne
-    @PrimaryKeyJoinColumn
-    private  Station stationOfDestination;
+    @JoinColumn(name = "destinationstation_fk")
+    private Station stationOfDestination;
+
     @OneToOne
-    @PrimaryKeyJoinColumn
+    @JoinColumn(name = "consignee_fk")
     private Persons consignee;
     
+    @Lob
     private String cargo;
     private String weight;
     
@@ -32,7 +37,7 @@ public class CodesOrders {
     
     private String provider;
     
-    private Integer rate;
+    private String rate;
     private String rateCurrency;
     private String unit;
     
@@ -145,11 +150,11 @@ public class CodesOrders {
         this.provider = provider;
     }
 
-    public Integer getRate() {
+    public String getRate() {
         return rate;
     }
 
-    public void setRate(Integer rate) {
+    public void setRate(String rate) {
         this.rate = rate;
     }
 

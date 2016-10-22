@@ -20,7 +20,7 @@ public  class Station {
        
      @Id
     @GeneratedValue
-    private Long id;
+       private Long id;
      
      private String stationName;
      private String stationRoad;

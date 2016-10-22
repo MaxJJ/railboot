@@ -5,6 +5,7 @@
  */
 package lv.rtme.repositories;
 
+import java.util.List;
 import lv.rtme.entities.Persons;
 import org.springframework.data.repository.CrudRepository;
 
@@ -13,5 +14,8 @@ import org.springframework.data.repository.CrudRepository;
  * @author Maksims
  */
 public interface PersonsRepository extends CrudRepository<Persons, Long> {
+    List<Persons> findAll();
+    List<Persons> findBySampleName(String name);
+    List<Persons> findBySearchName(String searchname);
     
 }

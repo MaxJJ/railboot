@@ -7,9 +7,15 @@ package lv.rtme.services;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Set;
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -33,24 +39,42 @@ public class XclReader {
     private XSSFSheet myExcelSheet;
 //    private Set<String> stations = new LinkedHashSet<>();
     
-    public XclReader() {
-       
-        
-    }
+    public XclReader() {}
+    
     
     public Set<String> getSetFromColumn(int column){
        Set<String> stations = new LinkedHashSet<>(); 
-        System.out.println(myExcelSheet.getSheetName());
-        System.out.println(myExcelSheet.getRow(10).getCell(2).getStringCellValue());
-      for (int i = 2; i <= 190; i++) {
-                 
-             stations.add(myExcelSheet.getRow(i).getCell(column).getStringCellValue());
-                   
-               }
-                
+        for (int i = 2; i <= 190; i++) {
+            stations.add(myExcelSheet.getRow(i).getCell(column, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).getStringCellValue());
+        }
         return stations;
     }
     
+    public Map<Integer, Object> getRowAsMapBy(int row) {
+
+        Map<Integer, Object> rowAsMap = new HashMap<>();
+        XSSFRow nextRow = myExcelSheet.getRow(row);
+        DataFormatter formatter = new DataFormatter();
+        for (int i = 0; i <= 13; i++) {
+            XSSFCell cell = nextRow.getCell(i, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
+            if (i == 13) {
+                Date time = null;
+                try {
+                    time = cell.getDateCellValue();
+                } catch (Exception e) {
+                    time = new Date();
+                    time.setTime(1L);
+                }
+                rowAsMap.put(i, time);
+                break;
+            }
+            rowAsMap.put(i, formatter.formatCellValue(cell));
+
+        }
+
+        return rowAsMap;
+    }
+
     @PostConstruct
 	public void init() throws Exception {
 	 
@@ -58,6 +82,11 @@ public class XclReader {
          myExcelSheet = myExcelBook.getSheet("ДАННЫЕ");            
 	}
         
+        @PreDestroy
+        public void destroy() throws IOException{
+            
+            myExcelBook.close();
+        }
 
     
     
