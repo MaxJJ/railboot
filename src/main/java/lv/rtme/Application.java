@@ -15,7 +15,11 @@ public class Application extends AbstractJavaFxApplicationSupport {
     @Value("${ui.title:JavaFX приложение}")//
     private String windowTitle;
 
-    @Qualifier("mainView")
+//    @Qualifier("mainView")
+//    @Autowired
+//    private ConfigurationControllers.View view;
+    
+    @Qualifier("railbootMainView")
     @Autowired
     private ConfigurationControllers.View view;
 

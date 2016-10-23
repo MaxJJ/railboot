@@ -18,13 +18,12 @@ import lv.rtme.repositories.StationRepository;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.Order;
-import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Maksims
  */
-@Component
+//@Component
 public class ReadAndPopulate {
     
     
@@ -101,7 +100,7 @@ int num = 0;
                catch(StringIndexOutOfBoundsException e){
                   searchName = "blank";
                }
-                      System.out.println(searchName); 
+                  
                       List<Persons> person = persons.findBySearchName(searchName);
                       
                       if(person.size()==0){break;}else{

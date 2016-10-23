@@ -5,13 +5,16 @@
  */
 package lv.rtme.repositories;
 
-import org.springframework.data.repository.CrudRepository;
+import java.util.List;
 import lv.rtme.entities.CodesOrders;
+import org.springframework.data.repository.CrudRepository;
 
 /**
  *
  * @author User
  */
 public interface CodesOrdersRepository extends CrudRepository<CodesOrders, Long> {
+    
+    List<CodesOrders> findAll();
     
 }

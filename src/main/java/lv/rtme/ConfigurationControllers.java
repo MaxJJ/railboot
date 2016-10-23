@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import lv.rtme.fxui.MainController;
+import lv.rtme.fxui.RailbootMainController;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -18,19 +18,32 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ConfigurationControllers {
 
-    @Bean(name = "mainView")
+//    @Bean(name = "mainView")
+//    public View getMainView() throws IOException {
+//        return loadView("fxml/main.fxml");
+//    }
+    
+    @Bean(name = "railbootMainView")
     public View getMainView() throws IOException {
-        return loadView("fxml/main.fxml");
+        return loadView("fxml/railbootMain.fxml");
     }
+    
+    
 
     /**
      * Именно благодаря этому методу мы добавили контроллер в контекст спринга,
      * и заставили его сделать произвести все необходимые инъекции.
      */
-    @Bean
-    public MainController getMainController() throws IOException {
-        return (MainController) getMainView().getController();
+//    @Bean
+//    public MainController getMainController() throws IOException {
+//        return (MainController) getMainView().getController();
+//    }
+    
+      @Bean
+    public RailbootMainController getMainController() throws IOException {
+        return (RailbootMainController) getMainView().getController();
     }
+    
 
     /**
      * Самый обыкновенный способ использовать FXML загрузчик.
