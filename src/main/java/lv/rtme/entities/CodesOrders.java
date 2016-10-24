@@ -19,6 +19,7 @@ public class CodesOrders {
     
     @OneToOne
     @JoinColumn(name = "dispatchstation_fk")
+  
     private Station stationOfDispatch;
 
     @OneToOne

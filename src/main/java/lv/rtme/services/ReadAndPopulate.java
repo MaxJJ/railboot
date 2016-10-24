@@ -18,12 +18,13 @@ import lv.rtme.repositories.StationRepository;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Maksims
  */
-//@Component
+@Component
 public class ReadAndPopulate {
     
     

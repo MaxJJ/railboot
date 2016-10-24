@@ -24,11 +24,6 @@ public class CodesTableService {
  private List<CodesOrders> inList = new LinkedList<>();
     private ObservableList<CodesTableItem> data = FXCollections.observableArrayList();
     
-  
-        
-      
-        
-        
     
 
     public List<CodesOrders> getInList() {
