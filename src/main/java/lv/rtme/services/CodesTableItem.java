@@ -5,21 +5,27 @@
  */
 package lv.rtme.services;
 
+import java.util.Date;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import lv.rtme.entities.CodesOrders;
+import lv.rtme.entities.Persons;
+import lv.rtme.entities.Station;
 
 /**
  *
  * @author Maksims
  */
         public class CodesTableItem {
-         private StringProperty fileID = new SimpleStringProperty();
+    private StringProperty fileID = new SimpleStringProperty();
 
     private StringProperty stationOfDispatch = new SimpleStringProperty();
 
-    private  StringProperty stationOfDestination = new SimpleStringProperty();
+    private StringProperty stationOfDestination = new SimpleStringProperty();
 
-    private StringProperty consignee = new SimpleStringProperty();
+    private StringProperty   consignee = new SimpleStringProperty();
 
     private StringProperty cargo= new SimpleStringProperty();
     private StringProperty weight= new SimpleStringProperty();
@@ -35,43 +41,21 @@ import javafx.beans.property.StringProperty;
     private StringProperty roadsToPay= new SimpleStringProperty();
 
     private StringProperty isOrdered= new SimpleStringProperty();
-
-    private StringProperty orderedOnDate=new SimpleStringProperty();
+    private ObjectProperty<Date> orderedOnDate=new SimpleObjectProperty();
+    private ObjectProperty<CodesOrders> codesOrders = new SimpleObjectProperty<>();
     
 
         public CodesTableItem() {
         }
 
+        
+        
         public StringProperty getFileID() {
             return fileID;
         }
 
         public void setFileID(StringProperty fileID) {
             this.fileID = fileID;
-        }
-
-        public StringProperty getStationOfDispatch() {
-            return stationOfDispatch;
-        }
-
-        public void setStationOfDispatch(StringProperty stationOfDispatch) {
-            this.stationOfDispatch = stationOfDispatch;
-        }
-
-        public StringProperty getStationOfDestination() {
-            return stationOfDestination;
-        }
-
-        public void setStationOfDestination(StringProperty stationOfDestination) {
-            this.stationOfDestination = stationOfDestination;
-        }
-
-        public StringProperty getConsignee() {
-            return consignee;
-        }
-
-        public void setConsignee(StringProperty consignee) {
-            this.consignee = consignee;
         }
 
         public StringProperty getCargo() {
@@ -146,15 +130,48 @@ import javafx.beans.property.StringProperty;
             this.isOrdered = isOrdered;
         }
 
-        public StringProperty getOrderedOnDate() {
+        public ObjectProperty<Date> getOrderedOnDate() {
             return orderedOnDate;
         }
 
-        public void setOrderedOnDate(StringProperty orderedOnDate) {
+        public void setOrderedOnDate(ObjectProperty<Date> orderedOnDate) {
             this.orderedOnDate = orderedOnDate;
         }
+
+    public ObjectProperty<CodesOrders> getCodesOrders() {
+        return codesOrders;
+    }
+
+    public void setCodesOrders(ObjectProperty<CodesOrders> codesOrders) {
+        this.codesOrders = codesOrders;
+    }
+
+    public StringProperty getStationOfDispatch() {
+        return stationOfDispatch;
+    }
+
+    public void setStationOfDispatch(StringProperty stationOfDispatch) {
+        this.stationOfDispatch = stationOfDispatch;
+    }
+
+    public StringProperty getStationOfDestination() {
+        return stationOfDestination;
+    }
+
+    public void setStationOfDestination(StringProperty stationOfDestination) {
+        this.stationOfDestination = stationOfDestination;
+    }
+
+    public StringProperty getConsignee() {
+        return consignee;
+    }
+
+    public void setConsignee(StringProperty consignee) {
+        this.consignee = consignee;
+    }
         
-        
+      
+    
     }
 
 

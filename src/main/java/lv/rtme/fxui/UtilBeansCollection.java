@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package lv.rtme.fxui.models;
+package lv.rtme.fxui;
 
 import java.util.List;
 import javafx.collections.FXCollections;

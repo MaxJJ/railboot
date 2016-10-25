@@ -45,6 +45,7 @@ public class CodesTableService {
            item.getUnit().setValue(codesOrders.getUnit());
            item.getRate().setValue(codesOrders.getRate()+" "+codesOrders.getRateCurrency());
            item.getConsignee().setValue(codesOrders.getConsignee().getSampleName());
+           item.getCodesOrders().setValue(codesOrders);
            
           
           data.add(item);

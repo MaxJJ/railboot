@@ -135,22 +135,19 @@ public class RailbootMainController {
             }
 
             model.init((CodesTableItem) row.getItem());
-            file.setText(model.getFile());
-            stDestText.setText(model.getStDestination());
-            stDispText.setText(model.getStDispatch());
-            consiText.setText(model.getConsignee());
-         
-            List<Station> listSt = stationRepository.findAll();
+            file.setText(model.getFileID());
+            stDestText.setText(model.getStationOfDestination().getStationName());
+            stDispText.setText(model.getStationOfDispatch().getStationName());
+            consiText.setText(model.getConsignee().getSampleName());
             
-            for (Station object : listSt) {
-                String string = object.getStationName();
-              stations.add(string);
-                          }
+            //--------------
             
-            
-//            stDestCombo.setItems(stations);
-//            consiArea.setText(model.getConsignee());
-//            fileField.setText(model.getFile());
+            fileField.setText(model.getFileID());
+            fileField.setEditable(false);
+            stDestCombo.setValue(model.getStationOfDestination().getStationName());
+            consiArea.setText(model.getConsignee().getSampleName());
+            cargoArea.setText(model.getCargo());
+            containerField.setText(model.getUnit());
             
         }
     }
