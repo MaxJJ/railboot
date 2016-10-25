@@ -97,7 +97,7 @@ int num = 0;
                       break;}
                   case 3:
                       String searchName = (String) item;
-                       try{ searchName = searchName.substring(0, 12).replace(" ", "_").replace("\"", "_");}
+                       try{ searchName = searchName.substring(0,12).replace(" ", "_").replace("\"", "_");}
                catch(StringIndexOutOfBoundsException e){
                   searchName = "blank";
                }

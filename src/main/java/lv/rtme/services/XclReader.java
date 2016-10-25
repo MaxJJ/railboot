@@ -29,7 +29,7 @@ import org.springframework.stereotype.Component;
  * @author User
  */
 @Component
-@Scope("prototype")
+@Scope
 public class XclReader {
     
     @Value("${excl.url}")
@@ -37,7 +37,6 @@ public class XclReader {
     
     private XSSFWorkbook myExcelBook;
     private XSSFSheet myExcelSheet;
-//    private Set<String> stations = new LinkedHashSet<>();
     
     public XclReader() {}
     

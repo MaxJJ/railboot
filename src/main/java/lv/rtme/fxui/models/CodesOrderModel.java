@@ -10,7 +10,6 @@ import lv.rtme.entities.CodesOrders;
 import lv.rtme.entities.Persons;
 import lv.rtme.entities.Station;
 import lv.rtme.services.CodesTableItem;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 /**
@@ -19,7 +18,7 @@ import org.springframework.stereotype.Component;
  */
 
 @Component
-@Scope
+
 public class CodesOrderModel {
     
     private String fileID;

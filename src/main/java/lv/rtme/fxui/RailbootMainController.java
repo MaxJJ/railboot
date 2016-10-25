@@ -5,7 +5,7 @@
  */
 package lv.rtme.fxui;
 
-import java.util.List;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,7 +24,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
 import javax.annotation.PostConstruct;
-import lv.rtme.entities.Station;
+import lv.rtme.entities.CodesOrders;
 import lv.rtme.fxui.models.CodesOrderModel;
 import lv.rtme.repositories.CodesOrdersRepository;
 import lv.rtme.repositories.StationRepository;
@@ -34,6 +34,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.transaction.annotation.Transactional;
 
 
 
@@ -94,6 +95,8 @@ public class RailbootMainController {
     @Autowired
     private ObservableList<String> kuku;
     
+    private TableRow<CodesTableItem> row;
+    
     
     @FXML
     public void initialize() {
@@ -127,11 +130,12 @@ public class RailbootMainController {
     public void handle(MouseEvent event) {
         if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
             Node node = ((Node) event.getTarget()).getParent();
-            TableRow row;
+            
             if (node instanceof TableRow) {
                 row = (TableRow) node;
             } else { // clicking on text part
                 row = (TableRow) node.getParent();
+                
             }
 
             model.init((CodesTableItem) row.getItem());
@@ -154,11 +158,16 @@ public class RailbootMainController {
 });
     }
       @FXML
+      @Transactional
      public void addItem() {
 //        CodesOrders codes = new CodesOrders();
 //        codes.setFileID(fileField.getText());
 //       repository.save(codes);
-          System.out.println("button clicked ---"+kuku);
+service.getData().get(row.getIndex()).setCargo(new SimpleStringProperty(cargoArea.getText()));
+CodesOrders cd =row.getItem().getCodesOrders().getValue();
+cd.setCargo(cargoArea.getText());
+repository.save(cd);
+//          System.out.println("button clicked ---"+kuku);
     }
     
     }
