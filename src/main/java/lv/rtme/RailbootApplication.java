@@ -10,6 +10,7 @@ public class RailbootApplication {
 
   
 	public static void main(String[] args) {
+      ;
 		SpringApplication.run(RailbootApplication.class, args);
 	}
         

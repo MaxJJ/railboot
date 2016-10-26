@@ -17,7 +17,6 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <AnchorPane xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lv.rtme.fxui.RailbootMainController">
    <children>
       <AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="0.0">
@@ -49,12 +48,12 @@
                               <Font size="24.0" />
                            </font>
                         </Text>
-                        <Text fx:id="stDispText" strokeType="OUTSIDE" strokeWidth="0.0" text="СТАНЦИЯ ОТПРАВЛЕНИЯ" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <Text fx:id="stDispText" strokeType="OUTSIDE" strokeWidth="0.0" text="СТАНЦИЯ ОТПРАВЛЕНИЯ" wrappingWidth="220.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Text>
-                        <Text fx:id="stDestText" strokeType="OUTSIDE" strokeWidth="0.0" text="СТАНЦИЯ НАЗНАЧЕНИЯ" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                        <Text fx:id="stDestText" strokeType="OUTSIDE" strokeWidth="0.0" text="СТАНЦИЯ НАЗНАЧЕНИЯ" wrappingWidth="220.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
@@ -66,26 +65,31 @@
                         <Insets left="5.0" right="5.0" />
                      </VBox.margin>
                   </GridPane>
-                  <TableView fx:id="codesOrdersTable" minHeight="200.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="300.0">
-                    <columns>
-                      <TableColumn fx:id="fileID" maxWidth="-1.0" minWidth="80.0" prefWidth="-1.0" text="ФАЙЛ" />
-                      <TableColumn fx:id="stDispatch" prefWidth="297.0" text="СТАНЦИЯ ОТПРАВЛЕНИЯ" />
-                        <TableColumn fx:id="stDestination" prefWidth="321.0" text="СТАНЦИЯ  НАЗНАЧЕНИЯ" />
-                        <TableColumn fx:id="cargo" prefWidth="75.0" text="ГРУЗ" />
-                        <TableColumn fx:id="wagon" prefWidth="75.0" text="ВАГОН" />
-                        <TableColumn fx:id="container" prefWidth="75.0" text="КОНТЕЙНЕР" />
-                        <TableColumn fx:id="rate" prefWidth="75.0" text="СТАВКА" />
-                    </columns>
+                  <AnchorPane fx:id="tableAnchorPane" maxWidth="1.7976931348623157E308">
                      <VBox.margin>
                         <Insets left="5.0" right="5.0" />
                      </VBox.margin>
-                     <columnResizePolicy>
-                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                     </columnResizePolicy>
-                  </TableView>
+                     <children>
+                        <TableView fx:id="codesOrdersTable" minHeight="200.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="300.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <columns>
+                            <TableColumn fx:id="fileID" maxWidth="-1.0" minWidth="80.0" prefWidth="-1.0" text="ФАЙЛ" />
+                            <TableColumn fx:id="stDispatch" prefWidth="297.0" text="СТАНЦИЯ ОТПРАВЛЕНИЯ" />
+                              <TableColumn fx:id="stDestination" prefWidth="321.0" text="СТАНЦИЯ  НАЗНАЧЕНИЯ" />
+                              <TableColumn fx:id="cargo" prefWidth="75.0" text="ГРУЗ" />
+                              <TableColumn fx:id="wagon" prefWidth="75.0" text="ВАГОН" />
+                              <TableColumn fx:id="container" prefWidth="75.0" text="КОНТЕЙНЕР" />
+                              <TableColumn fx:id="rate" prefWidth="75.0" text="СТАВКА" />
+                          </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
                   <GridPane hgap="6.0" maxWidth="1.7976931348623157E308" minWidth="800.0" prefWidth="1200.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="140.0" minWidth="10.0" prefWidth="130.0" />
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="200.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
@@ -99,6 +103,7 @@
                         <RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
@@ -123,34 +128,37 @@
                         <Label text="Станция назначения" GridPane.rowIndex="4" GridPane.valignment="BOTTOM" />
                         <ComboBox fx:id="stDispCombo" editable="true" maxWidth="300.0" prefWidth="250.0" GridPane.rowIndex="3" />
                         <Label layoutX="10.0" layoutY="113.0" text="Получатель" GridPane.rowIndex="6" />
-                        <TextArea fx:id="consiArea" maxWidth="300.0" minHeight="80.0" prefHeight="200.0" prefWidth="250.0" GridPane.rowIndex="7" />
-                        <Label layoutX="10.0" layoutY="141.0" maxWidth="150.0" text="Вагон (Принадлежность)" GridPane.columnIndex="1" />
-                        <TextField fx:id="wagonField" maxWidth="300.0" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Label layoutX="407.0" layoutY="9.0" maxWidth="170.0" text="Контейнер (Принадлежность)" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <TextField fx:id="containerField" layoutX="407.0" layoutY="27.0" maxWidth="300.0" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <Label layoutX="407.0" layoutY="53.0" maxWidth="170.0" text="Вес груза (Кг)" GridPane.columnIndex="2" />
-                        <TextField fx:id="weightField" layoutX="407.0" layoutY="71.0" maxWidth="100.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                        <Label layoutX="804.0" layoutY="9.0" maxWidth="170.0" text="Тара(Кг)" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                        <TextField fx:id="tareField" layoutX="804.0" layoutY="27.0" maxWidth="100.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                        <Label layoutX="724.0" layoutY="53.0" maxWidth="170.0" text="Груз" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <TextArea fx:id="cargoArea" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="5" GridPane.rowSpan="3" />
-                        <Label layoutX="367.0" layoutY="97.0" maxWidth="170.0" text="Экспедитор" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-                        <Label layoutX="724.0" layoutY="97.0" maxWidth="170.0" text="Оплачиваемые дороги" GridPane.columnIndex="3" GridPane.rowIndex="6" />
-                        <TextField fx:id="providerField" layoutX="724.0" layoutY="71.0" maxWidth="180.0" prefWidth="170.0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
-                        <TextField fx:id="payRoadsField" layoutX="10.0" layoutY="1.0" maxWidth="180.0" prefWidth="170.0" GridPane.columnIndex="3" GridPane.rowIndex="7" GridPane.valignment="TOP" />
-                        <Label layoutX="670.0" layoutY="141.0" maxWidth="170.0" text="Ставка" GridPane.columnIndex="3" />
-                        <TextField fx:id="rateField" layoutX="670.0" layoutY="158.0" maxWidth="180.0" prefWidth="170.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                        <Label layoutX="706.0" layoutY="9.0" maxWidth="170.0" text="Валюта" GridPane.columnIndex="4" />
-                        <TextField fx:id="rateCurrencyField" layoutX="706.0" layoutY="27.0" maxWidth="100.0" prefWidth="100.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                        <Label layoutX="953.0" layoutY="9.0" maxWidth="170.0" text="Охрана" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                        <Label layoutX="706.0" layoutY="53.0" maxWidth="170.0" text="Валюта" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-                        <TextField fx:id="securCurrencyField" layoutX="953.0" layoutY="27.0" maxWidth="100.0" prefWidth="100.0" GridPane.columnIndex="4" GridPane.rowIndex="3" />
-                        <TextField fx:id="securityRateField" layoutX="706.0" layoutY="27.0" maxWidth="180.0" prefWidth="170.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                        <Button fx:id="saveButton" mnemonicParsing="false" onAction="#addItem" text="Сохранить" GridPane.columnIndex="4" GridPane.rowIndex="5">
+                        <TextArea fx:id="consiArea" minHeight="80.0" prefHeight="200.0" prefWidth="250.0" GridPane.columnSpan="2" GridPane.rowIndex="8" />
+                        <Label layoutX="10.0" layoutY="141.0" maxWidth="150.0" text="Вагон (Принадлежность)" GridPane.columnIndex="2" />
+                        <TextField fx:id="wagonField" maxWidth="300.0" prefWidth="250.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <Label layoutX="407.0" layoutY="9.0" maxWidth="170.0" text="Контейнер (Принадлежность)" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                        <TextField fx:id="containerField" layoutX="407.0" layoutY="27.0" maxWidth="300.0" prefWidth="250.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                        <Label layoutX="407.0" layoutY="53.0" maxWidth="170.0" text="Вес груза (Кг)" GridPane.columnIndex="3" />
+                        <TextField fx:id="weightField" layoutX="407.0" layoutY="71.0" maxWidth="100.0" prefWidth="100.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                        <Label layoutX="804.0" layoutY="9.0" maxWidth="170.0" text="Тара(Кг)" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                        <TextField fx:id="tareField" layoutX="804.0" layoutY="27.0" maxWidth="100.0" prefWidth="100.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                        <Label layoutX="724.0" layoutY="53.0" maxWidth="170.0" text="Груз" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                        <TextArea fx:id="cargoArea" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="5" GridPane.rowSpan="4" />
+                        <Label layoutX="367.0" layoutY="97.0" maxWidth="170.0" text="Экспедитор" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+                        <Label layoutX="724.0" layoutY="97.0" maxWidth="170.0" text="Оплачиваемые дороги" GridPane.columnIndex="4" GridPane.rowIndex="6" />
+                        <TextField fx:id="providerField" layoutX="724.0" layoutY="71.0" maxWidth="180.0" prefWidth="170.0" GridPane.columnIndex="4" GridPane.rowIndex="5" />
+                        <TextField fx:id="payRoadsField" layoutX="10.0" layoutY="1.0" maxWidth="180.0" prefWidth="170.0" GridPane.columnIndex="4" GridPane.rowIndex="7" GridPane.valignment="TOP" />
+                        <Label layoutX="670.0" layoutY="141.0" maxWidth="170.0" text="Ставка" GridPane.columnIndex="4" />
+                        <TextField fx:id="rateField" layoutX="670.0" layoutY="158.0" maxWidth="180.0" prefWidth="170.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                        <Label layoutX="706.0" layoutY="9.0" maxWidth="170.0" text="Валюта" GridPane.columnIndex="5" />
+                        <TextField fx:id="rateCurrencyField" layoutX="706.0" layoutY="27.0" maxWidth="100.0" prefWidth="100.0" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+                        <Label layoutX="953.0" layoutY="9.0" maxWidth="170.0" text="Охрана" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                        <Label layoutX="706.0" layoutY="53.0" maxWidth="170.0" text="Валюта" GridPane.columnIndex="5" GridPane.rowIndex="2" />
+                        <TextField fx:id="securCurrencyField" layoutX="953.0" layoutY="27.0" maxWidth="100.0" prefWidth="100.0" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+                        <TextField fx:id="securityRateField" layoutX="706.0" layoutY="27.0" maxWidth="180.0" prefWidth="170.0" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+                        <Button fx:id="saveButton" mnemonicParsing="false" onAction="#addItem" text="Сохранить" GridPane.columnIndex="5" GridPane.rowIndex="5">
                            <font>
                               <Font size="24.0" />
                            </font>
                         </Button>
+                        <Button maxWidth="120.0" mnemonicParsing="false" prefWidth="70.0" text="Добавить станцию" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <ComboBox maxWidth="1.7976931348623157E308" prefWidth="150.0" promptText="Получатели" GridPane.rowIndex="7" />
+                        <Button mnemonicParsing="false" text="Добавить получателя" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                      </children>
                      <VBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" />

@@ -15,9 +15,7 @@ import lv.rtme.entities.Station;
 import lv.rtme.repositories.CodesOrdersRepository;
 import lv.rtme.repositories.PersonsRepository;
 import lv.rtme.repositories.StationRepository;
-import org.springframework.boot.ApplicationRunner;
-import org.springframework.context.annotation.Bean;
-import org.springframework.core.annotation.Order;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -26,13 +24,21 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class ReadAndPopulate {
+   @Autowired  private StationRepository stations;
+   @Autowired  private XclReader reader;
+   @Autowired private PersonsRepository persons; 
+   @Autowired private CodesOrdersRepository codes;
+   
+   public void init(){
+        readAndPopulateStation();
+        readAndPopulatePersons();
+        readAndPopulateCodesOrders();
+    }
     
-    
-    
-       @Bean
-    @Order(1)        
-    ApplicationRunner readAndPopulateStation(StationRepository stations, XclReader reader) {
-        return (args) -> {
+//       @Bean
+//    @Order(1)        
+    void readAndPopulateStation() {
+      
             Set<String> set = reader.getSetFromColumn(2);
             set.addAll(reader.getSetFromColumn(1));
 
@@ -41,13 +47,13 @@ public class ReadAndPopulate {
                 newObj.setStationName(string);
                 stations.save(newObj);
             }
-        };
+      
     }
     
-    @Bean
-    @Order(100)        
-    ApplicationRunner readAndPopulatePersons(PersonsRepository persons, XclReader reader) {
-        return (args) -> {
+//    @Bean
+//    @Order(100)        
+    void readAndPopulatePersons() {
+       
             Set<String> set = reader.getSetFromColumn(3);
 int num = 0;
             for (String string : set) {
@@ -65,15 +71,15 @@ int num = 0;
                 newObj.setSearchName(search);
                 persons.save(newObj);
             }
-        };
+        
     }
     
-    @Bean
-    @Order(3000)
-    ApplicationRunner readAndPopulateCodesOrders(CodesOrdersRepository codes, XclReader reader,PersonsRepository persons, StationRepository stations){
+//    @Bean
+//    @Order(3000)
+    void readAndPopulateCodesOrders(){
         
       
-        return (args)-> {
+      
             for (int ix = 2; ix < 200; ix++) {
         Map<Integer,Object> myRow=null;        
        myRow =  reader.getRowAsMapBy(ix);
@@ -143,7 +149,7 @@ int num = 0;
    codes.save(table);
             
         }
-    };
+  
     
    
      

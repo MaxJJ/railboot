@@ -12,6 +12,8 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
@@ -21,15 +23,20 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import javax.annotation.PostConstruct;
 import lv.rtme.entities.CodesOrders;
+import lv.rtme.entities.Station;
 import lv.rtme.fxui.models.CodesOrderModel;
 import lv.rtme.repositories.CodesOrdersRepository;
 import lv.rtme.repositories.StationRepository;
 import lv.rtme.services.CodesTableItem;
 import lv.rtme.services.CodesTableService;
+import lv.rtme.services.ReadAndPopulate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,10 +45,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 
-
+@SuppressWarnings("SpringJavaAutowiringInspection")
 public class RailbootMainController {
     
  private Logger logger = LoggerFactory.getLogger(RailbootMainController.class);
+ 
+ @Autowired ReadAndPopulate readerX;
+ 
  @Autowired private CodesOrdersRepository repository;
  @Autowired private CodesTableService service;
  @Autowired private CodesOrderModel model;
@@ -60,6 +70,7 @@ public class RailbootMainController {
     // MAIN TABLE END
     
     // TOP PANEL BEGIN
+    @FXML private AnchorPane tableAnchorPane;
     @FXML private Text file ;
     @FXML private Text stDispText;
     @FXML private Text stDestText;
@@ -87,13 +98,14 @@ public class RailbootMainController {
     @FXML private TextField securityRateField;
     @FXML private Button saveButton;
     
+    
     // EDITING FORM END
     
     private ObservableList<CodesTableItem> data ;
     private ObservableList<String> stations = FXCollections.observableArrayList();
-    @Qualifier("testbean")
+    @Qualifier("stationsComboBox")
     @Autowired
-    private ObservableList<String> kuku;
+    private ObservableList<String> stationsCombo;
     
     private TableRow<CodesTableItem> row;
     
@@ -106,8 +118,14 @@ public class RailbootMainController {
      @SuppressWarnings("unchecked")
     @PostConstruct
     public void init() {
-        stDestCombo.setItems(kuku);
-        stDispCombo.setItems(kuku);
+        
+        
+//        readerX.init();
+
+        
+        stDestCombo.setItems(stationsCombo);
+        stDispCombo.setItems(stationsCombo);
+        
         service.setInList(repository.findAll());
         data=service.getData();
         
@@ -152,15 +170,37 @@ public class RailbootMainController {
             consiArea.setText(model.getConsignee().getSampleName());
             cargoArea.setText(model.getCargo());
             containerField.setText(model.getUnit());
+            wagonField.setText(model.getWagon());
+            weightField.setText(model.getWeight());
+            rateField.setText(model.getRate());
+            rateCurrencyField.setText(model.getRateCurrency());
+            providerField.setText(model.getProvider());
+            payRoadsField.setText(model.getRoadsToPay());
+            
             
         }
     }
 });
     }
-      @FXML
-      @Transactional
-     public void addItem() {
-//        CodesOrders codes = new CodesOrders();
+     @FXML
+    @Transactional
+    public void addItem() {
+
+         Station a = new Station();
+         a.setStationName("5 new name!!! second");
+         stationRepository.save(a);
+//       stDestCombo.setItems(stationsCombo);
+stationsCombo.add(a.getStationName());
+       
+      Stage stage = new Stage();
+    Parent root = new AnchorPane();
+    stage.setScene(new Scene(root));
+    stage.setTitle("My modal window");
+    stage.initModality(Modality.WINDOW_MODAL);
+    stage.show();
+       
+       
+       //        CodesOrders codes = new CodesOrders();
 //        codes.setFileID(fileField.getText());
 //       repository.save(codes);
 service.getData().get(row.getIndex()).setCargo(new SimpleStringProperty(cargoArea.getText()));

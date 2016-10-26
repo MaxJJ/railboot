@@ -12,6 +12,7 @@ import lv.rtme.entities.Station;
 import lv.rtme.repositories.StationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 /**
@@ -19,21 +20,22 @@ import org.springframework.stereotype.Component;
  * @author Maksims
  */
 @Component
+
 public class UtilBeansCollection {
   @Autowired
  private StationRepository  stationRepository;
     
     
-    @Bean(name = "testbean")
-    
-    public ObservableList<String> strbean(){
+    @Bean(name = "stationsComboBox")
+  @Scope("prototype")
+        public ObservableList<String> strbean(){
+                
         ObservableList<String> list = FXCollections.observableArrayList();
         List<Station> stringList = stationRepository.findAll();
         for (Station station : stringList) {
             list.add(station.getStationName());
         }
-        
-        return list;
+               return list;
     }
     
     

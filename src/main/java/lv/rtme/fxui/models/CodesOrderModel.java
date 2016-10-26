@@ -57,6 +57,9 @@ public class CodesOrderModel {
       this.consignee=codesOrders.getConsignee();
       this.cargo=codesOrders.getCargo();
       this.unit=codesOrders.getUnit();
+      this.wagon=codesOrders.getWagon();
+      this.rate=codesOrders.getRate();
+      this.rateCurrency=codesOrders.getRateCurrency();
     }
 
     public String getFileID() {
