@@ -166,6 +166,7 @@ public class RailbootMainController {
             
             fileField.setText(model.getFileID());
             fileField.setEditable(false);
+            stDispCombo.setValue(model.getStationOfDispatch().getStationName());
             stDestCombo.setValue(model.getStationOfDestination().getStationName());
             consiArea.setText(model.getConsignee().getSampleName());
             cargoArea.setText(model.getCargo());
@@ -176,6 +177,9 @@ public class RailbootMainController {
             rateCurrencyField.setText(model.getRateCurrency());
             providerField.setText(model.getProvider());
             payRoadsField.setText(model.getRoadsToPay());
+            weightField.setText(model.getWeight());
+            
+            
             
             
         }
@@ -186,28 +190,31 @@ public class RailbootMainController {
     @Transactional
     public void addItem() {
 
-         Station a = new Station();
-         a.setStationName("5 new name!!! second");
-         stationRepository.save(a);
-//       stDestCombo.setItems(stationsCombo);
-stationsCombo.add(a.getStationName());
-       
-      Stage stage = new Stage();
-    Parent root = new AnchorPane();
-    stage.setScene(new Scene(root));
-    stage.setTitle("My modal window");
-    stage.initModality(Modality.WINDOW_MODAL);
-    stage.show();
-       
-       
-       //        CodesOrders codes = new CodesOrders();
-//        codes.setFileID(fileField.getText());
-//       repository.save(codes);
-service.getData().get(row.getIndex()).setCargo(new SimpleStringProperty(cargoArea.getText()));
-CodesOrders cd =row.getItem().getCodesOrders().getValue();
-cd.setCargo(cargoArea.getText());
-repository.save(cd);
-//          System.out.println("button clicked ---"+kuku);
+if(fileField.getText() != null){
+    
+   CodesOrders co= model.getCodesOrders();
+   
+   co.setFileID(fileField.getText()); 
+    co.getStationOfDispatch().setStationName("changed :"+stDispCombo.getValue());
+    co.getStationOfDestination().setStationName(stDestCombo.getValue());
+//    stDestCombo.setValue(model.getStationOfDestination().getStationName());
+//    consiArea.setText(model.getConsignee().getSampleName());
+//    cargoArea.setText(model.getCargo());
+//    containerField.setText(model.getUnit());
+//    wagonField.setText(model.getWagon());
+//    weightField.setText(model.getWeight());
+//    rateField.setText(model.getRate());
+//    rateCurrencyField.setText(model.getRateCurrency());
+//    providerField.setText(model.getProvider());
+//    payRoadsField.setText(model.getRoadsToPay());
+//    weightField.setText(model.getWeight());
+ try{ repository.save(co);
+ CodesOrders coor = repository.findOne(co.getId());
+ codesOrdersTable.getItems().get(row.getIndex()).getCodesOrders().setValue(coor);
+ }
+ catch(Exception e){ e.printStackTrace();}
+}
+        
     }
     
     }

@@ -56,10 +56,15 @@ public class CodesOrderModel {
       this.stationOfDestination= codesOrders.getStationOfDestination();
       this.consignee=codesOrders.getConsignee();
       this.cargo=codesOrders.getCargo();
+      
+      this.weight=codesOrders.getWeight();
+      
       this.unit=codesOrders.getUnit();
       this.wagon=codesOrders.getWagon();
       this.rate=codesOrders.getRate();
       this.rateCurrency=codesOrders.getRateCurrency();
+      this.provider=codesOrders.getProvider();
+      this.roadsToPay = codesOrders.getRoadsToPay();
     }
 
     public String getFileID() {
@@ -172,6 +177,10 @@ public class CodesOrderModel {
 
     public void setOrderedOnDate(Date orderedOnDate) {
         this.orderedOnDate = orderedOnDate;
+    }
+
+    public CodesOrders getCodesOrders() {
+        return codesOrders;
     }
 
    
