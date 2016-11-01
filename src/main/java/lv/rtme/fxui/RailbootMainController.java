@@ -5,15 +5,12 @@
  */
 package lv.rtme.fxui;
 
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
@@ -25,8 +22,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import javafx.util.Callback;
 import javax.annotation.PostConstruct;
 import lv.rtme.entities.CodesOrders;
@@ -37,6 +32,7 @@ import lv.rtme.repositories.StationRepository;
 import lv.rtme.services.CodesTableItem;
 import lv.rtme.services.CodesTableService;
 import lv.rtme.services.ReadAndPopulate;
+import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +52,7 @@ public class RailbootMainController {
  @Autowired private CodesTableService service;
  @Autowired private CodesOrderModel model;
  @Autowired private StationRepository stationRepository;
+ 
  
  // MAIN TABLE BEGIN
     @FXML private TableView<CodesTableItem> codesOrdersTable;
@@ -118,7 +115,8 @@ public class RailbootMainController {
      @SuppressWarnings("unchecked")
     @PostConstruct
     public void init() {
-        
+      
+   
         
 //        readerX.init();
 
@@ -131,15 +129,15 @@ public class RailbootMainController {
         
  fileID.setCellValueFactory(new Callback<CellDataFeatures<CodesTableItem, String>, ObservableValue<String>>() {
      public ObservableValue<String> call(CellDataFeatures<CodesTableItem, String> p) {
-         return p.getValue().getFileID();
+         return p.getValue().getFileIdProperty();
      }
   });  
-         cargo.setCellValueFactory((CellDataFeatures<CodesTableItem, String> p) -> p.getValue().getCargo());
-         stDispatch.setCellValueFactory((CellDataFeatures<CodesTableItem, String> p) -> p.getValue().getStationOfDispatch());
-         stDestination.setCellValueFactory((CellDataFeatures<CodesTableItem, String> p) -> p.getValue().getStationOfDestination());
-         wagon.setCellValueFactory((CellDataFeatures<CodesTableItem, String> p) -> p.getValue().getWagon());
-         container.setCellValueFactory((CellDataFeatures<CodesTableItem, String> p) -> p.getValue().getUnit());
-         rate.setCellValueFactory((CellDataFeatures<CodesTableItem, String> p) -> p.getValue().getRate());
+         cargo.setCellValueFactory((CellDataFeatures<CodesTableItem, String> p) -> p.getValue().getCargoProperty());
+         stDispatch.setCellValueFactory((CellDataFeatures<CodesTableItem, String> p) -> p.getValue().getStationOfDispatchProperty());
+         stDestination.setCellValueFactory((CellDataFeatures<CodesTableItem, String> p) -> p.getValue().getStationOfDestinationProperty());
+         wagon.setCellValueFactory((CellDataFeatures<CodesTableItem, String> p) -> p.getValue().getWagonProperty());
+         container.setCellValueFactory((CellDataFeatures<CodesTableItem, String> p) -> p.getValue().getUnitProperty());
+         rate.setCellValueFactory((CellDataFeatures<CodesTableItem, String> p) -> p.getValue().getRateProperty());
 
     codesOrdersTable.setItems(data) ;
     
@@ -195,11 +193,12 @@ if(fileField.getText() != null){
    CodesOrders co= model.getCodesOrders();
    
    co.setFileID(fileField.getText()); 
-    co.getStationOfDispatch().setStationName("changed :"+stDispCombo.getValue());
+    Station stDisp = co.getStationOfDispatch(); 
+    stDisp.setStationName(stDispCombo.getValue());
+    co.setStationOfDispatch(stDisp);
     co.getStationOfDestination().setStationName(stDestCombo.getValue());
-//    stDestCombo.setValue(model.getStationOfDestination().getStationName());
 //    consiArea.setText(model.getConsignee().getSampleName());
-//    cargoArea.setText(model.getCargo());
+     co.setCargo(cargoArea.getText());
 //    containerField.setText(model.getUnit());
 //    wagonField.setText(model.getWagon());
 //    weightField.setText(model.getWeight());
@@ -210,7 +209,17 @@ if(fileField.getText() != null){
 //    weightField.setText(model.getWeight());
  try{ repository.save(co);
  CodesOrders coor = repository.findOne(co.getId());
- codesOrdersTable.getItems().get(row.getIndex()).getCodesOrders().setValue(coor);
+ 
+// CodesTableItem codesTableItem = codesOrdersTable.getItems().get(row.getIndex());
+CodesTableItem codesTableItem = data.get(row.getIndex());
+     BeanUtils.copyProperties(codesTableItem, coor);
+     codesTableItem.init();
+     System.out.println(codesTableItem.getCargo());
+//     data.add(codesTableItem);
+ 
+
+     
+
  }
  catch(Exception e){ e.printStackTrace();}
 }

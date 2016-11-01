@@ -47,10 +47,12 @@ public class CodesOrderModel {
     private Date orderedOnDate;
     
     private CodesOrders codesOrders;
+    private CodesTableItem coTab;
     
     
     public void init(CodesTableItem item){
-        codesOrders = item.getCodesOrders().getValue();
+        this.coTab=item;
+        codesOrders = item.getCodesOrdersProperty().getValue();
       this.fileID =  codesOrders.getFileID();
       this.stationOfDispatch= codesOrders.getStationOfDispatch();
       this.stationOfDestination= codesOrders.getStationOfDestination();

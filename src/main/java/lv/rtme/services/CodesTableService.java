@@ -37,15 +37,15 @@ public class CodesTableService {
     public ObservableList<CodesTableItem> getData() {
           for (CodesOrders codesOrders : inList) {
             CodesTableItem item = new CodesTableItem();
-          item.getFileID().setValue(codesOrders.getFileID());
-          item.getStationOfDispatch().setValue(codesOrders.getStationOfDispatch().getStationName());
-          item.getStationOfDestination().setValue(codesOrders.getStationOfDestination().getStationName());
-           item.getCargo().setValue(codesOrders.getCargo());
-           item.getWagon().setValue(codesOrders.getWagon());
-           item.getUnit().setValue(codesOrders.getUnit());
-           item.getRate().setValue(codesOrders.getRate()+" "+codesOrders.getRateCurrency());
-           item.getConsignee().setValue(codesOrders.getConsignee().getSampleName());
-           item.getCodesOrders().setValue(codesOrders);
+          item.getFileIdProperty().setValue(codesOrders.getFileID());
+          item.getStationOfDispatchProperty().setValue(codesOrders.getStationOfDispatch().getStationName());
+          item.getStationOfDestinationProperty().setValue(codesOrders.getStationOfDestination().getStationName());
+           item.getCargoProperty().setValue(codesOrders.getCargo());
+           item.getWagonProperty().setValue(codesOrders.getWagon());
+           item.getUnitProperty().setValue(codesOrders.getUnit());
+           item.getRateProperty().setValue(codesOrders.getRate()+" "+codesOrders.getRateCurrency());
+           item.getConsigneeProperty().setValue(codesOrders.getConsignee().getSampleName());
+           item.getCodesOrdersProperty().setValue(codesOrders);
            
           
           data.add(item);

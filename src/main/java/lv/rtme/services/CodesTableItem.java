@@ -6,7 +6,11 @@
 package lv.rtme.services;
 
 import java.util.Date;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.LongProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -18,160 +22,339 @@ import lv.rtme.entities.Station;
  *
  * @author Maksims
  */
-        public class CodesTableItem {
-    private StringProperty fileID = new SimpleStringProperty();
+ public class CodesTableItem {
 
-    private StringProperty stationOfDispatch = new SimpleStringProperty();
+    private Long id;
+    private String fileID;
+    private Station stationOfDispatch;
+    private Station stationOfDestination;
+    private Persons consignee;
+    private String cargo;
+    private String weight;
 
-    private StringProperty stationOfDestination = new SimpleStringProperty();
+    private String wagon;
 
-    private StringProperty   consignee = new SimpleStringProperty();
+    private String provider;
 
-    private StringProperty cargo= new SimpleStringProperty();
-    private StringProperty weight= new SimpleStringProperty();
+    private String rate;
+    private String rateCurrency;
+    private String unit;
 
-    private StringProperty wagon= new SimpleStringProperty();
+    private String roadsToPay;
 
-    private StringProperty provider= new SimpleStringProperty();
+    private boolean isOrdered;
 
-    private StringProperty rate= new SimpleStringProperty();
-    private StringProperty rateCurrency= new SimpleStringProperty();
-    private StringProperty unit= new SimpleStringProperty();
+    private Date orderedOnDate;
+    private CodesOrders codesOrders;
 
-    private StringProperty roadsToPay= new SimpleStringProperty();
+    //----------- FX Properties  ---------------------------------
+    private StringProperty fileIdProperty = new SimpleStringProperty();
 
-    private StringProperty isOrdered= new SimpleStringProperty();
-    private ObjectProperty<Date> orderedOnDate=new SimpleObjectProperty();
-    private ObjectProperty<CodesOrders> codesOrders = new SimpleObjectProperty<>();
-    
+    private StringProperty stationOfDispatchProperty = new SimpleStringProperty();
 
-        public CodesTableItem() {
-        }
+    private StringProperty stationOfDestinationProperty = new SimpleStringProperty();
 
-        
-        
-        public StringProperty getFileID() {
-            return fileID;
-        }
+    private StringProperty consigneeProperty = new SimpleStringProperty();
 
-        public void setFileID(StringProperty fileID) {
-            this.fileID = fileID;
-        }
+    private StringProperty cargoProperty = new SimpleStringProperty();
+    private StringProperty weightProperty = new SimpleStringProperty();
 
-        public StringProperty getCargo() {
-            return cargo;
-        }
+    private StringProperty wagonProperty = new SimpleStringProperty();
 
-        public void setCargo(StringProperty cargo) {
-            this.cargo = cargo;
-        }
+    private StringProperty providerProperty = new SimpleStringProperty();
 
-        public StringProperty getWeight() {
-            return weight;
-        }
+    private StringProperty rateProperty = new SimpleStringProperty();
+    private StringProperty rateCurrencyProperty = new SimpleStringProperty();
+    private StringProperty unitProperty = new SimpleStringProperty();
 
-        public void setWeight(StringProperty weight) {
-            this.weight = weight;
-        }
+    private StringProperty roadsToPayProperty = new SimpleStringProperty();
 
-        public StringProperty getWagon() {
-            return wagon;
-        }
+    private BooleanProperty isOrderedProperty = new SimpleBooleanProperty();
+    private ObjectProperty<Date> orderedOnDateProperty = new SimpleObjectProperty();
+    private ObjectProperty<CodesOrders> codesOrdersProperty = new SimpleObjectProperty<>();
+    private LongProperty idLongProperty = new SimpleLongProperty();
 
-        public void setWagon(StringProperty wagon) {
-            this.wagon = wagon;
-        }
-
-        public StringProperty getProvider() {
-            return provider;
-        }
-
-        public void setProvider(StringProperty provider) {
-            this.provider = provider;
-        }
-
-        public StringProperty getRate() {
-            return rate;
-        }
-
-        public void setRate(StringProperty rate) {
-            this.rate = rate;
-        }
-
-        public StringProperty getRateCurrency() {
-            return rateCurrency;
-        }
-
-        public void setRateCurrency(StringProperty rateCurrency) {
-            this.rateCurrency = rateCurrency;
-        }
-
-        public StringProperty getUnit() {
-            return unit;
-        }
-
-        public void setUnit(StringProperty unit) {
-            this.unit = unit;
-        }
-
-        public StringProperty getRoadsToPay() {
-            return roadsToPay;
-        }
-
-        public void setRoadsToPay(StringProperty roadsToPay) {
-            this.roadsToPay = roadsToPay;
-        }
-
-        public StringProperty getIsOrdered() {
-            return isOrdered;
-        }
-
-        public void setIsOrdered(StringProperty isOrdered) {
-            this.isOrdered = isOrdered;
-        }
-
-        public ObjectProperty<Date> getOrderedOnDate() {
-            return orderedOnDate;
-        }
-
-        public void setOrderedOnDate(ObjectProperty<Date> orderedOnDate) {
-            this.orderedOnDate = orderedOnDate;
-        }
-
-    public ObjectProperty<CodesOrders> getCodesOrders() {
-        return codesOrders;
+    public CodesTableItem() {
     }
 
-    public void setCodesOrders(ObjectProperty<CodesOrders> codesOrders) {
-        this.codesOrders = codesOrders;
+    public void init()
+    {
+        fileIdProperty.setValue(fileID);
+        stationOfDispatchProperty.setValue(stationOfDispatch.getStationName());
+        stationOfDestinationProperty.setValue(stationOfDestination.getStationName());
+        consigneeProperty.setValue(consignee.getSampleName());
+        cargoProperty.setValue(cargo);
+        weightProperty.setValue(weight);
+        wagonProperty.setValue(wagon);
+        providerProperty.setValue(provider);
+        rateProperty.setValue(rate);
+        rateCurrencyProperty.setValue(rateCurrency);
+        unitProperty.setValue(unit);
+        roadsToPayProperty.setValue(roadsToPay);
+        isOrderedProperty.setValue(isOrdered);
+        orderedOnDateProperty.setValue(orderedOnDate);
+        codesOrdersProperty.setValue(codesOrders);
+        idLongProperty.set(id);
     }
 
-    public StringProperty getStationOfDispatch() {
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getFileID() {
+        return fileID;
+    }
+
+    public void setFileID(String fileID) {
+        this.fileID = fileID;
+    }
+
+    public Station getStationOfDispatch() {
         return stationOfDispatch;
     }
 
-    public void setStationOfDispatch(StringProperty stationOfDispatch) {
+    public void setStationOfDispatch(Station stationOfDispatch) {
         this.stationOfDispatch = stationOfDispatch;
     }
 
-    public StringProperty getStationOfDestination() {
+    public Station getStationOfDestination() {
         return stationOfDestination;
     }
 
-    public void setStationOfDestination(StringProperty stationOfDestination) {
+    public void setStationOfDestination(Station stationOfDestination) {
         this.stationOfDestination = stationOfDestination;
     }
 
-    public StringProperty getConsignee() {
+    public Persons getConsignee() {
         return consignee;
     }
 
-    public void setConsignee(StringProperty consignee) {
+    public void setConsignee(Persons consignee) {
         this.consignee = consignee;
     }
-        
-      
-    
+
+    public String getCargo() {
+        return cargo;
     }
+
+    public void setCargo(String cargo) {
+        this.cargo = cargo;
+    }
+
+    public String getWeight() {
+        return weight;
+    }
+
+    public void setWeight(String weight) {
+        this.weight = weight;
+    }
+
+    public String getWagon() {
+        return wagon;
+    }
+
+    public void setWagon(String wagon) {
+        this.wagon = wagon;
+    }
+
+    public String getProvider() {
+        return provider;
+    }
+
+    public void setProvider(String provider) {
+        this.provider = provider;
+    }
+
+    public String getRate() {
+        return rate;
+    }
+
+    public void setRate(String rate) {
+        this.rate = rate;
+    }
+
+    public String getRateCurrency() {
+        return rateCurrency;
+    }
+
+    public void setRateCurrency(String rateCurrency) {
+        this.rateCurrency = rateCurrency;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public String getRoadsToPay() {
+        return roadsToPay;
+    }
+
+    public void setRoadsToPay(String roadsToPay) {
+        this.roadsToPay = roadsToPay;
+    }
+
+    public boolean isIsOrdered() {
+        return isOrdered;
+    }
+
+    public void setIsOrdered(boolean isOrdered) {
+        this.isOrdered = isOrdered;
+    }
+
+    public Date getOrderedOnDate() {
+        return orderedOnDate;
+    }
+
+    public void setOrderedOnDate(Date orderedOnDate) {
+        this.orderedOnDate = orderedOnDate;
+    }
+
+    public CodesOrders getCodesOrders() {
+        return codesOrders;
+    }
+
+    public void setCodesOrders(CodesOrders codesOrders) {
+        this.codesOrders = codesOrders;
+    }
+
+    public StringProperty getFileIdProperty() {
+        return fileIdProperty;
+    }
+
+    public void setFileIdProperty(StringProperty fileIdProperty) {
+        this.fileIdProperty = fileIdProperty;
+    }
+
+    public StringProperty getStationOfDispatchProperty() {
+        return stationOfDispatchProperty;
+    }
+
+    public void setStationOfDispatchProperty(StringProperty stationOfDispatchProperty) {
+        this.stationOfDispatchProperty = stationOfDispatchProperty;
+    }
+
+    public StringProperty getStationOfDestinationProperty() {
+        return stationOfDestinationProperty;
+    }
+
+    public void setStationOfDestinationProperty(StringProperty stationOfDestinationProperty) {
+        this.stationOfDestinationProperty = stationOfDestinationProperty;
+    }
+
+    public StringProperty getConsigneeProperty() {
+        return consigneeProperty;
+    }
+
+    public void setConsigneeProperty(StringProperty consigneeProperty) {
+        this.consigneeProperty = consigneeProperty;
+    }
+
+    public StringProperty getCargoProperty() {
+        return cargoProperty;
+    }
+
+    public void setCargoProperty(StringProperty cargoProperty) {
+        this.cargoProperty = cargoProperty;
+    }
+
+    public StringProperty getWeightProperty() {
+        return weightProperty;
+    }
+
+    public void setWeightProperty(StringProperty weightProperty) {
+        this.weightProperty = weightProperty;
+    }
+
+    public StringProperty getWagonProperty() {
+        return wagonProperty;
+    }
+
+    public void setWagonProperty(StringProperty wagonProperty) {
+        this.wagonProperty = wagonProperty;
+    }
+
+    public StringProperty getProviderProperty() {
+        return providerProperty;
+    }
+
+    public void setProviderProperty(StringProperty providerProperty) {
+        this.providerProperty = providerProperty;
+    }
+
+    public StringProperty getRateProperty() {
+        return rateProperty;
+    }
+
+    public void setRateProperty(StringProperty rateProperty) {
+        this.rateProperty = rateProperty;
+    }
+
+    public StringProperty getRateCurrencyProperty() {
+        return rateCurrencyProperty;
+    }
+
+    public void setRateCurrencyProperty(StringProperty rateCurrencyProperty) {
+        this.rateCurrencyProperty = rateCurrencyProperty;
+    }
+
+    public StringProperty getUnitProperty() {
+        return unitProperty;
+    }
+
+    public void setUnitProperty(StringProperty unitProperty) {
+        this.unitProperty = unitProperty;
+    }
+
+    public StringProperty getRoadsToPayProperty() {
+        return roadsToPayProperty;
+    }
+
+    public void setRoadsToPayProperty(StringProperty roadsToPayProperty) {
+        this.roadsToPayProperty = roadsToPayProperty;
+    }
+
+    public BooleanProperty getIsOrderedProperty() {
+        return isOrderedProperty;
+    }
+
+    public void setIsOrderedProperty(BooleanProperty isOrderedProperty) {
+        this.isOrderedProperty = isOrderedProperty;
+    }
+
+    public ObjectProperty<Date> getOrderedOnDateProperty() {
+        return orderedOnDateProperty;
+    }
+
+    public void setOrderedOnDateProperty(ObjectProperty<Date> orderedOnDateProperty) {
+        this.orderedOnDateProperty = orderedOnDateProperty;
+    }
+
+    public ObjectProperty<CodesOrders> getCodesOrdersProperty() {
+        return codesOrdersProperty;
+    }
+
+    public void setCodesOrdersProperty(ObjectProperty<CodesOrders> codesOrdersProperty) {
+        this.codesOrdersProperty = codesOrdersProperty;
+    }
+
+    public LongProperty getIdLongProperty() {
+        return idLongProperty;
+    }
+
+    public void setIdLongProperty(LongProperty idLongProperty) {
+        this.idLongProperty = idLongProperty;
+    }
+    
+    
+    
+}
 
 
