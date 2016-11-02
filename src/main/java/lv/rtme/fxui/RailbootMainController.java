@@ -5,6 +5,8 @@
  */
 package lv.rtme.fxui;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.logging.Level;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -25,7 +27,6 @@ import javafx.scene.text.Text;
 import javafx.util.Callback;
 import javax.annotation.PostConstruct;
 import lv.rtme.entities.CodesOrders;
-import lv.rtme.entities.Station;
 import lv.rtme.fxui.models.CodesOrderModel;
 import lv.rtme.repositories.CodesOrdersRepository;
 import lv.rtme.repositories.StationRepository;
@@ -112,15 +113,10 @@ public class RailbootMainController {
     }
     
     
-     @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
     @PostConstruct
     public void init() {
-      
-   
-        
 //        readerX.init();
-
-        
         stDestCombo.setItems(stationsCombo);
         stDispCombo.setItems(stationsCombo);
         
@@ -144,17 +140,25 @@ public class RailbootMainController {
     codesOrdersTable.setOnMousePressed(new EventHandler<MouseEvent>() {
     @Override 
     public void handle(MouseEvent event) {
-        if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
+        if (event.isPrimaryButtonDown() && event.getClickCount() == 1) {
             Node node = ((Node) event.getTarget()).getParent();
-            
+
             if (node instanceof TableRow) {
                 row = (TableRow) node;
             } else { // clicking on text part
                 row = (TableRow) node.getParent();
-                
-            }
 
-            model.init((CodesTableItem) row.getItem());
+            }
+            try {
+                CodesOrders cti = row.getItem().getCodesOrdersProperty().get();
+                BeanUtils.copyProperties(model, cti);
+                model.setCodesOrders(cti);
+
+            } catch (IllegalAccessException ex) {
+                java.util.logging.Logger.getLogger(RailbootMainController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InvocationTargetException ex) {
+                java.util.logging.Logger.getLogger(RailbootMainController.class.getName()).log(Level.SEVERE, null, ex);
+            }
             file.setText(model.getFileID());
             stDestText.setText(model.getStationOfDestination().getStationName());
             stDispText.setText(model.getStationOfDispatch().getStationName());
@@ -176,28 +180,23 @@ public class RailbootMainController {
             providerField.setText(model.getProvider());
             payRoadsField.setText(model.getRoadsToPay());
             weightField.setText(model.getWeight());
-            
-            
-            
-            
         }
     }
 });
     }
+    
+    
      @FXML
     @Transactional
     public void addItem() {
-
-if(fileField.getText() != null){
-    
+        
    CodesOrders co= model.getCodesOrders();
    
    co.setFileID(fileField.getText()); 
-    Station stDisp = co.getStationOfDispatch(); 
-    stDisp.setStationName(stDispCombo.getValue());
-    co.setStationOfDispatch(stDisp);
-    co.getStationOfDestination().setStationName(stDestCombo.getValue());
-//    consiArea.setText(model.getConsignee().getSampleName());
+   co.setStationOfDispatch(stationRepository.findByStationName(stDispCombo.getValue()).get(0));
+   co.setStationOfDestination(stationRepository.findByStationName(stDestCombo.getValue()).get(0));
+   
+//   consiArea.setText(model.getConsignee().getSampleName());
      co.setCargo(cargoArea.getText());
 //    containerField.setText(model.getUnit());
 //    wagonField.setText(model.getWagon());
@@ -226,7 +225,7 @@ CodesTableItem codesTableItem = data.get(row.getIndex());
         
     }
     
-    }
+    
    
    
     

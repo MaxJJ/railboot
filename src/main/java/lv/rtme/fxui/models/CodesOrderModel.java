@@ -20,15 +20,11 @@ import org.springframework.stereotype.Component;
 @Component
 
 public class CodesOrderModel {
-    
+ private Long id;
     private String fileID;
-
     private Station stationOfDispatch;
-
     private Station stationOfDestination;
-
     private Persons consignee;
-
     private String cargo;
     private String weight;
 
@@ -42,16 +38,13 @@ public class CodesOrderModel {
 
     private String roadsToPay;
 
-    private String isOrdered;
+    private boolean isOrdered;
 
     private Date orderedOnDate;
-    
     private CodesOrders codesOrders;
-    private CodesTableItem coTab;
     
     
     public void init(CodesTableItem item){
-        this.coTab=item;
         codesOrders = item.getCodesOrdersProperty().getValue();
       this.fileID =  codesOrders.getFileID();
       this.stationOfDispatch= codesOrders.getStationOfDispatch();
@@ -67,6 +60,14 @@ public class CodesOrderModel {
       this.rateCurrency=codesOrders.getRateCurrency();
       this.provider=codesOrders.getProvider();
       this.roadsToPay = codesOrders.getRoadsToPay();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFileID() {
@@ -165,11 +166,11 @@ public class CodesOrderModel {
         this.roadsToPay = roadsToPay;
     }
 
-    public String getIsOrdered() {
+    public boolean isIsOrdered() {
         return isOrdered;
     }
 
-    public void setIsOrdered(String isOrdered) {
+    public void setIsOrdered(boolean isOrdered) {
         this.isOrdered = isOrdered;
     }
 
@@ -184,6 +185,11 @@ public class CodesOrderModel {
     public CodesOrders getCodesOrders() {
         return codesOrders;
     }
+
+    public void setCodesOrders(CodesOrders codesOrders) {
+        this.codesOrders = codesOrders;
+    }
+
 
    
     
