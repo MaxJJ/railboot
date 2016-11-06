@@ -28,6 +28,7 @@ import javafx.util.Callback;
 import javax.annotation.PostConstruct;
 import lv.rtme.entities.CodesOrders;
 import lv.rtme.fxui.models.CodesOrderModel;
+import lv.rtme.reportsService.ReportPrintService;
 import lv.rtme.repositories.CodesOrdersRepository;
 import lv.rtme.repositories.StationRepository;
 import lv.rtme.services.CodesTableItem;
@@ -48,6 +49,7 @@ public class RailbootMainController {
  private Logger logger = LoggerFactory.getLogger(RailbootMainController.class);
  
  @Autowired ReadAndPopulate readerX;
+ @Autowired ReportPrintService printer;
  
  @Autowired private CodesOrdersRepository repository;
  @Autowired private CodesTableService service;
@@ -221,7 +223,12 @@ CodesTableItem codesTableItem = data.get(row.getIndex());
 
  }
  catch(Exception e){ e.printStackTrace();}
+ 
+// printer.setModel(model);
+ printer.printThis();
 }
+    
+ 
         
     }
     

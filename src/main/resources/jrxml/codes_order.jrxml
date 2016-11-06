@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2016-11-04T15:44:44 -->
+<!-- 2016-11-06T22:32:12 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="codes_order" pageWidth="595" pageHeight="842" whenNoDataType="NoPages" columnWidth="497" leftMargin="56" rightMargin="42" topMargin="20" bottomMargin="20" uuid="79af2604-54ae-42be-bddb-9767b11dd50d">
 	<property name="com.jaspersoft.studio.unit." value="mm"/>
 	<property name="com.jaspersoft.studio.unit.pageHeight" value="mm"/>
@@ -15,23 +15,56 @@
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
-	<field name="pointCode" class="java.lang.String">
-		<fieldDescription><![CDATA[pointCode]]></fieldDescription>
+	<field name="rateCurrency" class="java.lang.String">
+		<fieldDescription><![CDATA[rateCurrency]]></fieldDescription>
 	</field>
-	<field name="pointName" class="java.lang.String">
-		<fieldDescription><![CDATA[pointName]]></fieldDescription>
+	<field name="consignee" class="lv.rtme.entities.Persons">
+		<fieldDescription><![CDATA[consignee]]></fieldDescription>
+	</field>
+	<field name="wagon" class="java.lang.String">
+		<fieldDescription><![CDATA[wagon]]></fieldDescription>
+	</field>
+	<field name="codesOrders" class="lv.rtme.entities.CodesOrders">
+		<fieldDescription><![CDATA[codesOrders]]></fieldDescription>
+	</field>
+	<field name="roadsToPay" class="java.lang.String">
+		<fieldDescription><![CDATA[roadsToPay]]></fieldDescription>
+	</field>
+	<field name="weight" class="java.lang.String">
+		<fieldDescription><![CDATA[weight]]></fieldDescription>
+	</field>
+	<field name="orderedOnDate" class="java.util.Date">
+		<fieldDescription><![CDATA[orderedOnDate]]></fieldDescription>
+	</field>
+	<field name="stationOfDispatch" class="lv.rtme.entities.Station">
+		<fieldDescription><![CDATA[stationOfDispatch]]></fieldDescription>
+	</field>
+	<field name="stationOfDestination" class="lv.rtme.entities.Station">
+		<fieldDescription><![CDATA[stationOfDestination]]></fieldDescription>
+	</field>
+	<field name="unit" class="java.lang.String">
+		<fieldDescription><![CDATA[unit]]></fieldDescription>
+	</field>
+	<field name="provider" class="java.lang.String">
+		<fieldDescription><![CDATA[provider]]></fieldDescription>
+	</field>
+	<field name="rate" class="java.lang.String">
+		<fieldDescription><![CDATA[rate]]></fieldDescription>
 	</field>
 	<field name="id" class="java.lang.Long">
 		<fieldDescription><![CDATA[id]]></fieldDescription>
 	</field>
-	<field name="pointType" class="java.lang.String">
-		<fieldDescription><![CDATA[pointType]]></fieldDescription>
-	</field>
-	<field name="reservationName" class="java.lang.String">
-		<fieldDescription><![CDATA[reservationName]]></fieldDescription>
+	<field name="cargo" class="java.lang.String">
+		<fieldDescription><![CDATA[cargo]]></fieldDescription>
 	</field>
 	<field name="class" class="java.lang.Class">
 		<fieldDescription><![CDATA[class]]></fieldDescription>
+	</field>
+	<field name="isOrdered" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[isOrdered]]></fieldDescription>
+	</field>
+	<field name="fileID" class="java.lang.String">
+		<fieldDescription><![CDATA[fileID]]></fieldDescription>
 	</field>
 	<background>
 		<band splitType="Stretch"/>
@@ -86,7 +119,7 @@
 					<textElement>
 						<font fontName="Calibri" size="16"/>
 					</textElement>
-					<textFieldExpression><![CDATA["text"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{fileID}]]></textFieldExpression>
 				</textField>
 				<textField pattern="dd.MM.yyyy">
 					<reportElement x="226" y="30" width="100" height="30" uuid="df526ac7-cb48-4743-b596-612b9d1c2e1c"/>
@@ -99,14 +132,13 @@
 		</band>
 	</pageHeader>
 	<detail>
-		<band height="666" splitType="Stretch">
+		<band height="400" splitType="Stretch">
 			<property name="com.jaspersoft.studio.unit.height" value="mm"/>
 			<frame>
 				<reportElement x="0" y="10" width="198" height="42" uuid="09436417-8511-46fe-a98f-7ee0a450f032">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
 					<property name="com.jaspersoft.studio.unit.x" value="mm"/>
 					<property name="com.jaspersoft.studio.unit.y" value="mm"/>
-					<property name="com.jaspersoft.studio.unit.height" value="mm"/>
 				</reportElement>
 				<staticText>
 					<reportElement x="0" y="0" width="198" height="21" uuid="17152533-b766-4a79-8675-62fe927ada0b"/>
@@ -119,12 +151,12 @@
 					</textElement>
 					<text><![CDATA[ОПЛАЧИВАЕМЫЕ ТЕРРИТОРИИ]]></text>
 				</staticText>
-				<textField isBlankWhenNull="false">
+				<textField pattern="" isBlankWhenNull="true">
 					<reportElement x="0" y="21" width="198" height="21" uuid="2f70cfbe-a80d-41f8-9685-ed5186e16c5d"/>
 					<textElement textAlignment="Left">
 						<font fontName="Calibri" size="10"/>
 					</textElement>
-					<textFieldExpression><![CDATA["Text Field1"					]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{roadsToPay}]]></textFieldExpression>
 				</textField>
 			</frame>
 			<frame>
@@ -202,7 +234,7 @@
 					<textElement textAlignment="Left">
 						<font fontName="Calibri" size="10"/>
 					</textElement>
-					<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{stationOfDispatch}.getStationName()]]></textFieldExpression>
 				</textField>
 			</frame>
 			<frame>
@@ -228,7 +260,7 @@
 					<textElement textAlignment="Left">
 						<font fontName="Calibri" size="10"/>
 					</textElement>
-					<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{stationOfDestination}.getStationName()]]></textFieldExpression>
 				</textField>
 			</frame>
 			<frame>
@@ -332,7 +364,7 @@
 					<textElement textAlignment="Left">
 						<font fontName="Calibri" size="10"/>
 					</textElement>
-					<textFieldExpression><![CDATA["Text Field АААААААААААААААААААААААААААААААААААААААААААААААААААААА"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["Text Field "]]></textFieldExpression>
 				</textField>
 			</frame>
 			<frame>
@@ -353,12 +385,12 @@
 					</textElement>
 					<text><![CDATA[ПОЛУЧАТЕЛЬ]]></text>
 				</staticText>
-				<textField isBlankWhenNull="false">
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
 					<reportElement x="0" y="21" width="198" height="21" uuid="0478ed59-f752-4ff1-93b8-d0e70aba606b"/>
 					<textElement textAlignment="Left">
 						<font fontName="Calibri" size="10"/>
 					</textElement>
-					<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{consignee}.getSampleName()]]></textFieldExpression>
 				</textField>
 			</frame>
 		</band>
