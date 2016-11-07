@@ -6,6 +6,7 @@
 package lv.rtme.fxui;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 import java.util.logging.Level;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -15,6 +16,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableRow;
@@ -24,6 +26,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.util.Callback;
 import javax.annotation.PostConstruct;
 import lv.rtme.entities.CodesOrders;
@@ -101,6 +105,22 @@ public class RailbootMainController {
     
     // EDITING FORM END
     
+    // SEARCH BEGIN
+       @FXML
+    private Button searchButton;
+
+    @FXML
+    private TextField searchText;
+
+    @FXML
+    private ListView<String> searchResultList;
+    
+    @FXML
+    private AnchorPane webAnchor;
+    
+    private WebEngine engine;
+    
+    // SEARCH END
     private ObservableList<CodesTableItem> data ;
     private ObservableList<String> stations = FXCollections.observableArrayList();
     @Qualifier("stationsComboBox")
@@ -185,6 +205,23 @@ public class RailbootMainController {
         }
     }
 });
+ 
+  
+   
+        searchText.textProperty().addListener((oservable, oldValue, newValue) -> {
+            searchResultList.getItems().clear();
+            List<CodesOrders> que = repository.findByCargoLike("%" + newValue + "%");
+            ObservableList<String> resList = FXCollections.observableArrayList();
+            int i = 1;
+            for (CodesOrders codesOrders : que) {
+
+                resList.add(i + " ФАЙЛ " + codesOrders.getFileID() + "-----");
+                resList.add(codesOrders.getCargo());
+                i++;
+            }
+            searchResultList.setItems(resList);
+
+        });
     }
     
     
@@ -224,10 +261,44 @@ CodesTableItem codesTableItem = data.get(row.getIndex());
  }
  catch(Exception e){ e.printStackTrace();}
  
+
+ 
 // printer.setModel(model);
  printer.printThis();
 }
     
+ @FXML
+ public void searchAction(){
+    
+     
+     searchResultList.getItems().clear();
+     List<CodesOrders> que = repository.findByCargoLike("%"+searchText.getText()+"%");
+ ObservableList<String> resList = FXCollections.observableArrayList();
+ String content = "<h1>BEGIN</h1><br/>";
+     int i = 1;
+         for (CodesOrders codesOrders : que) {
+             
+             resList.add(i+" ФАЙЛ "+codesOrders.getFileID()+ "-----" );
+             resList.add(codesOrders.getCargo());
+             content=content.concat("<p><b>"+codesOrders.getFileID()+"</b><span>  "+codesOrders.getProvider()+"  "+codesOrders.getRate()+codesOrders.getRateCurrency()+"</span></p>" );
+           content=  content.concat("<p>"+codesOrders.getCargo()+"</p>");
+            i++;
+         }
+          
+           WebView webView = new WebView();
+           webView.setStyle("font-size:12px");
+           webView.setPrefWidth(300);
+           webView.setMaxWidth(350);
+           webView.getEngine().loadContent(content,"text/html");
+           
+           webAnchor.getChildren().add(webView);
+         
+          
+       searchResultList.setItems(resList);
+       
+      
+ }
+ 
  
         
     }
