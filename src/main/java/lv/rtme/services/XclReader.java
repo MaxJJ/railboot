@@ -43,7 +43,7 @@ public class XclReader {
     
     public Set<String> getSetFromColumn(int column){
        Set<String> stations = new LinkedHashSet<>(); 
-        for (int i = 2; i <= 190; i++) {
+        for (int i = 2; i <= 202; i++) {
             stations.add(myExcelSheet.getRow(i).getCell(column, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).getStringCellValue());
         }
         return stations;

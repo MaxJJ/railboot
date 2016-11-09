@@ -82,6 +82,7 @@ import lv.rtme.entities.Station;
         fileIdProperty.setValue(fileID);
         stationOfDispatchProperty.setValue(stationOfDispatch.getStationName());
         stationOfDestinationProperty.setValue(stationOfDestination.getStationName());
+        
         consigneeProperty.setValue(consignee.getSampleName());
         cargoProperty.setValue(cargo);
         weightProperty.setValue(weight);

@@ -52,7 +52,7 @@ public class ReportPrintService {
       JasperPrint jasperPrint = null;
         try {
 //            jasperPrint = JasperFillManager.fillReport(getClass().getClassLoader().getResource("/codes_order.jasper").getFile(), params, beanDataSource);
-        jasperPrint=JasperFillManager.fillReport("C:\\Users\\Maksims\\Documents\\NetBeansProjects\\lv\\rtme\\railboot\\src\\main\\resources\\codes_order.jasper", params, beanDataSource);
+        jasperPrint=JasperFillManager.fillReport(getClass().getClassLoader().getResource("codes_order.jasper").getFile(), params, beanDataSource);
         } catch (Exception ex) {
             
             System.out.println("JRException throw 1");
