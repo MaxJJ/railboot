@@ -5,6 +5,7 @@ import java.io.InputStream;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import lv.rtme.fxui.RailbootMainController;
+import lv.rtme.fxui.SearchPaneController;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -18,14 +19,13 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ConfigurationControllers {
 
-//    @Bean(name = "mainView")
-//    public View getMainView() throws IOException {
-//        return loadView("fxml/main.fxml");
-//    }
-    
     @Bean(name = "railbootMainView")
     public View getMainView() throws IOException {
         return loadView("fxml/railbootMain.fxml");
+    }
+    @Bean(name = "searchView")
+    public View getSearchView() throws IOException {
+        return loadView("fxml/search.fxml");
     }
     
     
@@ -42,6 +42,11 @@ public class ConfigurationControllers {
       @Bean
     public RailbootMainController getMainController() throws IOException {
         return (RailbootMainController) getMainView().getController();
+    }
+    
+      @Bean
+    public SearchPaneController getSearchController() throws IOException {
+        return (SearchPaneController) getSearchView().getController();
     }
     
 

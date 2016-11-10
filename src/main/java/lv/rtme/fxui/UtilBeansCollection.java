@@ -12,7 +12,6 @@ import lv.rtme.entities.Station;
 import lv.rtme.repositories.StationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 /**
@@ -27,7 +26,7 @@ public class UtilBeansCollection {
     
     
     @Bean(name = "stationsComboBox")
-  @Scope("prototype")
+ 
         public ObservableList<String> strbean(){
                 
         ObservableList<String> list = FXCollections.observableArrayList();
