@@ -18,5 +18,6 @@ public interface CodesOrdersRepository extends CrudRepository<CodesOrders, Long>
     List<CodesOrders> findAll();
     
     List<CodesOrders> findByCargoLike(String search);
+    List<CodesOrders> findBySearchStringLike(String search);
     
 }

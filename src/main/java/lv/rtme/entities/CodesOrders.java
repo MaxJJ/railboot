@@ -8,6 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 
+
 @Entity
 public class CodesOrders {
 
@@ -16,6 +17,9 @@ public class CodesOrders {
     private Long id;
     
     private  String fileID;
+    
+    @Lob
+    private String searchString;
     
     @OneToOne
     @JoinColumn(name = "dispatchstation_fk")
@@ -35,23 +39,14 @@ public class CodesOrders {
     private String weight;
     
     private String wagon;
-    
     private String provider;
-    
     private String rate;
     private String rateCurrency;
     private String unit;
-    
     private String roadsToPay;
-    
     private boolean isOrdered;
     
     private Date orderedOnDate;
-    
-    
-    
-    
-    
     
     
     private String reservationName;
@@ -65,6 +60,8 @@ public class CodesOrders {
     }
 
     public CodesOrders() {
+        
+     
     }
 
     public CodesOrders(String reservationName) {
@@ -198,6 +195,16 @@ public class CodesOrders {
     public void setOrderedOnDate(Date orderedOnDate) {
         this.orderedOnDate = orderedOnDate;
     }
+
+    public String getSearchString() {
+        return searchString;
+    }
+
+    public void setSearchString(String searchString) {
+        this.searchString = searchString;
+    }
+    
+    
     
     
     

@@ -6,9 +6,11 @@
 package lv.rtme.fxui;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 import java.util.logging.Level;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -22,7 +24,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
-import javafx.util.Callback;
+import javafx.stage.Stage;
 import javax.annotation.PostConstruct;
 import lv.rtme.ConfigurationControllers;
 import lv.rtme.entities.CodesOrders;
@@ -45,21 +47,41 @@ import org.springframework.transaction.annotation.Transactional;
 @SuppressWarnings("SpringJavaAutowiringInspection")
 public class RailbootMainController {
    
-     @Qualifier("searchView")
+    @Qualifier("searchView")
     @Autowired
     private ConfigurationControllers.View view;
-    
- private Logger logger = LoggerFactory.getLogger(RailbootMainController.class);
+
+    private Logger logger = LoggerFactory.getLogger(RailbootMainController.class);
+    @Autowired
+    UtilBeansCollection utils;
+    @Autowired
+    ReadAndPopulate readerX;
+    @Autowired
+    ReportPrintService printer;
+
+    @Autowired
+    private CodesOrdersRepository repository;
+    @Autowired
+    private CodesTableService service;
+    @Autowired
+    private CodesOrderModel model;
+    @Autowired
+    private StationRepository stationRepository;
  
- @Autowired ReadAndPopulate readerX;
- @Autowired ReportPrintService printer;
- 
- @Autowired private CodesOrdersRepository repository;
- @Autowired private CodesTableService service;
- @Autowired private CodesOrderModel model;
- @Autowired private StationRepository stationRepository;
- 
- 
+     @FXML
+    private Button addStationButton;
+
+    @FXML
+    private Button addConsigneeButton;
+
+    @FXML
+    private Button showAllButton;
+    @FXML
+    private TextField searchTextField;
+
+    @FXML
+    private Button selectButton;
+     
  // MAIN TABLE BEGIN
     @FXML private TableView<CodesTableItem> codesOrdersTable;
     @FXML private TableColumn<CodesTableItem, String> fileID;
@@ -104,14 +126,14 @@ public class RailbootMainController {
     
     // EDITING FORM END
     
-    private ObservableList<CodesTableItem> data ;
-//    private ObservableList<String> stations = FXCollections.observableArrayList();
+    
+    
     @Qualifier("stationsComboBox")
     @Autowired
     private ObservableList<String> stationsCombo;
     
     private TableRow<CodesTableItem> row;
-    
+    private ObservableList<CodesTableItem> data ;
     
     @FXML    public void initialize() {  }
     
@@ -126,22 +148,28 @@ public class RailbootMainController {
         stDispCombo.setItems(stationsCombo);
         
          /* setting ObservableList<CodesTableItem> for TableView<CodesTableItem> codesOrdersTable   */
-        service.setInList(repository.findAll());
-        data=service.getData();
-        
- fileID.setCellValueFactory(new Callback<CellDataFeatures<CodesTableItem, String>, ObservableValue<String>>() {
-     public ObservableValue<String> call(CellDataFeatures<CodesTableItem, String> p) {
-         return p.getValue().getFileIdProperty();
-     }
-  });  
-         cargo.setCellValueFactory((CellDataFeatures<CodesTableItem, String> p) -> p.getValue().getCargoProperty());
-         stDispatch.setCellValueFactory((CellDataFeatures<CodesTableItem, String> p) -> p.getValue().getStationOfDispatchProperty());
-         stDestination.setCellValueFactory((CellDataFeatures<CodesTableItem, String> p) -> p.getValue().getStationOfDestinationProperty());
-         wagon.setCellValueFactory((CellDataFeatures<CodesTableItem, String> p) -> p.getValue().getWagonProperty());
-         container.setCellValueFactory((CellDataFeatures<CodesTableItem, String> p) -> p.getValue().getUnitProperty());
-         rate.setCellValueFactory((CellDataFeatures<CodesTableItem, String> p) -> p.getValue().getRateProperty());
-
-    codesOrdersTable.setItems(data) ;
+        utils.setSearch();
+        addStationButton.setOnAction((ActionEvent event) -> {
+            Stage newStage = new Stage();
+            newStage.showAndWait();
+        });
+        searchTextField.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            if (newValue.length() > 2) {
+                codesOrdersTable.getItems().clear();
+                List<CodesOrders> que = repository.findBySearchStringLike("%" + newValue + "%");
+                service.setInList(que);
+                data = service.getData();
+                codesOrdersTable.setItems(data);
+            }
+        });
+       
+        fileID.setCellValueFactory((CellDataFeatures<CodesTableItem, String> p) -> p.getValue().getFileIdProperty());
+        cargo.setCellValueFactory((CellDataFeatures<CodesTableItem, String> p) -> p.getValue().getCargoProperty());
+        stDispatch.setCellValueFactory((CellDataFeatures<CodesTableItem, String> p) -> p.getValue().getStationOfDispatchProperty());
+        stDestination.setCellValueFactory((CellDataFeatures<CodesTableItem, String> p) -> p.getValue().getStationOfDestinationProperty());
+        wagon.setCellValueFactory((CellDataFeatures<CodesTableItem, String> p) -> p.getValue().getWagonProperty());
+        container.setCellValueFactory((CellDataFeatures<CodesTableItem, String> p) -> p.getValue().getUnitProperty());
+        rate.setCellValueFactory((CellDataFeatures<CodesTableItem, String> p) -> p.getValue().getRateProperty());
     
     codesOrdersTable.setOnMousePressed((MouseEvent event) -> {
         if (event.isPrimaryButtonDown() && event.getClickCount() == 1) {
@@ -163,10 +191,6 @@ public class RailbootMainController {
             } catch (InvocationTargetException ex) {
                 java.util.logging.Logger.getLogger(RailbootMainController.class.getName()).log(Level.SEVERE, null, ex);
             }
-//            file.setText(model.getFileID());
-//            stDestText.setText(model.getStationOfDestination().getStationName());
-//            stDispText.setText(model.getStationOfDispatch().getStationName());
-//            consiText.setText(model.getConsignee().getSampleName());
             
             //--------------
             
@@ -186,10 +210,7 @@ public class RailbootMainController {
             weightField.setText(model.getWeight());
         }
         });
- 
-  
     }
-    
     
      @FXML
     @Transactional
@@ -220,6 +241,17 @@ CodesTableItem codesTableItem = data.get(row.getIndex());
  }
  catch(Exception e){ e.printStackTrace();}
 }
+    
+    @FXML
+    void fillAllItems(){
+        codesOrdersTable.getItems().clear();
+        service.setInList(repository.findAll());
+        data=service.getData();
+        codesOrdersTable.setItems(data) ;
+        
+    } 
+    
+    
  }
         
     

@@ -6,6 +6,8 @@
 package lv.rtme.fxui;
 
 import java.util.List;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -55,20 +57,22 @@ public class SearchPaneController {
     @PostConstruct
     public void init() {
         
-                searchText.textProperty().addListener((oservable, oldValue, newValue) -> {
-            searchResultList.getItems().clear();
-            List<CodesOrders> que = repository.findByCargoLike("%" + newValue + "%");
-            ObservableList<String> resList = FXCollections.observableArrayList();
-            int i = 1;
-            for (CodesOrders codesOrders : que) {
-
-                resList.add(i + " ФАЙЛ " + codesOrders.getFileID() + "-----");
-                resList.add(codesOrders.getCargo());
-                i++;
-            }
-            searchResultList.setItems(resList);
-
-        });
+                searchText.textProperty().addListener(new ChangeListener<String>() {
+                    @Override
+                    public void changed(ObservableValue<? extends String> oservable, String oldValue, String newValue) {
+                        searchResultList.getItems().clear();
+                        List<CodesOrders> que = repository.findByCargoLike("%" + newValue + "%");
+                        ObservableList<String> resList = FXCollections.observableArrayList();
+                        int i = 1;
+                        for (CodesOrders codesOrders : que) {
+                            
+                            resList.add(i + " ФАЙЛ " + codesOrders.getFileID() + "-----");
+                            resList.add(codesOrders.getCargo());
+                            i++;
+                        }
+                        searchResultList.setItems(resList);
+                    }
+                });
         
         
     }
