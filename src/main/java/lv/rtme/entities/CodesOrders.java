@@ -42,13 +42,15 @@ public class CodesOrders {
     private String provider;
     private String rate;
     private String rateCurrency;
+    private Double guardRate;
+    private String guardCurrency;
     private String unit;
     private String roadsToPay;
     private boolean isOrdered;
     
     private Date orderedOnDate;
-    
-    
+    private Integer containerTare;
+    private String customTag;
     private String reservationName;
 
     @Override
@@ -202,6 +204,38 @@ public class CodesOrders {
 
     public void setSearchString(String searchString) {
         this.searchString = searchString;
+    }
+
+    public Double getGuardRate() {
+        return guardRate;
+    }
+
+    public void setGuardRate(Double guardRate) {
+        this.guardRate = guardRate;
+    }
+
+    public String getGuardCurrency() {
+        return guardCurrency;
+    }
+
+    public void setGuardCurrency(String guardCurrency) {
+        this.guardCurrency = guardCurrency;
+    }
+
+    public Integer getContainerTare() {
+        return containerTare;
+    }
+
+    public void setContainerTare(Integer containerTare) {
+        this.containerTare = containerTare;
+    }
+
+    public String getCustomTag() {
+        return customTag;
+    }
+
+    public void setCustomTag(String customTag) {
+        this.customTag = customTag;
     }
     
     

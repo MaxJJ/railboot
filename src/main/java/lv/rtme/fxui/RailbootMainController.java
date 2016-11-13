@@ -128,9 +128,9 @@ public class RailbootMainController {
     
     
     
-    @Qualifier("stationsComboBox")
-    @Autowired
-    private ObservableList<String> stationsCombo;
+//    @Qualifier("stationsComboBox")
+//    @Autowired
+//    private ObservableList<String> stationsCombo;
     
     private TableRow<CodesTableItem> row;
     private ObservableList<CodesTableItem> data ;
@@ -144,8 +144,8 @@ public class RailbootMainController {
         readerX.init();
         
         /* setting combos with station     */
-        stDestCombo.setItems(stationsCombo);
-        stDispCombo.setItems(stationsCombo);
+        stDestCombo.setItems(utils.strbean());
+        stDispCombo.setItems(utils.strbean());
         
          /* setting ObservableList<CodesTableItem> for TableView<CodesTableItem> codesOrdersTable   */
         utils.setSearch();

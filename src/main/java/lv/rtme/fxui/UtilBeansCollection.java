@@ -15,7 +15,6 @@ import lv.rtme.entities.Station;
 import lv.rtme.repositories.CodesOrdersRepository;
 import lv.rtme.repositories.StationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 /**
@@ -31,7 +30,7 @@ public class UtilBeansCollection {
   private CodesOrdersRepository codesOrdersRepository;
     
     
-    @Bean(name = "stationsComboBox")
+//    @Bean(name = "stationsComboBox")
  
         public ObservableList<String> strbean(){
                 
