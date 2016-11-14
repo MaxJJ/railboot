@@ -42,8 +42,7 @@ public class ReportPrintService {
         
           CodesOrderModel[] modelArray = new CodesOrderModel[1];
         modelArray[0]=model;
-        System.out.println("array --"+modelArray[0].getFileID());
-        System.out.println("model --"+model.getFileID());
+     
         
         JRAbstractBeanDataSource beanDataSource = new JRBeanArrayDataSource(modelArray, false);
        

@@ -13,6 +13,8 @@ public class Persons {
     private String reservationName;
     
     private String sampleName;
+    private String details;
+    
     private String searchName;
 
     @Override

@@ -12,7 +12,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableListBase;
 import lv.rtme.entities.CodesOrders;
+import lv.rtme.fxui.models.CodesOrderModel;
 import lv.rtme.repositories.CodesOrdersRepository;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +28,11 @@ import org.springframework.stereotype.Component;
 public class CodesTableService {
     @Autowired
     CodesOrdersRepository repository;
+    @Autowired
+    CodesOrderModel model;
+    
     private List<CodesOrders> inList = new LinkedList<>();
-    private ObservableList<CodesTableItem> data = FXCollections.observableArrayList();
+    private ObservableList<CodesOrderModel> data = FXCollections.observableArrayList();
 
 
 
@@ -39,39 +44,16 @@ public class CodesTableService {
         this.inList = inList;
     }
 
-    public ObservableList<CodesTableItem> getData() {
+    public ObservableList<CodesOrderModel> getData() {
           for (CodesOrders codesOrders : inList) {
-            CodesTableItem item = new CodesTableItem();
-            
-              try {
-                  BeanUtils.copyProperties(item, codesOrders);
-              } catch (IllegalAccessException ex) {
-                  Logger.getLogger(CodesTableService.class.getName()).log(Level.SEVERE, null, ex);
-              } catch (InvocationTargetException ex) {
-                  Logger.getLogger(CodesTableService.class.getName()).log(Level.SEVERE, null, ex);
-              }
-              
-              item.setCodesOrders(codesOrders);
-            item.init();
-            
-//          item.getFileIdProperty().setValue(codesOrders.getFileID());
-//          item.getStationOfDispatchProperty().setValue(codesOrders.getStationOfDispatch().getStationName());
-//          item.getStationOfDestinationProperty().setValue(codesOrders.getStationOfDestination().getStationName());
-//           item.getCargoProperty().setValue(codesOrders.getCargo());
-//           item.getWagonProperty().setValue(codesOrders.getWagon());
-//           item.getUnitProperty().setValue(codesOrders.getUnit());
-//           item.getRateProperty().setValue(codesOrders.getRate()+" "+codesOrders.getRateCurrency());
-//           item.getConsigneeProperty().setValue(codesOrders.getConsignee().getSampleName());
-//           item.getCodesOrdersProperty().setValue(codesOrders);
-           
-          
-          data.add(item);
+       model.init(codesOrders);
+          data.add(model);
         }
           
         return data;
     }
 
-    public void setData(ObservableList<CodesTableItem> data) {
+    public void setData(ObservableList<CodesOrderModel> data) {
         this.data = data;
     }
     
