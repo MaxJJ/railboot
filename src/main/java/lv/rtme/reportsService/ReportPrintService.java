@@ -17,6 +17,7 @@ import net.sf.jasperreports.engine.JasperPrintManager;
 import net.sf.jasperreports.engine.data.JRAbstractBeanDataSource;
 import net.sf.jasperreports.engine.data.JRBeanArrayDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 /**
@@ -27,6 +28,7 @@ import org.springframework.stereotype.Component;
 @Component
 
 public class ReportPrintService {
+    @Qualifier("coModel")
     @Autowired
     private CodesOrderModel model;
     

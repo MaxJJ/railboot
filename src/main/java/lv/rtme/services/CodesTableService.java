@@ -5,19 +5,16 @@
  */
 package lv.rtme.services;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableListBase;
 import lv.rtme.entities.CodesOrders;
 import lv.rtme.fxui.models.CodesOrderModel;
 import lv.rtme.repositories.CodesOrdersRepository;
-import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 /**
@@ -25,9 +22,12 @@ import org.springframework.stereotype.Component;
  * @author Maksims
  */
 @Component
+@Scope("prototype")
 public class CodesTableService {
     @Autowired
     CodesOrdersRepository repository;
+    
+    @Qualifier("tableItem")
     @Autowired
     CodesOrderModel model;
     
@@ -46,8 +46,9 @@ public class CodesTableService {
 
     public ObservableList<CodesOrderModel> getData() {
           for (CodesOrders codesOrders : inList) {
-       model.init(codesOrders);
-          data.add(model);
+              CodesOrderModel modelx= new CodesOrderModel();
+       modelx.init(codesOrders);
+          data.add(modelx);
         }
           
         return data;

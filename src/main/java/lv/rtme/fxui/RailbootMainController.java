@@ -20,12 +20,11 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 import javax.annotation.PostConstruct;
-import lv.rtme.ConfigurationControllers;
 import lv.rtme.entities.CodesOrders;
+import lv.rtme.entities.Station;
 import lv.rtme.fxui.models.CodesOrderModel;
 import lv.rtme.reportsService.ReportPrintService;
 import lv.rtme.repositories.CodesOrdersRepository;
@@ -42,11 +41,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 @SuppressWarnings("SpringJavaAutowiringInspection")
 public class RailbootMainController {
-   
-    @Qualifier("searchView")
-    @Autowired
-    private ConfigurationControllers.View view;
-
     private Logger logger = LoggerFactory.getLogger(RailbootMainController.class);
     @Autowired
     UtilBeansCollection utils;
@@ -54,29 +48,27 @@ public class RailbootMainController {
     ReadAndPopulate readerX;
     @Autowired
     ReportPrintService printer;
-
     @Autowired
     private CodesOrdersRepository repository;
     @Autowired
     private CodesTableService service;
+    @Qualifier("coModel")
     @Autowired
     private CodesOrderModel model;
     @Autowired
     private StationRepository stationRepository;
  
-     @FXML
-    private Button addStationButton;
-
-    @FXML
-    private Button addConsigneeButton;
-
-    @FXML
-    private Button showAllButton;
+    private TableRow<CodesOrderModel> row;
+    private ObservableList<CodesOrderModel> data ;
+   
     @FXML
     private TextField searchTextField;
-
-    @FXML
-    private Button selectButton;
+    
+/* BUTTONS ---------------   -------------    */
+    @FXML private Button selectButton;
+    @FXML private Button addStationButton;
+    @FXML private Button addConsigneeButton;
+    @FXML private Button showAllButton;
      
  // MAIN TABLE BEGIN
     @FXML private TableView<CodesOrderModel> codesOrdersTable;
@@ -90,21 +82,12 @@ public class RailbootMainController {
     
     // MAIN TABLE END
     
-    // TOP PANEL BEGIN
-    @FXML private AnchorPane tableAnchorPane;
-    @FXML private Text file ;
-    @FXML private Text stDispText;
-    @FXML private Text stDestText;
-    @FXML private Text consiText;
-    
-    // TOP PANEL END
-    
     // EDITING FORM BEGIN
     @FXML private TextField fileField;
     @FXML private Button copyButton;
     @FXML private Button newButton;
-    @FXML private ComboBox<String> stDestCombo;
-    @FXML private ComboBox<String> stDispCombo;
+    @FXML private ComboBox<Station> stDestCombo;
+    @FXML private ComboBox<Station> stDispCombo;
     @FXML private TextArea consiArea;
     @FXML private TextField wagonField;
     @FXML private TextField containerField;
@@ -118,18 +101,8 @@ public class RailbootMainController {
     @FXML private TextField securCurrencyField;
     @FXML private TextField securityRateField;
     @FXML private Button saveButton;
-    
-    
     // EDITING FORM END
     
-    
-    
-//    @Qualifier("stationsComboBox")
-//    @Autowired
-//    private ObservableList<String> stationsCombo;
-    
-    private TableRow<CodesOrderModel> row;
-    private ObservableList<CodesOrderModel> data ;
     
     @FXML    public void initialize() {  }
     
@@ -140,8 +113,15 @@ public class RailbootMainController {
         readerX.init();
         
         /* setting combos with station     */
-        stDestCombo.setItems(utils.strbean());
-        stDispCombo.setItems(utils.strbean());
+        
+     
+        stDestCombo.itemsProperty().setValue(utils.strbean());
+        stDestCombo.converterProperty().setValue(getStationConverter());
+        
+        
+        stDispCombo.itemsProperty().setValue(utils.strbean());
+        stDispCombo.converterProperty().setValue(getStationConverter());
+        
         
          /* setting ObservableList<CodesOrderModel> for TableView<CodesOrderModel> codesOrdersTable   */
         utils.setSearch();
@@ -177,15 +157,15 @@ public class RailbootMainController {
                 row = (TableRow) node.getParent();
 
             }
-            model.init(row.getItem().getCodesOrdersProperty().get());
+            model.init(row.getItem().getCodesOrders());
            
             
             //--------------
             
             fileField.setText(model.getCodesOrders().getFileID());
             fileField.setEditable(false);
-            stDispCombo.setValue(model.getCodesOrders().getStationOfDispatch().getStationName());
-            stDestCombo.setValue(model.getCodesOrders().getStationOfDestination().getStationName());
+            stDispCombo.setValue(model.getCodesOrders().getStationOfDispatch());
+            stDestCombo.setValue(model.getCodesOrders().getStationOfDestination());
             consiArea.setText(model.getCodesOrders().getConsignee().getSampleName());
             cargoArea.setText(model.getCodesOrders().getCargo());
             containerField.setText(model.getCodesOrders().getUnit());
@@ -207,32 +187,14 @@ public class RailbootMainController {
    CodesOrders co= model.getCodesOrders();
    
    co.setFileID(fileField.getText()); 
-   co.setStationOfDispatch(stationRepository.findByStationName(stDispCombo.getValue()).get(0));
-   co.setStationOfDestination(stationRepository.findByStationName(stDestCombo.getValue()).get(0));
+   co.setStationOfDispatch(stDispCombo.getValue());
+   co.setStationOfDestination(stDestCombo.getValue());
+   co.setCargo(cargoArea.getText());
    
-//   consiArea.setText(model.getConsignee().getSampleName());
-     co.setCargo(cargoArea.getText());
-//    containerField.setText(model.getUnit());
-//    wagonField.setText(model.getWagon());
-//    weightField.setText(model.getWeight());
-//    rateField.setText(model.getRate());
-//    rateCurrencyField.setText(model.getRateCurrency());
-//    providerField.setText(model.getProvider());
-//    payRoadsField.setText(model.getRoadsToPay());
-//    weightField.setText(model.getWeight());
-// try{ repository.save(co);
-// CodesOrders coor = repository.findOne(co.getId());
-//CodesOrderModel codesTableItem = data.get(row.getIndex());
-//     BeanUtils.copyProperties(codesTableItem, coor);
-//     codesTableItem.init();
-//     System.out.println(codesTableItem.getCargo());
-// }
-// catch(Exception e){ e.printStackTrace();}
-
 repository.save(co);
 CodesOrders comod = repository.findOne(co.getId());
 model.init(comod);
-codesOrdersTable.getItems().set(row.getIndex(),model );
+codesOrdersTable.getItems().get(row.getIndex()).init(comod);
 
 
 }
@@ -245,6 +207,26 @@ codesOrdersTable.getItems().set(row.getIndex(),model );
         codesOrdersTable.setItems(data) ;
         
     } 
+    
+   
+    
+    private StringConverter<Station> getStationConverter(){
+        
+        return new StringConverter<Station>() {
+            @Override
+            public String toString(Station object) {
+             String name = null;
+                if(object!=null){
+                name = object.getStationName();}
+                else {name="pizdec!";}
+                return name;
+            }
+            @Override
+            public Station fromString(String string) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        };
+    }
     
     
  }

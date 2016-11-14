@@ -15,6 +15,8 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import lv.rtme.entities.CodesOrders;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -23,8 +25,8 @@ import org.springframework.stereotype.Component;
  * @author Maksims
  */
 
-@Component
-@Scope("prototype")
+@Component("coModel")
+
 
 public class CodesOrderModel {
 
@@ -54,7 +56,6 @@ public class CodesOrderModel {
 
     private BooleanProperty isOrderedProperty = new SimpleBooleanProperty();
     private ObjectProperty<Date> orderedOnDateProperty = new SimpleObjectProperty();
-    private ObjectProperty<CodesOrders> codesOrdersProperty = new SimpleObjectProperty<>();
     private LongProperty idLongProperty = new SimpleLongProperty();
     
     
@@ -74,6 +75,14 @@ public class CodesOrderModel {
       this.rateCurrencyProperty.setValue(codesOrders.getRateCurrency());
       this.providerProperty.setValue(codesOrders.getProvider());
       this.roadsToPayProperty.setValue(codesOrders.getRoadsToPay());
+    }
+    @Lazy(true)
+    @Bean(name="tableItem")
+    @Scope("prototype")
+    
+    CodesOrderModel getInstance(){
+        
+        return new CodesOrderModel();
     }
 
     public CodesOrders getCodesOrders() {
@@ -196,13 +205,6 @@ public class CodesOrderModel {
         this.orderedOnDateProperty = orderedOnDateProperty;
     }
 
-    public ObjectProperty<CodesOrders> getCodesOrdersProperty() {
-        return codesOrdersProperty;
-    }
-
-    public void setCodesOrdersProperty(ObjectProperty<CodesOrders> codesOrdersProperty) {
-        this.codesOrdersProperty = codesOrdersProperty;
-    }
 
     public LongProperty getIdLongProperty() {
         return idLongProperty;

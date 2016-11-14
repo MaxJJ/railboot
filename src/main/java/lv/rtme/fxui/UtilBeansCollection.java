@@ -30,15 +30,14 @@ public class UtilBeansCollection {
   private CodesOrdersRepository codesOrdersRepository;
     
     
-//    @Bean(name = "stationsComboBox")
- 
-        public ObservableList<String> strbean(){
+        public ObservableList<Station> strbean(){
                 
-        ObservableList<String> list = FXCollections.observableArrayList();
+        ObservableList<Station> list = FXCollections.observableArrayList();
         List<Station> stringList = stationRepository.findAll();
-        for (Station station : stringList) {
-            list.add(station.getStationName());
-        }
+        list.addAll(stringList);
+//        for (Station station : stringList) {
+//            list.add(station);
+//        }
                return list;
     }
         
