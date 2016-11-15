@@ -15,7 +15,9 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface PersonsRepository extends CrudRepository<Persons, Long> {
     List<Persons> findAll();
-    List<Persons> findBySampleName(String name);
+    List<Persons> findAllByOrderBySearchNameAsc();
+    
+    List<Persons> findBySampleNameLike(String name);
     List<Persons> findBySearchName(String searchname);
     
 }

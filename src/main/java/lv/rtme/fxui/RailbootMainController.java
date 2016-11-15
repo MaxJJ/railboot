@@ -6,7 +6,9 @@
 package lv.rtme.fxui;
 
 import java.util.List;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -24,10 +26,12 @@ import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import javax.annotation.PostConstruct;
 import lv.rtme.entities.CodesOrders;
+import lv.rtme.entities.Persons;
 import lv.rtme.entities.Station;
 import lv.rtme.fxui.models.CodesOrderModel;
 import lv.rtme.reportsService.ReportPrintService;
 import lv.rtme.repositories.CodesOrdersRepository;
+import lv.rtme.repositories.PersonsRepository;
 import lv.rtme.repositories.StationRepository;
 import lv.rtme.services.CodesTableService;
 import lv.rtme.services.ReadAndPopulate;
@@ -57,6 +61,8 @@ public class RailbootMainController {
     private CodesOrderModel model;
     @Autowired
     private StationRepository stationRepository;
+    @Autowired
+    private PersonsRepository personsRepository;
  
     private TableRow<CodesOrderModel> row;
     private ObservableList<CodesOrderModel> data ;
@@ -88,6 +94,7 @@ public class RailbootMainController {
     @FXML private Button newButton;
     @FXML private ComboBox<Station> stDestCombo;
     @FXML private ComboBox<Station> stDispCombo;
+    @FXML private ComboBox<Persons> consiNameCombo;
     @FXML private TextArea consiArea;
     @FXML private TextField wagonField;
     @FXML private TextField containerField;
@@ -109,8 +116,27 @@ public class RailbootMainController {
     @SuppressWarnings("unchecked")
     @PostConstruct
     public void init() {
+        
+     
+        
         /* initial parsing of excell file       */
         readerX.init();
+        
+          List<Persons> persons =   personsRepository.findAll();
+        
+     for (Persons person : persons) {
+          if(person!=null){  
+            String search = "";
+            String sample = person.getSampleName();
+            int l = sample.length();
+            if(l>=30){l=30;};
+            search = search.concat(sample.substring(0, l));
+            
+            person.setSearchName(search);
+            personsRepository.save(person);
+        }
+     }
+      
         
         /* setting combos with station     */
         
@@ -118,10 +144,26 @@ public class RailbootMainController {
         stDestCombo.itemsProperty().setValue(utils.strbean());
         stDestCombo.converterProperty().setValue(getStationConverter());
         
-        
         stDispCombo.itemsProperty().setValue(utils.strbean());
         stDispCombo.converterProperty().setValue(getStationConverter());
         
+        consiNameCombo.converterProperty().setValue(getPersonsConverter());
+        
+        ObservableList<String> list = FXCollections.observableArrayList();
+         List<Persons> pl = personsRepository.findAllByOrderBySearchNameAsc();
+     
+         
+         
+           consiNameCombo.getItems().addAll(pl);
+           
+           consiNameCombo.valueProperty().addListener(new ChangeListener<Persons>() {
+            @Override
+            public void changed(ObservableValue<? extends Persons> observable, Persons oldValue, Persons newValue) {
+                
+                consiArea.setText(newValue.getSampleName());
+            }
+        });
+            
         
          /* setting ObservableList<CodesOrderModel> for TableView<CodesOrderModel> codesOrdersTable   */
         utils.setSearch();
@@ -157,16 +199,17 @@ public class RailbootMainController {
                 row = (TableRow) node.getParent();
 
             }
+      
             model.init(row.getItem().getCodesOrders());
            
             
             //--------------
-            
+            consiNameCombo.setValue(model.getCodesOrders().getConsignee());
             fileField.setText(model.getCodesOrders().getFileID());
             fileField.setEditable(false);
             stDispCombo.setValue(model.getCodesOrders().getStationOfDispatch());
             stDestCombo.setValue(model.getCodesOrders().getStationOfDestination());
-            consiArea.setText(model.getCodesOrders().getConsignee().getSampleName());
+//            consiArea.setText(model.getCodesOrders().getConsignee().getSampleName());
             cargoArea.setText(model.getCodesOrders().getCargo());
             containerField.setText(model.getCodesOrders().getUnit());
             wagonField.setText(model.getCodesOrders().getWagon());
@@ -228,7 +271,25 @@ codesOrdersTable.getItems().get(row.getIndex()).init(comod);
         };
     }
     
+    private StringConverter<Persons> getPersonsConverter(){
+        
+        return new StringConverter<Persons>() {
+            @Override
+            public String toString(Persons object) {
+             String name = null;
+                if(object!=null){
+                name = object.getSearchName();}
+                else {name="pizdec!";}
+                return name;
+            }
+            @Override
+            public Persons fromString(String string) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        };
+    }
     
+ 
  }
         
     

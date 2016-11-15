@@ -35,11 +35,10 @@ public class UtilBeansCollection {
         ObservableList<Station> list = FXCollections.observableArrayList();
         List<Station> stringList = stationRepository.findAll();
         list.addAll(stringList);
-//        for (Station station : stringList) {
-//            list.add(station);
-//        }
                return list;
     }
+        
+    
         
         @PostConstruct
          public void setSearch(){
