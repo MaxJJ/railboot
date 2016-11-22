@@ -59,7 +59,7 @@
                   </ButtonBar>
                   <ButtonBar buttonMinWidth="120.0" prefHeight="40.0" prefWidth="350.0">
                     <buttons>
-                        <Button fx:id="addStationButton" maxWidth="120.0" mnemonicParsing="false" prefWidth="70.0" text="Добавить станцию" />
+                        <Button fx:id="addStationButton" maxWidth="120.0" mnemonicParsing="false" onAction="#stationsEditor" prefWidth="70.0" text="Добавить станцию" />
                         <Button fx:id="addConsigneeButton" mnemonicParsing="false" text="Добавить получателя" />
                     </buttons>
                   </ButtonBar>

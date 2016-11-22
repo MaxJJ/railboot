@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import lv.rtme.fxui.PersonsEditorController;
 import lv.rtme.fxui.RailbootMainController;
 import lv.rtme.fxui.SearchPaneController;
+import lv.rtme.fxui.StationsEditorController;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -26,6 +28,15 @@ public class ConfigurationControllers {
     @Bean(name = "searchView")
     public View getSearchView() throws IOException {
         return loadView("fxml/search.fxml");
+    }
+    
+    @Bean(name = "stationsEditor")
+    public View getStationEditorView() throws IOException {
+        return loadView("fxml/stationsEditor.fxml");
+    }
+    @Bean(name = "personsEditor")
+    public View getPersonsEditorView() throws IOException {
+        return loadView("fxml/personsEditor.fxml");
     }
     
     
@@ -49,6 +60,15 @@ public class ConfigurationControllers {
         return (SearchPaneController) getSearchView().getController();
     }
     
+    @Bean
+    public StationsEditorController getStationsEditorController() throws IOException {
+        return (StationsEditorController) getStationEditorView().getController();
+    }
+    @Bean
+    public PersonsEditorController getPersonsEditorController() throws IOException {
+        return (PersonsEditorController) getPersonsEditorView().getController();
+    }
+    
 
     /**
      * Самый обыкновенный способ использовать FXML загрузчик.
@@ -60,6 +80,7 @@ public class ConfigurationControllers {
         try {
             fxmlStream = getClass().getClassLoader().getResourceAsStream(url);
             FXMLLoader loader = new FXMLLoader();
+            
             loader.load(fxmlStream);
             return new View(loader.getRoot(), loader.getController());
         } finally {

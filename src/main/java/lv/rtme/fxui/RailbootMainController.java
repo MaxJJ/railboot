@@ -5,14 +5,16 @@
  */
 package lv.rtme.fxui;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
@@ -22,9 +24,13 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Region;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.StringConverter;
 import javax.annotation.PostConstruct;
+import lv.rtme.ConfigurationControllers;
 import lv.rtme.entities.CodesOrders;
 import lv.rtme.entities.Persons;
 import lv.rtme.entities.Station;
@@ -46,6 +52,13 @@ import org.springframework.transaction.annotation.Transactional;
 @SuppressWarnings("SpringJavaAutowiringInspection")
 public class RailbootMainController {
     private Logger logger = LoggerFactory.getLogger(RailbootMainController.class);
+    
+    @Qualifier("stationsEditor")
+    @Autowired
+    private ConfigurationControllers.View stationsEditorView;
+    @Qualifier("personsEditor")
+    @Autowired
+    private ConfigurationControllers.View personsEditorView;
     @Autowired
     UtilBeansCollection utils;
     @Autowired
@@ -66,7 +79,8 @@ public class RailbootMainController {
  
     private TableRow<CodesOrderModel> row;
     private ObservableList<CodesOrderModel> data ;
-   
+
+    
     @FXML
     private TextField searchTextField;
     
@@ -117,7 +131,7 @@ public class RailbootMainController {
     @PostConstruct
     public void init() {
         
-     
+   
         
         /* initial parsing of excell file       */
         readerX.init();
@@ -167,10 +181,6 @@ public class RailbootMainController {
         
          /* setting ObservableList<CodesOrderModel> for TableView<CodesOrderModel> codesOrdersTable   */
         utils.setSearch();
-        addStationButton.setOnAction((ActionEvent event) -> {
-            Stage newStage = new Stage();
-            newStage.showAndWait();
-        });
         searchTextField.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             if (newValue.length() > 2) {
                 codesOrdersTable.getItems().clear();
@@ -249,9 +259,19 @@ codesOrdersTable.getItems().get(row.getIndex()).init(comod);
         data=service.getData();
         codesOrdersTable.setItems(data) ;
         
-    } 
+    }
     
-   
+    @FXML
+    void stationsEditor (){
+        
+        openModal(stationsEditorView.getView());
+  
+        
+    }
+  
+    
+    
+    
     
     private StringConverter<Station> getStationConverter(){
         
@@ -289,7 +309,22 @@ codesOrdersTable.getItems().get(row.getIndex()).init(comod);
         };
     }
     
- 
+    void openModal(Parent parent) {
+
+        Scene checkScene = parent.getScene();
+        if (checkScene != null) {
+            checkScene.setRoot(new Region());
+        }
+        Stage newStage = new Stage();
+        newStage.setScene(new Scene(parent));
+        newStage.initModality(Modality.APPLICATION_MODAL);
+
+        newStage.setOnCloseRequest((WindowEvent event) -> {
+            System.out.println(parent + " is closed at" + LocalDateTime.now());
+        });
+
+        newStage.showAndWait();
+    }
  }
         
     

@@ -25,6 +25,12 @@ public  class Station {
      private String stationName;
      private String stationRoad;
      private String stationCode;
+     private String stationParagraph;
+     private boolean isDispatch;
+     private boolean isExport;
+     private boolean isIn;
+     private boolean isOut;
+     
      
      public Station() {
     }
@@ -59,6 +65,46 @@ public  class Station {
 
     public void setStationCode(String stationCode) {
         this.stationCode = stationCode;
+    }
+
+    public String getStationParagraph() {
+        return stationParagraph;
+    }
+
+    public void setStationParagraph(String stationParagraph) {
+        this.stationParagraph = stationParagraph;
+    }
+
+    public boolean isIsDispatch() {
+        return isDispatch;
+    }
+
+    public void setIsDispatch(boolean isDispatch) {
+        this.isDispatch = isDispatch;
+    }
+
+    public boolean isIsExport() {
+        return isExport;
+    }
+
+    public void setIsExport(boolean isExport) {
+        this.isExport = isExport;
+    }
+
+    public boolean isIsIn() {
+        return isIn;
+    }
+
+    public void setIsIn(boolean isIn) {
+        this.isIn = isIn;
+    }
+
+    public boolean isIsOut() {
+        return isOut;
+    }
+
+    public void setIsOut(boolean isOut) {
+        this.isOut = isOut;
     }
 
  
