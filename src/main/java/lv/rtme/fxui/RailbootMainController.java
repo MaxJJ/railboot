@@ -5,8 +5,13 @@
  */
 package lv.rtme.fxui;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.logging.Level;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -230,7 +235,17 @@ public class RailbootMainController {
             payRoadsField.setText(model.getCodesOrders().getRoadsToPay());
             weightField.setText(model.getCodesOrders().getWeight());
         }
+        
+          ObjectMapper om = new ObjectMapper();
+        try {
+            om.writeValue(new File("mymodel.json"), model);
+        } catch (IOException ex) {
+            java.util.logging.Logger.getLogger(RailbootMainController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         });
+    
+      
     }
     
      @FXML
@@ -321,6 +336,7 @@ codesOrdersTable.getItems().get(row.getIndex()).init(comod);
 
         newStage.setOnCloseRequest((WindowEvent event) -> {
             System.out.println(parent + " is closed at" + LocalDateTime.now());
+            
         });
 
         newStage.showAndWait();

@@ -6,10 +6,15 @@
 package lv.rtme.fxui;
 
 import java.util.List;
+import java.util.stream.Collector;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -57,6 +62,8 @@ public class StationsEditorController {
     @Autowired
     private StationRepository repository;
     
+    private Station stationModel;
+    
     @FXML    public void initialize() {  }
     
      @SuppressWarnings("unchecked")
@@ -70,18 +77,66 @@ public class StationsEditorController {
         
         stEditorTableView.setItems(getModels(repository.findAll()));
         
+        stEditorTableView.getSelectionModel().selectedItemProperty().addListener((ObservableValue<? extends StationsEditorModel> ov, StationsEditorModel t, StationsEditorModel t1) -> {
+            stationModel = t1.station;
+            setFields(stationModel);
+          });  
+            stEditorNewButton.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent t) {
+                  stationModel = new Station();
+                    setFields(stationModel);
+                }
+            });
+            saveButton.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent t) {
+                 
+                stationModel.setStationName(nameTextField.getText());    
+                stationModel.setStationCode(codeTextField.getText());    
+                stationModel.setStationRoad(roadTextField.getText());    
+                stationModel.setStationParagraph(paragraphTextField.getText());
+                stationModel.setIsDispatch(isStationOfDispatch.isSelected());
+                stationModel.setIsExport(isExportStation.isSelected());
+                stationModel.setIsIn(isInStation.isSelected());
+                stationModel.setIsOut(isOutStation.isSelected());
+    
+    repository.save(stationModel);
+    
+    int ind = stEditorTableView.getSelectionModel().getSelectedIndex();
+    stEditorTableView.getItems().set(ind, new StationsEditorModel(repository.findByStationName(stationModel.getStationName()).get(0)) );
+                }
+            });
+            
+        
     }
     
     public ObservableList<StationsEditorModel> getModels(List<Station> stationList){
        ObservableList<StationsEditorModel> list = FXCollections.observableArrayList();
-       
+     
         for (Station station : stationList) {
           
             StationsEditorModel stedmod = new StationsEditorModel(station);
             list.add(stedmod);
         }
         
+        
         return list;
+    }
+
+    private void setFields(Station stMod) {
+        
+    nameTextField.setText(stMod.getStationName());
+    codeTextField.setText(stMod.getStationCode());
+    roadTextField.setText(stMod.getStationRoad());
+    paragraphTextField.setText(stMod.getStationParagraph());
+    isStationOfDispatch.setSelected(stMod.isIsDispatch());
+    isExportStation.setSelected(stMod.isIsExport());
+    isInStation.setSelected(stMod.isIsIn());
+    isOutStation.setSelected(stMod.isIsOut());
+    
+        
+        
     }
     private static class StationsEditorModel {
 
@@ -90,10 +145,7 @@ public class StationsEditorController {
         private StringProperty stationCodeProperty = new SimpleStringProperty();
         private StringProperty stationRoadProperty = new SimpleStringProperty();
         private StringProperty stationParagraphProperty = new SimpleStringProperty();
-//        private BooleanProperty isDispatchProperty = new SimpleBooleanProperty();
-//        private BooleanProperty isExportProperty = new SimpleBooleanProperty();
-//        private BooleanProperty isInProperty = new SimpleBooleanProperty();
-//        private BooleanProperty isOutProperty = new SimpleBooleanProperty();
+
         
 
         public StationsEditorModel() {
