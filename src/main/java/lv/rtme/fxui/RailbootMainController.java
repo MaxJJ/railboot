@@ -8,8 +8,8 @@ package lv.rtme.fxui;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import javafx.beans.value.ChangeListener;
@@ -17,6 +17,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.AccessibleRole;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -57,6 +58,7 @@ import org.springframework.transaction.annotation.Transactional;
 @SuppressWarnings("SpringJavaAutowiringInspection")
 public class RailbootMainController {
     private Logger logger = LoggerFactory.getLogger(RailbootMainController.class);
+    private ArrayList<Node> oblist = new ArrayList<>();
     
     @Qualifier("stationsEditor")
     @Autowired
@@ -278,7 +280,7 @@ codesOrdersTable.getItems().get(row.getIndex()).init(comod);
     
     @FXML
     void stationsEditor (){
-        
+   
         openModal(stationsEditorView.getView());
   
         
@@ -336,10 +338,43 @@ codesOrdersTable.getItems().get(row.getIndex()).init(comod);
 
         newStage.setOnCloseRequest((WindowEvent event) -> {
             System.out.println(parent + " is closed at" + LocalDateTime.now());
-            
+
+            Stage stage = (Stage) event.getSource();
+            Parent root = stage.getScene().getRoot();
+
+            getNodeList(root);
+
+            for (Node node : oblist) {
+                AccessibleRole role = node.getAccessibleRole();
+                if (role == AccessibleRole.TEXT_FIELD) {
+                    TextField field = (TextField) node;
+                    field.setText("");
+                    
+                }
+                
+               stDestCombo.itemsProperty().setValue(utils.strbean());
+        stDispCombo.itemsProperty().setValue(utils.strbean());
+            }
+
         });
 
         newStage.showAndWait();
+    }
+    
+   public  void getNodeList(Parent root){
+       ObservableList<Node> li = root.getChildrenUnmodifiable();
+       oblist.addAll(li);
+       
+       for (Node node : li) {
+           
+           if(node instanceof Parent){
+               Parent par = (Parent) node;
+               getNodeList(par);
+           }
+           
+       }
+
+   
     }
  }
         

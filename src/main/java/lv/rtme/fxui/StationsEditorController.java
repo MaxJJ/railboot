@@ -6,10 +6,8 @@
 package lv.rtme.fxui;
 
 import java.util.List;
-import java.util.stream.Collector;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,6 +24,8 @@ import javafx.scene.text.TextFlow;
 import javax.annotation.PostConstruct;
 import lv.rtme.entities.Station;
 import lv.rtme.repositories.StationRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -36,6 +36,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 @SuppressWarnings("SpringJavaAutowiringInspection")
 public class StationsEditorController {
     
+    private Logger logger = LoggerFactory.getLogger(StationsEditorController .class);
         @FXML
     private AnchorPane stationsEditorsRoot;
 
@@ -64,12 +65,16 @@ public class StationsEditorController {
     
     private Station stationModel;
     
-    @FXML    public void initialize() {  }
+    @FXML    public void initialize() {
+    
+    
+    }
     
      @SuppressWarnings("unchecked")
     @PostConstruct
     public void init() {
-      
+       
+        
         nameColumn.setCellValueFactory((TableColumn.CellDataFeatures<StationsEditorModel, String> param) -> param.getValue().stationNameProperty);
         codeColumn.setCellValueFactory((TableColumn.CellDataFeatures<StationsEditorModel, String> param) -> param.getValue().stationCodeProperty);
         roadColumn.setCellValueFactory((TableColumn.CellDataFeatures<StationsEditorModel, String> param) -> param.getValue().stationRoadProperty);
@@ -104,7 +109,9 @@ public class StationsEditorController {
     repository.save(stationModel);
     
     int ind = stEditorTableView.getSelectionModel().getSelectedIndex();
-    stEditorTableView.getItems().set(ind, new StationsEditorModel(repository.findByStationName(stationModel.getStationName()).get(0)) );
+    stEditorTableView.getSelectionModel().focus(ind);
+    stEditorTableView.getItems().get(ind).setProps(repository.findByStationName(stationModel.getStationName()).get(0));
+   
                 }
             });
             
@@ -152,6 +159,15 @@ public class StationsEditorController {
 
         }
         public StationsEditorModel(Station st) {
+            
+            station=st;
+            stationNameProperty.setValue(st.getStationName());
+            stationCodeProperty.setValue(st.getStationCode());
+            stationRoadProperty.setValue(st.getStationRoad());
+            stationParagraphProperty.setValue(st.getStationParagraph());
+
+        }
+        public void setProps(Station st) {
             
             station=st;
             stationNameProperty.setValue(st.getStationName());
