@@ -33,7 +33,7 @@ public class UtilBeansCollection {
         public ObservableList<Station> strbean(){
                 
         ObservableList<Station> list = FXCollections.observableArrayList();
-        List<Station> stringList = stationRepository.findAll();
+        List<Station> stringList = stationRepository.findAllByOrderByStationNameAsc();
         list.addAll(stringList);
                return list;
     }

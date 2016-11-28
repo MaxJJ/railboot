@@ -4,7 +4,7 @@
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPaneMe" fx:id="stationsEditorsRoot" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lv.rtme.fxui.PersonsEditorController">
+<AnchorPane id="AnchorPaneMe" fx:id="stationsEditorsRoot" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lv.rtme.fxui.personsEditorView.PersonsEditorController">
    <children>
       <Accordion layoutX="154.0" layoutY="125.0">
         <panes>

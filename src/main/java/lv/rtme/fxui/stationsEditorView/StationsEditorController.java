@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package lv.rtme.fxui;
+package lv.rtme.fxui.stationsEditorView;
 
 import java.util.List;
 import javafx.beans.property.SimpleStringProperty;
@@ -16,6 +16,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -57,6 +58,8 @@ public class StationsEditorController {
     @FXML  private CheckBox isOutStation;
     @FXML  private TextFlow textFlow;
     @FXML  private Button saveButton;
+        @FXML
+    private ListView<Station> stationListView;
        
     //-------------------------------
     
@@ -64,6 +67,7 @@ public class StationsEditorController {
     private StationRepository repository;
     
     private Station stationModel;
+    private  ObservableList<Station> xlist = FXCollections.observableArrayList();
     
     @FXML    public void initialize() {
     
@@ -73,8 +77,12 @@ public class StationsEditorController {
      @SuppressWarnings("unchecked")
     @PostConstruct
     public void init() {
-       
         
+        
+     
+        xlist.addAll(repository.findAllByOrderByStationNameAsc());
+        stationListView.setItems(xlist);
+       stationListView.setCellFactory(c-> new StationListCell());
         nameColumn.setCellValueFactory((TableColumn.CellDataFeatures<StationsEditorModel, String> param) -> param.getValue().stationNameProperty);
         codeColumn.setCellValueFactory((TableColumn.CellDataFeatures<StationsEditorModel, String> param) -> param.getValue().stationCodeProperty);
         roadColumn.setCellValueFactory((TableColumn.CellDataFeatures<StationsEditorModel, String> param) -> param.getValue().stationRoadProperty);
@@ -96,26 +104,29 @@ public class StationsEditorController {
             saveButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent t) {
-                 
-                stationModel.setStationName(nameTextField.getText());    
-                stationModel.setStationCode(codeTextField.getText());    
-                stationModel.setStationRoad(roadTextField.getText());    
-                stationModel.setStationParagraph(paragraphTextField.getText());
-                stationModel.setIsDispatch(isStationOfDispatch.isSelected());
-                stationModel.setIsExport(isExportStation.isSelected());
-                stationModel.setIsIn(isInStation.isSelected());
-                stationModel.setIsOut(isOutStation.isSelected());
-    
-    repository.save(stationModel);
-    
-    int ind = stEditorTableView.getSelectionModel().getSelectedIndex();
-    stEditorTableView.getSelectionModel().focus(ind);
-    stEditorTableView.getItems().get(ind).setProps(repository.findByStationName(stationModel.getStationName()).get(0));
+              
+                    stationModel.setStationName(nameTextField.getText());
+                    stationModel.setStationCode(codeTextField.getText());
+                    stationModel.setStationRoad(roadTextField.getText());
+                    stationModel.setStationParagraph(paragraphTextField.getText());
+                    stationModel.setIsDispatch(isStationOfDispatch.isSelected());
+                    stationModel.setIsExport(isExportStation.isSelected());
+                    stationModel.setIsIn(isInStation.isSelected());
+                    stationModel.setIsOut(isOutStation.isSelected());
+
+                    repository.save(stationModel);
+
+                    int ind = stEditorTableView.getSelectionModel().getSelectedIndex();
+                    stEditorTableView.getSelectionModel().focus(ind);
+                    stEditorTableView.getItems().get(ind).setProps(repository.findByStationName(stationModel.getStationName()).get(0));
+
+                    stationListView.getItems().clear();
+                    xlist.clear();
+                    xlist.addAll(repository.findAllByOrderByStationNameAsc());
+                    stationListView.setItems(xlist);
    
                 }
             });
-            
-        
     }
     
     public ObservableList<StationsEditorModel> getModels(List<Station> stationList){
@@ -126,8 +137,6 @@ public class StationsEditorController {
             StationsEditorModel stedmod = new StationsEditorModel(station);
             list.add(stedmod);
         }
-        
-        
         return list;
     }
 
@@ -141,9 +150,6 @@ public class StationsEditorController {
     isExportStation.setSelected(stMod.isIsExport());
     isInStation.setSelected(stMod.isIsIn());
     isOutStation.setSelected(stMod.isIsOut());
-    
-        
-        
     }
     private static class StationsEditorModel {
 
@@ -152,9 +158,7 @@ public class StationsEditorController {
         private StringProperty stationCodeProperty = new SimpleStringProperty();
         private StringProperty stationRoadProperty = new SimpleStringProperty();
         private StringProperty stationParagraphProperty = new SimpleStringProperty();
-
         
-
         public StationsEditorModel() {
 
         }

@@ -17,5 +17,8 @@ public interface StationRepository extends CrudRepository<Station, Long> {
     
      List<Station> findAll();
      List<Station> findByStationName(String name);
+     List<Station> findByStationNameLike(String namelike);
+     List<Station> findByStationNameLikeIgnoreCase(String namecase);
+     List<Station> findAllByOrderByStationNameAsc();
     
 }

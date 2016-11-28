@@ -4,10 +4,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import lv.rtme.fxui.PersonsEditorController;
-import lv.rtme.fxui.RailbootMainController;
-import lv.rtme.fxui.SearchPaneController;
-import lv.rtme.fxui.StationsEditorController;
+import lv.rtme.fxui.mainView.RailbootMainController;
+import lv.rtme.fxui.personsEditorView.PersonsEditorController;
+import lv.rtme.fxui.stationsEditorView.StationEditorActions;
+import lv.rtme.fxui.stationsEditorView.StationsEditorController;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -24,10 +24,6 @@ public class ConfigurationControllers {
     @Bean(name = "railbootMainView")
     public View getMainView() throws IOException {
         return loadView("fxml/railbootMain.fxml");
-    }
-    @Bean(name = "searchView")
-    public View getSearchView() throws IOException {
-        return loadView("fxml/search.fxml");
     }
     
     @Bean(name = "stationsEditor")
@@ -55,10 +51,6 @@ public class ConfigurationControllers {
         return (RailbootMainController) getMainView().getController();
     }
     
-      @Bean
-    public SearchPaneController getSearchController() throws IOException {
-        return (SearchPaneController) getSearchView().getController();
-    }
     
     @Bean
     public StationsEditorController getStationsEditorController() throws IOException {
@@ -68,6 +60,12 @@ public class ConfigurationControllers {
     public PersonsEditorController getPersonsEditorController() throws IOException {
         return (PersonsEditorController) getPersonsEditorView().getController();
     }
+    
+   @Bean(name = "actions")
+   public StationEditorActions setFac(){
+       
+       return new StationEditorActions();
+   }
     
 
     /**

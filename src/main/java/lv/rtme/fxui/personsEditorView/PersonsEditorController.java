@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package lv.rtme.fxui;
+package lv.rtme.fxui.personsEditorView;
 
 import javafx.fxml.FXML;
 

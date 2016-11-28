@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package lv.rtme.fxui;
+package lv.rtme.fxui.mainView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
@@ -31,6 +31,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -40,6 +42,7 @@ import lv.rtme.ConfigurationControllers;
 import lv.rtme.entities.CodesOrders;
 import lv.rtme.entities.Persons;
 import lv.rtme.entities.Station;
+import lv.rtme.fxui.UtilBeansCollection;
 import lv.rtme.fxui.models.CodesOrderModel;
 import lv.rtme.reportsService.ReportPrintService;
 import lv.rtme.repositories.CodesOrdersRepository;
@@ -47,6 +50,9 @@ import lv.rtme.repositories.PersonsRepository;
 import lv.rtme.repositories.StationRepository;
 import lv.rtme.services.CodesTableService;
 import lv.rtme.services.ReadAndPopulate;
+import org.controlsfx.control.action.ActionMap;
+import org.controlsfx.control.textfield.AutoCompletionBinding;
+import org.controlsfx.control.textfield.TextFields;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +65,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class RailbootMainController {
     private Logger logger = LoggerFactory.getLogger(RailbootMainController.class);
     private ArrayList<Node> oblist = new ArrayList<>();
-    
+   
     @Qualifier("stationsEditor")
     @Autowired
     private ConfigurationControllers.View stationsEditorView;
@@ -137,7 +143,10 @@ public class RailbootMainController {
     @SuppressWarnings("unchecked")
     @PostConstruct
     public void init() {
+       
         
+         ActionMap.register(new MainViewActions());
+         
    
         
         /* initial parsing of excell file       */
@@ -160,31 +169,35 @@ public class RailbootMainController {
       
         
         /* setting combos with station     */
-        
-     
+  
         stDestCombo.itemsProperty().setValue(utils.strbean());
         stDestCombo.converterProperty().setValue(getStationConverter());
+        stDestCombo.setEditable(true);
+        TextFields.bindAutoCompletion(stDestCombo.getEditor(), (AutoCompletionBinding.ISuggestionRequest param) -> {
+            return stationRepository.findByStationNameLikeIgnoreCase("%" + param.getUserText() + "%");
+        }, getStationConverter());
+        TextFields.bindAutoCompletion(consiNameCombo.getEditor(), (AutoCompletionBinding.ISuggestionRequest param) -> {
+            return personsRepository.findBySampleNameLike("%" + param.getUserText() + "%");
+        }, getPersonsConverter());
+        
         
         stDispCombo.itemsProperty().setValue(utils.strbean());
         stDispCombo.converterProperty().setValue(getStationConverter());
         
         consiNameCombo.converterProperty().setValue(getPersonsConverter());
-        
+        consiNameCombo.setEditable(true);
         ObservableList<String> list = FXCollections.observableArrayList();
-         List<Persons> pl = personsRepository.findAllByOrderBySearchNameAsc();
-     
-         
-         
-           consiNameCombo.getItems().addAll(pl);
-           
-           consiNameCombo.valueProperty().addListener(new ChangeListener<Persons>() {
+        List<Persons> pl = personsRepository.findAllByOrderBySearchNameAsc();
+        consiNameCombo.getItems().addAll(pl);
+
+        consiNameCombo.valueProperty().addListener(new ChangeListener<Persons>() {
             @Override
             public void changed(ObservableValue<? extends Persons> observable, Persons oldValue, Persons newValue) {
-                
+
                 consiArea.setText(newValue.getSampleName());
             }
         });
-            
+
         
          /* setting ObservableList<CodesOrderModel> for TableView<CodesOrderModel> codesOrdersTable   */
         utils.setSearch();
@@ -206,6 +219,12 @@ public class RailbootMainController {
         container.setCellValueFactory((CellDataFeatures<CodesOrderModel, String> p) -> p.getValue().getUnitProperty());
         rate.setCellValueFactory((CellDataFeatures<CodesOrderModel, String> p) -> p.getValue().getRateProperty());
     
+     codesOrdersTable.setPlaceholder(new TextFlow(new Text("ЖМИ КНОПКИ!")));
+      
+      
+   
+      
+      
     codesOrdersTable.setOnMousePressed((MouseEvent event) -> {
         if (event.isPrimaryButtonDown() && event.getClickCount() == 1) {
             Node node = ((Node) event.getTarget()).getParent();
@@ -240,6 +259,7 @@ public class RailbootMainController {
         
           ObjectMapper om = new ObjectMapper();
         try {
+            
             om.writeValue(new File("mymodel.json"), model);
         } catch (IOException ex) {
             java.util.logging.Logger.getLogger(RailbootMainController.class.getName()).log(Level.SEVERE, null, ex);
@@ -303,7 +323,8 @@ codesOrdersTable.getItems().get(row.getIndex()).init(comod);
             }
             @Override
             public Station fromString(String string) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                
+                return stationRepository.findByStationName(string).get(0);
             }
         };
     }
@@ -321,7 +342,8 @@ codesOrdersTable.getItems().get(row.getIndex()).init(comod);
             }
             @Override
             public Persons fromString(String string) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                
+                return personsRepository.findBySearchName(string).get(0);
             }
         };
     }
@@ -354,6 +376,7 @@ codesOrdersTable.getItems().get(row.getIndex()).init(comod);
                 
                stDestCombo.itemsProperty().setValue(utils.strbean());
         stDispCombo.itemsProperty().setValue(utils.strbean());
+        
             }
 
         });
