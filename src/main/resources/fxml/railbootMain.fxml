@@ -278,9 +278,12 @@
       </FlowPane>
    </right>
    <left>
-      <VBox alignment="TOP_CENTER" BorderPane.alignment="CENTER">
+      <VBox alignment="TOP_CENTER" spacing="4.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="copyButton" maxWidth="180.0" mnemonicParsing="false" prefWidth="170.0" text="Копировать" />
+            <Button fx:id="copyButton1" layoutX="18.0" layoutY="10.0" maxWidth="180.0" mnemonicParsing="false" prefWidth="170.0" text="Изменить" />
+            <Button fx:id="copyButton11" layoutX="18.0" layoutY="35.0" maxWidth="180.0" mnemonicParsing="false" prefWidth="170.0" text="Сохранить в файл" />
+            <AnchorPane minHeight="20.0" prefWidth="200.0" />
          </children>
          <opaqueInsets>
             <Insets top="4.0" />
