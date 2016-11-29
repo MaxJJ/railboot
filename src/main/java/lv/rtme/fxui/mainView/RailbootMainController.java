@@ -99,7 +99,7 @@ public class RailbootMainController {
     private TextField searchTextField;
     
 /* BUTTONS ---------------   -------------    */
-    @FXML private Button selectButton;
+    @FXML private Button notOrderedButton;
     @FXML private Button addStationButton;
     @FXML private Button addConsigneeButton;
     @FXML private Button showAllButton;
@@ -147,7 +147,8 @@ public class RailbootMainController {
        
         MainViewActions mva = new MainViewActions();
          ActionMap.register(mva);
-         ActionMap.action("readExcell");
+         notOrderedButton.setOnAction( ActionMap.action("readExcell"));
+        
 //         codesOrdersTable.setPlaceholder(ActionUtils.createButton(ActionMap.action("readExcell")));
         /* setting combos with station     */
         stationsComboListist.addAll(stationRepository.findAll());
