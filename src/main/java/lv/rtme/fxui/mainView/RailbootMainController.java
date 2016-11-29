@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.AccessibleRole;
@@ -51,6 +52,7 @@ import lv.rtme.repositories.StationRepository;
 import lv.rtme.services.CodesTableService;
 import lv.rtme.services.ReadAndPopulate;
 import org.controlsfx.control.action.ActionMap;
+import org.controlsfx.control.action.ActionUtils;
 import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
 import org.slf4j.Logger;
@@ -74,8 +76,7 @@ public class RailbootMainController {
     private ConfigurationControllers.View personsEditorView;
     @Autowired
     UtilBeansCollection utils;
-    @Autowired
-    ReadAndPopulate readerX;
+   private ObservableList<Station> stationsComboListist = FXCollections.observableArrayList();
     @Autowired
     ReportPrintService printer;
     @Autowired
@@ -144,33 +145,18 @@ public class RailbootMainController {
     @PostConstruct
     public void init() {
        
-        
-         ActionMap.register(new MainViewActions());
-         
-   
-        
-        /* initial parsing of excell file       */
-        readerX.init();
-        
-          List<Persons> persons =   personsRepository.findAll();
-        
-     for (Persons person : persons) {
-          if(person!=null){  
-            String search = "";
-            String sample = person.getSampleName();
-            int l = sample.length();
-            if(l>=30){l=30;};
-            search = search.concat(sample.substring(0, l));
-            
-            person.setSearchName(search);
-            personsRepository.save(person);
-        }
-     }
-      
-        
+        MainViewActions mva = new MainViewActions();
+         ActionMap.register(mva);
+         ActionMap.action("readExcell");
+//         codesOrdersTable.setPlaceholder(ActionUtils.createButton(ActionMap.action("readExcell")));
         /* setting combos with station     */
+        stationsComboListist.addAll(stationRepository.findAll());
+  stationsComboListist.addListener((ListChangeListener.Change<? extends Station> change) -> {
+      stDestCombo.getItems().clear();
+      stDestCombo.itemsProperty().setValue(stationsComboListist);
+         });
   
-        stDestCombo.itemsProperty().setValue(utils.strbean());
+        stDestCombo.itemsProperty().setValue(stationsComboListist);
         stDestCombo.converterProperty().setValue(getStationConverter());
         stDestCombo.setEditable(true);
         TextFields.bindAutoCompletion(stDestCombo.getEditor(), (AutoCompletionBinding.ISuggestionRequest param) -> {
@@ -219,9 +205,8 @@ public class RailbootMainController {
         container.setCellValueFactory((CellDataFeatures<CodesOrderModel, String> p) -> p.getValue().getUnitProperty());
         rate.setCellValueFactory((CellDataFeatures<CodesOrderModel, String> p) -> p.getValue().getRateProperty());
     
-     codesOrdersTable.setPlaceholder(new TextFlow(new Text("ЖМИ КНОПКИ!")));
-      
-      
+    
+   
    
       
       
