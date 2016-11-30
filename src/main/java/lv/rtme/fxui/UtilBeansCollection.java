@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.StringTokenizer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javax.annotation.PostConstruct;
 import lv.rtme.entities.CodesOrders;
 import lv.rtme.entities.Station;
 import lv.rtme.repositories.CodesOrdersRepository;
@@ -40,7 +39,7 @@ public class UtilBeansCollection {
         
     
         
-        @PostConstruct
+       
          public void setSearch(){
            
             List<CodesOrders> list = codesOrdersRepository.findAll();

@@ -21,7 +21,7 @@
          <children>
             <HBox alignment="TOP_CENTER">
                <children>
-                  <Button fx:id="saveButton" mnemonicParsing="false" onAction="#addItem" text="Сохранить">
+                  <Button fx:id="saveButton" mnemonicParsing="false" onAction="" text="Сохранить">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
