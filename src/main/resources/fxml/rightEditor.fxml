@@ -14,14 +14,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<FlowPane fx:id="rightFlowPane" columnHalignment="CENTER" maxWidth="-Infinity" prefWidth="400.0" rowValignment="TOP" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lv.rtme.fxui.rightEditor.RightEditorController">
+<FlowPane fx:id="rightFlowPane" alignment="TOP_CENTER" columnHalignment="CENTER" maxWidth="-Infinity" prefWidth="400.0" rowValignment="TOP" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lv.rtme.fxui.rightEditor.RightEditorController">
    <children>
       <VBox prefWidth="350.0" spacing="3.0">
          <children>
             <HBox alignment="TOP_CENTER">
                <children>
-                  <Button fx:id="saveButton" mnemonicParsing="false" onAction="" text="Сохранить">
+                  <Button fx:id="saveButton" mnemonicParsing="false" text="Сохранить">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
@@ -204,7 +203,7 @@
                   <Insets top="4.0" />
                </GridPane.margin>
             </TextArea>
-            <Button fx:id="addStationButton" mnemonicParsing="false" onAction="#stationsEditor" text="+" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4">
+            <Button fx:id="addStationButton" mnemonicParsing="false" text="+" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -225,7 +224,10 @@
       <VBox>
          <children>
             <Label maxWidth="170.0" text="Груз" />
-            <TextArea fx:id="cargoArea" prefWidth="350.0" wrapText="true" />
+            <TextArea fx:id="cargoArea" prefWidth="350.0" wrapText="true" VBox.vgrow="ALWAYS">
+               <VBox.margin>
+                  <Insets bottom="4.0" />
+               </VBox.margin></TextArea>
          </children>
       </VBox>
    </children>

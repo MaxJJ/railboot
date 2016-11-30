@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import lv.rtme.fxui.mainView.RailbootMainController;
 import lv.rtme.fxui.personsEditorView.PersonsEditorController;
+import lv.rtme.fxui.rightEditor.RightEditorController;
 import lv.rtme.fxui.stationsEditorView.StationEditorActions;
 import lv.rtme.fxui.stationsEditorView.StationsEditorController;
 import org.springframework.context.annotation.Bean;
@@ -34,6 +35,10 @@ public class ConfigurationControllers {
     public View getPersonsEditorView() throws IOException {
         return loadView("fxml/personsEditor.fxml");
     }
+    @Bean(name = "rightEditor")
+    public View getRightEditorView() throws IOException {
+        return loadView("fxml/rightEditor.fxml");
+    }
     
     
 
@@ -59,6 +64,10 @@ public class ConfigurationControllers {
     @Bean
     public PersonsEditorController getPersonsEditorController() throws IOException {
         return (PersonsEditorController) getPersonsEditorView().getController();
+    }
+    @Bean
+    public RightEditorController getRightEditorController() throws IOException {
+        return (RightEditorController) getRightEditorView().getController();
     }
     
    @Bean(name = "actions")
