@@ -5,44 +5,32 @@
  */
 package lv.rtme.fxui.mainView;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.File;
-import java.io.IOException;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import javafx.beans.value.ChangeListener;
+import java.util.StringTokenizer;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.AccessibleRole;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Region;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
-import javafx.util.StringConverter;
 import javax.annotation.PostConstruct;
 import lv.rtme.ConfigurationControllers;
 import lv.rtme.entities.CodesOrders;
 import lv.rtme.entities.Persons;
-import lv.rtme.entities.Station;
 import lv.rtme.fxui.UtilBeansCollection;
 import lv.rtme.fxui.models.CodesOrderModel;
 import lv.rtme.reportsService.ReportPrintService;
@@ -51,32 +39,77 @@ import lv.rtme.repositories.PersonsRepository;
 import lv.rtme.repositories.StationRepository;
 import lv.rtme.services.CodesTableService;
 import lv.rtme.services.ReadAndPopulate;
-import org.controlsfx.control.action.ActionMap;
-import org.controlsfx.control.action.ActionUtils;
-import org.controlsfx.control.textfield.AutoCompletionBinding;
-import org.controlsfx.control.textfield.TextFields;
+import org.controlsfx.glyphfont.FontAwesome;
+import org.controlsfx.glyphfont.Glyph;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.transaction.annotation.Transactional;
 
 
 
 @SuppressWarnings("SpringJavaAutowiringInspection")
 public class RailbootMainController {
-    private Logger logger = LoggerFactory.getLogger(RailbootMainController.class);
-    private ArrayList<Node> oblist = new ArrayList<>();
-   
+    
+    /* FXML FIELDS */
+      @FXML
+    private VBox leftVBox;
+    @FXML
+    private Button copyButton;
+    @FXML
+    private Button copyButton1;
+    @FXML
+    private Button copyButton11;
+    @FXML
+    private HBox topCenterHBox;
+    @FXML
+    private TextField searchTextField;
+    @FXML
+    private Button notOrderedButton;
+    @FXML
+    private Button showAllButton;
+    @FXML
+    private Button newButton;
+    @FXML
+    private AnchorPane tableAnchorPane;
+    @FXML
+    private TableView<CodesOrderModel> codesOrdersTable;
+    @FXML
+    private TableColumn<CodesOrderModel, String> fileID;
+    @FXML
+    private TableColumn<CodesOrderModel, String> stDispatch;
+    @FXML
+    private TableColumn<CodesOrderModel, String> stDestination;
+    @FXML
+    private TableColumn<CodesOrderModel, String> cargo;
+    @FXML
+    private TableColumn<CodesOrderModel, String> wagon;
+    @FXML
+    private TableColumn<CodesOrderModel, String> container;
+    @FXML
+    private TableColumn<CodesOrderModel, String> rate;
+    @FXML
+    private FlowPane rightFlowPane;
+    @FXML
+    private Button readButton;
+    /*---------AUTOWIRED---------*/
+    
+    @Autowired
+    ReadAndPopulate readerX;
     @Qualifier("stationsEditor")
     @Autowired
     private ConfigurationControllers.View stationsEditorView;
     @Qualifier("personsEditor")
     @Autowired
     private ConfigurationControllers.View personsEditorView;
+    @Qualifier("rightEditor")
+    @Autowired
+    private ConfigurationControllers.View rightEditorView;
+    @Qualifier("topPaneView")
+     @Autowired
+     MainViewControllers.View topPaneView;
     @Autowired
     UtilBeansCollection utils;
-   private ObservableList<Station> stationsComboListist = FXCollections.observableArrayList();
     @Autowired
     ReportPrintService printer;
     @Autowired
@@ -90,114 +123,32 @@ public class RailbootMainController {
     private StationRepository stationRepository;
     @Autowired
     private PersonsRepository personsRepository;
- 
-    private TableRow<CodesOrderModel> row;
-    private ObservableList<CodesOrderModel> data ;
+    @Autowired
+    private CodesOrdersRepository codesOrdersRepository;
+    
+    /*  CONTROLLERS FIELDS  */
+    private Logger logger = LoggerFactory.getLogger(RailbootMainController.class);
+    private ArrayList<Node> oblist = new ArrayList<>();
+    
 
+    private TableRow<CodesOrderModel> row;
+    private ObservableList<CodesOrderModel> data;
     
-    @FXML
-    private TextField searchTextField;
-    
-/* BUTTONS ---------------   -------------    */
-    @FXML private Button notOrderedButton;
-    @FXML private Button addStationButton;
-    @FXML private Button addConsigneeButton;
-    @FXML private Button showAllButton;
-     
- // MAIN TABLE BEGIN
-    @FXML private TableView<CodesOrderModel> codesOrdersTable;
-    @FXML private TableColumn<CodesOrderModel, String> fileID;
-    @FXML private TableColumn<CodesOrderModel, String> stDispatch;
-    @FXML private TableColumn<CodesOrderModel, String> stDestination;
-    @FXML private TableColumn<CodesOrderModel, String> cargo; 
-    @FXML private TableColumn<CodesOrderModel, String> wagon;
-    @FXML private TableColumn<CodesOrderModel, String> container;
-    @FXML private TableColumn<CodesOrderModel, String> rate;
-    
-    // MAIN TABLE END
-    
-    // EDITING FORM BEGIN
-    @FXML private TextField fileField;
-    @FXML private Button copyButton;
-    @FXML private Button newButton;
-    @FXML private ComboBox<Station> stDestCombo;
-    @FXML private ComboBox<Station> stDispCombo;
-    @FXML private ComboBox<Persons> consiNameCombo;
-    @FXML private TextArea consiArea;
-    @FXML private TextField wagonField;
-    @FXML private TextField containerField;
-    @FXML private TextField weightField;
-    @FXML private TextField tareField;
-    @FXML private TextArea cargoArea;
-    @FXML private TextField providerField;
-    @FXML private TextField payRoadsField;
-    @FXML private TextField rateField;
-    @FXML private TextField rateCurrencyField;
-    @FXML private TextField securCurrencyField;
-    @FXML private TextField securityRateField;
-    @FXML private Button saveButton;
-    // EDITING FORM END
-    
-    
-    @FXML    public void initialize() {  }
-    
+  
+    /*-----------------------------------------------------------------------------------------*/
+
+   public void initialize() {  }
+   
+   
     @SuppressWarnings("unchecked")
     @PostConstruct
     public void init() {
-       
-        MainViewActions mva = new MainViewActions();
-         ActionMap.register(mva);
-         notOrderedButton.setOnAction( ActionMap.action("readExcell"));
+        readButton.setText("");
+        readButton.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.EDIT));
         
-//         codesOrdersTable.setPlaceholder(ActionUtils.createButton(ActionMap.action("readExcell")));
-        /* setting combos with station     */
-        stationsComboListist.addAll(stationRepository.findAll());
-  stationsComboListist.addListener((ListChangeListener.Change<? extends Station> change) -> {
-      stDestCombo.getItems().clear();
-      stDestCombo.itemsProperty().setValue(stationsComboListist);
-         });
-  
-        stDestCombo.itemsProperty().setValue(stationsComboListist);
-        stDestCombo.converterProperty().setValue(getStationConverter());
-        stDestCombo.setEditable(true);
-        TextFields.bindAutoCompletion(stDestCombo.getEditor(), (AutoCompletionBinding.ISuggestionRequest param) -> {
-            return stationRepository.findByStationNameLikeIgnoreCase("%" + param.getUserText() + "%");
-        }, getStationConverter());
-        TextFields.bindAutoCompletion(consiNameCombo.getEditor(), (AutoCompletionBinding.ISuggestionRequest param) -> {
-            return personsRepository.findBySampleNameLike("%" + param.getUserText() + "%");
-        }, getPersonsConverter());
+        topCenterHBox.getChildren().addAll(topPaneView.getView().getChildrenUnmodifiable());
+        readFromExcell();
         
-        
-        stDispCombo.itemsProperty().setValue(utils.strbean());
-        stDispCombo.converterProperty().setValue(getStationConverter());
-        
-        consiNameCombo.converterProperty().setValue(getPersonsConverter());
-        consiNameCombo.setEditable(true);
-        ObservableList<String> list = FXCollections.observableArrayList();
-        List<Persons> pl = personsRepository.findAllByOrderBySearchNameAsc();
-        consiNameCombo.getItems().addAll(pl);
-
-        consiNameCombo.valueProperty().addListener(new ChangeListener<Persons>() {
-            @Override
-            public void changed(ObservableValue<? extends Persons> observable, Persons oldValue, Persons newValue) {
-
-                consiArea.setText(newValue.getSampleName());
-            }
-        });
-
-        
-         /* setting ObservableList<CodesOrderModel> for TableView<CodesOrderModel> codesOrdersTable   */
-        utils.setSearch();
-        searchTextField.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            if (newValue.length() > 2) {
-                codesOrdersTable.getItems().clear();
-                List<CodesOrders> que = repository.findBySearchStringLike("%" + newValue + "%");
-                service.setInList(que);
-                data = service.getData();
-                codesOrdersTable.setItems(data);
-            }
-        });
-       
         fileID.setCellValueFactory((CellDataFeatures<CodesOrderModel, String> p) -> p.getValue().getFileIdProperty());
         cargo.setCellValueFactory((CellDataFeatures<CodesOrderModel, String> p) -> p.getValue().getCargoProperty());
         stDispatch.setCellValueFactory((CellDataFeatures<CodesOrderModel, String> p) -> p.getValue().getStationOfDispatchProperty());
@@ -205,11 +156,18 @@ public class RailbootMainController {
         wagon.setCellValueFactory((CellDataFeatures<CodesOrderModel, String> p) -> p.getValue().getWagonProperty());
         container.setCellValueFactory((CellDataFeatures<CodesOrderModel, String> p) -> p.getValue().getUnitProperty());
         rate.setCellValueFactory((CellDataFeatures<CodesOrderModel, String> p) -> p.getValue().getRateProperty());
-    
-    
-   
-   
-      
+        
+        
+        searchTextField.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            if (newValue.length() > 2) {
+                codesOrdersTable.getItems().clear();
+                List<CodesOrders> que = repository.findBySearchStringLikeIgnoreCase("%" + newValue + "%");
+                service.setInList(que);
+                data = service.getData();
+                codesOrdersTable.setItems(data);
+            }
+        });
+       
       
     codesOrdersTable.setOnMousePressed((MouseEvent event) -> {
         if (event.isPrimaryButtonDown() && event.getClickCount() == 1) {
@@ -221,59 +179,34 @@ public class RailbootMainController {
                 row = (TableRow) node.getParent();
 
             }
-      
             model.init(row.getItem().getCodesOrders());
-           
-            
-            //--------------
-            consiNameCombo.setValue(model.getCodesOrders().getConsignee());
-            fileField.setText(model.getCodesOrders().getFileID());
-            fileField.setEditable(false);
-            stDispCombo.setValue(model.getCodesOrders().getStationOfDispatch());
-            stDestCombo.setValue(model.getCodesOrders().getStationOfDestination());
-//            consiArea.setText(model.getCodesOrders().getConsignee().getSampleName());
-            cargoArea.setText(model.getCodesOrders().getCargo());
-            containerField.setText(model.getCodesOrders().getUnit());
-            wagonField.setText(model.getCodesOrders().getWagon());
-            weightField.setText(model.getCodesOrders().getWeight());
-            rateField.setText(model.getCodesOrders().getRate());
-            rateCurrencyField.setText(model.getCodesOrders().getRateCurrency());
-            providerField.setText(model.getCodesOrders().getProvider());
-            payRoadsField.setText(model.getCodesOrders().getRoadsToPay());
-            weightField.setText(model.getCodesOrders().getWeight());
+      
         }
-        
-          ObjectMapper om = new ObjectMapper();
-        try {
-            
-            om.writeValue(new File("mymodel.json"), model);
-        } catch (IOException ex) {
-            java.util.logging.Logger.getLogger(RailbootMainController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
         });
     
-      
-    }
     
-     @FXML
-    @Transactional
-    public void addItem() {
-        
-   CodesOrders co= model.getCodesOrders();
-   
-   co.setFileID(fileField.getText()); 
-   co.setStationOfDispatch(stDispCombo.getValue());
-   co.setStationOfDestination(stDestCombo.getValue());
-   co.setCargo(cargoArea.getText());
-   
-repository.save(co);
-CodesOrders comod = repository.findOne(co.getId());
-model.init(comod);
-codesOrdersTable.getItems().get(row.getIndex()).init(comod);
-
-
-}
+    
+    
+    }
+            
+    
+//    @Transactional
+//    public void addItem() {
+//        
+//   CodesOrders co= model.getCodesOrders();
+//   
+//   co.setFileID(fileField.getText()); 
+//   co.setStationOfDispatch(stDispCombo.getValue());
+//   co.setStationOfDestination(stDestCombo.getValue());
+//   co.setCargo(cargoArea.getText());
+//   
+//repository.save(co);
+//CodesOrders comod = repository.findOne(co.getId());
+//model.init(comod);
+//codesOrdersTable.getItems().get(row.getIndex()).init(comod);
+//
+//
+//}
     
     @FXML
     void fillAllItems(){
@@ -284,107 +217,66 @@ codesOrdersTable.getItems().get(row.getIndex()).init(comod);
         
     }
     
-    @FXML
-    void stationsEditor (){
-   
-        openModal(stationsEditorView.getView());
-  
-        
+    
+
+   /* reading from excell  */
+    private void readFromExcell() {
+         readButton.setOnAction((ActionEvent event) -> {
+             readerX.init();
+             List<Persons> persons =   personsRepository.findAll();
+             for (Persons person : persons) {
+                 if(person!=null){
+                     String search = "";
+                     String sample = person.getSampleName();
+                     int l = sample.length();
+                     if(l>=30){l=30;};
+                     search = search.concat(sample.substring(0, l));
+                     person.setSearchName(search);
+                     personsRepository.save(person);
+                 }
+             }
+             setSearch();
+             readButton.setDisable(true);
+             
+              topCenterHBox.getChildren().addAll(getTop());
+              rightFlowPane.getChildren().addAll(rightEditorView.getView().getChildrenUnmodifiable());
+         });
     }
-  
-    
-    
-    
-    
-    private StringConverter<Station> getStationConverter(){
-        
-        return new StringConverter<Station>() {
-            @Override
-            public String toString(Station object) {
-             String name = null;
-                if(object!=null){
-                name = object.getStationName();}
-                else {name="pizdec!";}
-                return name;
-            }
-            @Override
-            public Station fromString(String string) {
-                
-                return stationRepository.findByStationName(string).get(0);
-            }
-        };
-    }
-    
-    private StringConverter<Persons> getPersonsConverter(){
-        
-        return new StringConverter<Persons>() {
-            @Override
-            public String toString(Persons object) {
-             String name = null;
-                if(object!=null){
-                name = object.getSearchName();}
-                else {name="pizdec!";}
-                return name;
-            }
-            @Override
-            public Persons fromString(String string) {
-                
-                return personsRepository.findBySearchName(string).get(0);
-            }
-        };
-    }
-    
-    void openModal(Parent parent) {
 
-        Scene checkScene = parent.getScene();
-        if (checkScene != null) {
-            checkScene.setRoot(new Region());
-        }
-        Stage newStage = new Stage();
-        newStage.setScene(new Scene(parent));
-        newStage.initModality(Modality.APPLICATION_MODAL);
-
-        newStage.setOnCloseRequest((WindowEvent event) -> {
-            System.out.println(parent + " is closed at" + LocalDateTime.now());
-
-            Stage stage = (Stage) event.getSource();
-            Parent root = stage.getScene().getRoot();
-
-            getNodeList(root);
-
-            for (Node node : oblist) {
-                AccessibleRole role = node.getAccessibleRole();
-                if (role == AccessibleRole.TEXT_FIELD) {
-                    TextField field = (TextField) node;
-                    field.setText("");
-                    
+   /* setting setting SearchString field in @link CodesOrder */
+    private void setSearch() {
+        List<CodesOrders> list = codesOrdersRepository.findAll();
+        String search = "";
+        for (CodesOrders codesOrders : list) {
+            search = search.concat(codesOrders.getFileID().concat(codesOrders.getProvider()));
+            String cargo = codesOrders.getCargo();
+            StringTokenizer cargoTok = new StringTokenizer(cargo);
+            while (cargoTok.hasMoreElements()) {
+                String nextElement = (String) cargoTok.nextElement();
+                if (nextElement.length() > 4) {
+                    search = search.concat(nextElement);
                 }
-                
-               stDestCombo.itemsProperty().setValue(utils.strbean());
-        stDispCombo.itemsProperty().setValue(utils.strbean());
-        
             }
+            codesOrders.setSearchString(search);
+            codesOrdersRepository.save(codesOrders);
+            search = "";
+        }
+    }
 
-        });
-
-        newStage.showAndWait();
+    private List< Node> getTop() {
+        TextFlow textFlowOne = new TextFlow();
+        List<Node> nodes = new ArrayList<>();
+        LocalDate date = LocalDate.now();
+        Text todayIsText=new Text(date.toString()+"\n");
+        
+        Text recordsText=new Text("Всего файлов - "+Long.toString(repository.count(), 0));
+        textFlowOne.getChildren().addAll(todayIsText,recordsText);
+        
+        nodes.add(textFlowOne);
+        
+       return nodes;
     }
     
-   public  void getNodeList(Parent root){
-       ObservableList<Node> li = root.getChildrenUnmodifiable();
-       oblist.addAll(li);
-       
-       for (Node node : li) {
-           
-           if(node instanceof Parent){
-               Parent par = (Parent) node;
-               getNodeList(par);
-           }
-           
-       }
-
-   
-    }
  }
         
     
