@@ -22,14 +22,17 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
 import javafx.util.StringConverter;
 import javax.annotation.PostConstruct;
+import lv.rtme.entities.CodesOrders;
 import lv.rtme.entities.Persons;
 import lv.rtme.entities.Station;
 import lv.rtme.fxui.UtilBeansCollection;
+import lv.rtme.fxui.models.CodesOrderModel;
 import lv.rtme.repositories.PersonsRepository;
 import lv.rtme.repositories.StationRepository;
 import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
  * FXML Controller class
@@ -89,7 +92,9 @@ public class RightEditorController implements Initializable {
      @Autowired
     private StationRepository stationRepository;
      private ObservableList<Station> stationsComboListist = FXCollections.observableArrayList();
-
+  @Qualifier("coModel")
+    @Autowired
+    private CodesOrderModel model;
     /**
      * Initializes the controller class.
      */
@@ -101,6 +106,8 @@ public class RightEditorController implements Initializable {
     @SuppressWarnings("unchecked")
     @PostConstruct
     public void init() {
+        
+        setSaveButtonAction();
         
           stationsComboListist.addAll(stationRepository.findAll());
   stationsComboListist.addListener((ListChangeListener.Change<? extends Station> change) -> {
@@ -172,6 +179,45 @@ public class RightEditorController implements Initializable {
                 return personsRepository.findBySearchName(string).get(0);
             }
         };
+    }
+    
+    public void setFields(){
+//        fileField.setText(model.getCodesOrders().getFileID());
+//        fileField.setEditable(false);
+//        stDispCombo.setValue(model.getCodesOrders().getStationOfDispatch());
+//        stDestCombo.setValue(model.getCodesOrders().getStationOfDestination());
+//        consiNameCombo.setValue(model.getCodesOrders().getConsignee());
+//        cargoArea.setText(model.getCodesOrders().getCargo());
+//        containerField.setText(model.getCodesOrders().getUnit());
+//        wagonField.setText(model.getCodesOrders().getWagon());
+//        weightField.setText(model.getCodesOrders().getWeight());
+//        rateField.setText(model.getCodesOrders().getRate());
+//        rateCurrencyField.setText(model.getCodesOrders().getRateCurrency());
+//        providerField.setText(model.getCodesOrders().getProvider());
+//        payRoadsField.setText(model.getCodesOrders().getRoadsToPay());
+//        weightField.setText(model.getCodesOrders().getWeight());
+        
+        fileField.textProperty().bindBidirectional(model.getFileIdProperty());
+        fileField.setEditable(false);
+        stDispCombo.valueProperty().bindBidirectional(model.getDispatchStationObjectProperty());
+        stDestCombo.valueProperty().bindBidirectional(model.getDestinationStationObjectProperty());
+        consiNameCombo.valueProperty().bindBidirectional(model.getConsigneeObjectProperty());
+        cargoArea.textProperty().bindBidirectional(model.getCargoProperty());
+        containerField.setText(model.getCodesOrders().getUnit());
+        wagonField.setText(model.getCodesOrders().getWagon());
+        weightField.setText(model.getCodesOrders().getWeight());
+        rateField.setText(model.getCodesOrders().getRate());
+        rateCurrencyField.setText(model.getCodesOrders().getRateCurrency());
+        providerField.setText(model.getCodesOrders().getProvider());
+        payRoadsField.setText(model.getCodesOrders().getRoadsToPay());
+        weightField.setText(model.getCodesOrders().getWeight());
+}
+
+    private void setSaveButtonAction() {
+        saveButton.setOnAction(event -> { 
+       CodesOrders order = model.getCodesOrders();
+        
+    });
     }
    
 }

@@ -78,7 +78,6 @@ public class StationsEditorController {
     @PostConstruct
     public void init() {
         
-        
      
         xlist.addAll(repository.findAllByOrderByStationNameAsc());
         stationListView.setItems(xlist);

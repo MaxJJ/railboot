@@ -5,7 +5,6 @@
  */
 package lv.rtme.fxui.mainView;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -15,18 +14,18 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
+import javafx.scene.layout.StackPane;
 import javax.annotation.PostConstruct;
 import lv.rtme.ConfigurationControllers;
 import lv.rtme.entities.CodesOrders;
@@ -52,24 +51,19 @@ import org.springframework.beans.factory.annotation.Qualifier;
 public class RailbootMainController {
     
     /* FXML FIELDS */
-      @FXML
-    private VBox leftVBox;
-    @FXML
-    private Button copyButton;
-    @FXML
-    private Button copyButton1;
-    @FXML
-    private Button copyButton11;
+   
     @FXML
     private HBox topCenterHBox;
     @FXML
     private TextField searchTextField;
     @FXML
-    private Button notOrderedButton;
+    private TextField searchForTextField;
     @FXML
-    private Button showAllButton;
+    private Button notOrderedButton;
+     
     @FXML
     private Button newButton;
+  
     @FXML
     private AnchorPane tableAnchorPane;
     @FXML
@@ -89,9 +83,15 @@ public class RailbootMainController {
     @FXML
     private TableColumn<CodesOrderModel, String> rate;
     @FXML
-    private FlowPane rightFlowPane;
+    private StackPane startTabStackPane;
     @FXML
     private Button readButton;
+    @FXML
+    private HBox toolHBox;
+    @FXML
+    private Tab mainTab;
+    
+      
     /*---------AUTOWIRED---------*/
     
     @Autowired
@@ -134,6 +134,8 @@ public class RailbootMainController {
     private TableRow<CodesOrderModel> row;
     private ObservableList<CodesOrderModel> data;
     
+   
+    
   
     /*-----------------------------------------------------------------------------------------*/
 
@@ -143,19 +145,13 @@ public class RailbootMainController {
     @SuppressWarnings("unchecked")
     @PostConstruct
     public void init() {
-        readButton.setText("");
+        
         readButton.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.EDIT));
         
         topCenterHBox.getChildren().addAll(topPaneView.getView().getChildrenUnmodifiable());
         readFromExcell();
+        setCellValueFactoryForColumns();
         
-        fileID.setCellValueFactory((CellDataFeatures<CodesOrderModel, String> p) -> p.getValue().getFileIdProperty());
-        cargo.setCellValueFactory((CellDataFeatures<CodesOrderModel, String> p) -> p.getValue().getCargoProperty());
-        stDispatch.setCellValueFactory((CellDataFeatures<CodesOrderModel, String> p) -> p.getValue().getStationOfDispatchProperty());
-        stDestination.setCellValueFactory((CellDataFeatures<CodesOrderModel, String> p) -> p.getValue().getStationOfDestinationProperty());
-        wagon.setCellValueFactory((CellDataFeatures<CodesOrderModel, String> p) -> p.getValue().getWagonProperty());
-        container.setCellValueFactory((CellDataFeatures<CodesOrderModel, String> p) -> p.getValue().getUnitProperty());
-        rate.setCellValueFactory((CellDataFeatures<CodesOrderModel, String> p) -> p.getValue().getRateProperty());
         
         
         searchTextField.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
@@ -171,42 +167,34 @@ public class RailbootMainController {
       
     codesOrdersTable.setOnMousePressed((MouseEvent event) -> {
         if (event.isPrimaryButtonDown() && event.getClickCount() == 1) {
-            Node node = ((Node) event.getTarget()).getParent();
-
-            if (node instanceof TableRow) {
-                row = (TableRow) node;
-            } else { // clicking on text part
-                row = (TableRow) node.getParent();
-
-            }
-            model.init(row.getItem().getCodesOrders());
-      
+            
+           CodesOrders coCheck =  codesOrdersTable.getSelectionModel().getSelectedItem().getCodesOrders();
+           if(coCheck !=null && !coCheck.getFileID().isEmpty()){
+            model.init(coCheck);
+         TopPaneController topPaneController = (TopPaneController) topPaneView.getController();   
+       topPaneController.getRecordInfo();
+           }
+        }
+        });
+    
+    codesOrdersTable.setOnKeyPressed((KeyEvent event) -> {
+        if (event.getCode()==KeyCode.ENTER || event.getCode()==KeyCode.SPACE) {
+            
+           CodesOrders coCheck =  codesOrdersTable.getSelectionModel().getSelectedItem().getCodesOrders();
+           if(coCheck !=null && !coCheck.getFileID().isEmpty()){
+            model.init(coCheck);
+         TopPaneController topPaneController = (TopPaneController) topPaneView.getController();   
+       topPaneController.getRecordInfo();
+           }
         }
         });
     
     
-    
-    
+    setSearch();
+    model.
     }
             
-    
-//    @Transactional
-//    public void addItem() {
-//        
-//   CodesOrders co= model.getCodesOrders();
-//   
-//   co.setFileID(fileField.getText()); 
-//   co.setStationOfDispatch(stDispCombo.getValue());
-//   co.setStationOfDestination(stDestCombo.getValue());
-//   co.setCargo(cargoArea.getText());
-//   
-//repository.save(co);
-//CodesOrders comod = repository.findOne(co.getId());
-//model.init(comod);
-//codesOrdersTable.getItems().get(row.getIndex()).init(comod);
-//
-//
-//}
+
     
     @FXML
     void fillAllItems(){
@@ -214,11 +202,8 @@ public class RailbootMainController {
         service.setInList(repository.findAll());
         data=service.getData();
         codesOrdersTable.setItems(data) ;
-        
+       
     }
-    
-    
-
    /* reading from excell  */
     private void readFromExcell() {
          readButton.setOnAction((ActionEvent event) -> {
@@ -238,8 +223,6 @@ public class RailbootMainController {
              setSearch();
              readButton.setDisable(true);
              
-              topCenterHBox.getChildren().addAll(getTop());
-              rightFlowPane.getChildren().addAll(rightEditorView.getView().getChildrenUnmodifiable());
          });
     }
 
@@ -257,25 +240,29 @@ public class RailbootMainController {
                     search = search.concat(nextElement);
                 }
             }
+            
+            search = search.concat(codesOrders.getConsignee().getSampleName()).concat(codesOrders.getStationOfDestination().getStationName());
             codesOrders.setSearchString(search);
             codesOrdersRepository.save(codesOrders);
             search = "";
         }
     }
 
-    private List< Node> getTop() {
-        TextFlow textFlowOne = new TextFlow();
-        List<Node> nodes = new ArrayList<>();
-        LocalDate date = LocalDate.now();
-        Text todayIsText=new Text(date.toString()+"\n");
-        
-        Text recordsText=new Text("Всего файлов - "+Long.toString(repository.count(), 0));
-        textFlowOne.getChildren().addAll(todayIsText,recordsText);
-        
-        nodes.add(textFlowOne);
-        
-       return nodes;
+    
+    public StackPane getMainTabPane() {
+        return startTabStackPane;
     }
+
+    private void setCellValueFactoryForColumns() {
+       fileID.setCellValueFactory((CellDataFeatures<CodesOrderModel, String> p) -> p.getValue().getFileIdProperty());
+        cargo.setCellValueFactory((CellDataFeatures<CodesOrderModel, String> p) -> p.getValue().getCargoProperty());
+        stDispatch.setCellValueFactory((CellDataFeatures<CodesOrderModel, String> p) -> p.getValue().getStationOfDispatchProperty());
+        stDestination.setCellValueFactory((CellDataFeatures<CodesOrderModel, String> p) -> p.getValue().getStationOfDestinationProperty());
+        wagon.setCellValueFactory((CellDataFeatures<CodesOrderModel, String> p) -> p.getValue().getWagonProperty());
+        container.setCellValueFactory((CellDataFeatures<CodesOrderModel, String> p) -> p.getValue().getUnitProperty());
+        rate.setCellValueFactory((CellDataFeatures<CodesOrderModel, String> p) -> p.getValue().getRateProperty());
+    }
+
     
  }
         

@@ -15,6 +15,8 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import lv.rtme.entities.CodesOrders;
+import lv.rtme.entities.Persons;
+import lv.rtme.entities.Station;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
@@ -36,11 +38,12 @@ public class CodesOrderModel {
     private StringProperty fileIdProperty = new SimpleStringProperty();
 
     private StringProperty stationOfDispatchProperty = new SimpleStringProperty();
-
+private ObjectProperty<Station> dispatchStationObjectProperty = new SimpleObjectProperty<Station>();
     private StringProperty stationOfDestinationProperty = new SimpleStringProperty();
+private ObjectProperty<Station> destinationStationObjectProperty = new SimpleObjectProperty<Station>();
 
     private StringProperty consigneeProperty = new SimpleStringProperty();
-
+private ObjectProperty<Persons> consigneeObjectProperty = new SimpleObjectProperty<Persons>();
     private StringProperty cargoProperty = new SimpleStringProperty();
     private StringProperty weightProperty = new SimpleStringProperty();
 
@@ -63,8 +66,11 @@ public class CodesOrderModel {
         codesOrders = item;
       this.fileIdProperty.setValue(codesOrders.getFileID());
       this.stationOfDispatchProperty.setValue(codesOrders.getStationOfDispatch().getStationName());
+      this.dispatchStationObjectProperty.setValue(codesOrders.getStationOfDispatch());
       this.stationOfDestinationProperty.setValue(codesOrders.getStationOfDestination().getStationName());
+      this.destinationStationObjectProperty.setValue(codesOrders.getStationOfDestination());
       this.consigneeProperty.setValue(codesOrders.getConsignee().getSampleName());
+      this.consigneeObjectProperty.setValue(codesOrders.getConsignee());
       this.cargoProperty.setValue(codesOrders.getCargo());
       
       this.weightProperty.setValue(codesOrders.getWeight());
@@ -212,6 +218,30 @@ public class CodesOrderModel {
 
     public void setIdLongProperty(LongProperty idLongProperty) {
         this.idLongProperty = idLongProperty;
+    }
+
+    public ObjectProperty<Station> getDispatchStationObjectProperty() {
+        return dispatchStationObjectProperty;
+    }
+
+    public void setDispatchStationObjectProperty(ObjectProperty<Station> dispatchStationObjectProperty) {
+        this.dispatchStationObjectProperty = dispatchStationObjectProperty;
+    }
+
+    public ObjectProperty<Station> getDestinationStationObjectProperty() {
+        return destinationStationObjectProperty;
+    }
+
+    public void setDestinationStationObjectProperty(ObjectProperty<Station> destinationStationObjectProperty) {
+        this.destinationStationObjectProperty = destinationStationObjectProperty;
+    }
+
+    public ObjectProperty<Persons> getConsigneeObjectProperty() {
+        return consigneeObjectProperty;
+    }
+
+    public void setConsigneeObjectProperty(ObjectProperty<Persons> consigneeObjectProperty) {
+        this.consigneeObjectProperty = consigneeObjectProperty;
     }
 
   

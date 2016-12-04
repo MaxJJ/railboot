@@ -18,9 +18,6 @@ public class MainViewControllers {
         return loadView("fxml/topPaneMainView.fxml");
     }
     
-   
- 
-    
       @Bean
     public TopPaneController getTopPaneController() throws IOException {
         return (TopPaneController) getMainView().getController();
