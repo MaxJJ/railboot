@@ -14,13 +14,24 @@ import org.springframework.context.annotation.Configuration;
 public class MainViewControllers {
 
     @Bean(name = "topPaneView")
-    public View getMainView() throws IOException {
+    public View getTopPaneView() throws IOException {
         return loadView("fxml/topPaneMainView.fxml");
     }
     
       @Bean
     public TopPaneController getTopPaneController() throws IOException {
-        return (TopPaneController) getMainView().getController();
+        return (TopPaneController) getTopPaneView().getController();
+    }
+    
+    
+    @Bean(name = "homeView")
+    public View getHomeView() throws IOException {
+        return loadView("fxml/homeView.fxml");
+    }
+    
+      @Bean
+    public HomeViewController getHomeViewController() throws IOException {
+        return (HomeViewController) getHomeView().getController();
     }
     
     protected View loadView(String url) throws IOException {

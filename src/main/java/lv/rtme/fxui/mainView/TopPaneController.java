@@ -48,6 +48,7 @@ public class TopPaneController {
      @Qualifier("railbootMainView")
     @Autowired
     private ConfigurationControllers.View mainView; 
+       
      
      
       @Autowired
@@ -137,8 +138,8 @@ public class TopPaneController {
             @Override
             public void handle(ActionEvent event) {
                 rightCtrl.setFields();
-             mainCtrl.getMainTabPane().getChildren().clear();
-             mainCtrl.getMainTabPane().getChildren().add(rightEditorView.getView());
+             mainCtrl.getHomeTabStackPane().getChildren().clear();
+             mainCtrl.getHomeTabStackPane().getChildren().add(rightEditorView.getView());
                             
             }
         });

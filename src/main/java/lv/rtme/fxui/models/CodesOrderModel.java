@@ -82,6 +82,26 @@ private ObjectProperty<Persons> consigneeObjectProperty = new SimpleObjectProper
       this.providerProperty.setValue(codesOrders.getProvider());
       this.roadsToPayProperty.setValue(codesOrders.getRoadsToPay());
     }
+    public void initEmpty(CodesOrders item){
+        codesOrders = item;
+      this.fileIdProperty.setValue("");
+      this.stationOfDispatchProperty.setValue("");
+      this.dispatchStationObjectProperty.setValue(null);
+      this.stationOfDestinationProperty.setValue("");
+      this.destinationStationObjectProperty.setValue(null);
+      this.consigneeProperty.setValue("");
+      this.consigneeObjectProperty.setValue(null);
+      this.cargoProperty.setValue("");
+      
+      this.weightProperty.setValue("");
+      
+      this.unitProperty.setValue("");
+      this.wagonProperty.setValue("");
+      this.rateProperty.setValue("");
+      this.rateCurrencyProperty.setValue("");
+      this.providerProperty.setValue("");
+      this.roadsToPayProperty.setValue("");
+    }
     @Lazy(true)
     @Bean(name="tableItem")
     @Scope("prototype")

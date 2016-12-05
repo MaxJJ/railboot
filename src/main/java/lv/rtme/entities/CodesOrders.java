@@ -49,6 +49,7 @@ public class CodesOrders {
     private boolean isOrdered;
     
     private Date orderedOnDate;
+
     private Integer containerTare;
     private String customTag;
     private String reservationName;
@@ -237,6 +238,8 @@ public class CodesOrders {
     public void setCustomTag(String customTag) {
         this.customTag = customTag;
     }
+
+  
     
     
     

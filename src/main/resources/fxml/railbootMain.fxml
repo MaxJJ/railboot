@@ -9,14 +9,10 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
 <StackPane alignment="TOP_CENTER" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lv.rtme.fxui.mainView.RailbootMainController">
    <children>
@@ -26,76 +22,14 @@
                <children>
                   <HBox fx:id="topCenterHBox" prefHeight="130.0" prefWidth="200.0" VBox.vgrow="NEVER" />
                   <HBox fx:id="toolHBox" prefHeight="35.0" />
-                  <TabPane style="-fx-background-color: #F7FCFF;" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+                  <TabPane fx:id="mainTabPane" style="-fx-background-color: #F7FCFF;" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
                      <VBox.margin>
                         <Insets bottom="8.0" />
                      </VBox.margin>
                      <tabs>
-                        <Tab fx:id="mainTab" text="Home">
+                        <Tab fx:id="homeTab" text="Home">
                           <content>
-                              <StackPane fx:id="startTabStackPane" prefWidth="1200.0">
-                                 <children>
-                                    <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="400.0" StackPane.alignment="CENTER">
-                                       <columnConstraints>
-                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                       </columnConstraints>
-                                       <rowConstraints>
-                                          <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                       </rowConstraints>
-                                       <children>
-                                          <Button fx:id="readButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="90.0" prefWidth="90.0" text="Button" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                                             <font>
-                                                <Font size="16.0" />
-                                             </font>
-                                          </Button>
-                                          <Button fx:id="readButton1" layoutX="142.0" layoutY="163.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="90.0" prefWidth="90.0" text="Button" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                                             <font>
-                                                <Font size="16.0" />
-                                             </font>
-                                          </Button>
-                                          <Button fx:id="readButton11" layoutX="10.0" layoutY="52.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="90.0" prefWidth="90.0" text="Button" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                                             <font>
-                                                <Font size="16.0" />
-                                             </font>
-                                          </Button>
-                                          <Button fx:id="readButton111" layoutX="10.0" layoutY="196.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="90.0" prefWidth="90.0" text="Button" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                                             <font>
-                                                <Font size="16.0" />
-                                             </font>
-                                          </Button>
-                                          <Button fx:id="readButton1111" layoutX="274.0" layoutY="52.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="90.0" prefWidth="90.0" text="Button" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                                             <font>
-                                                <Font size="16.0" />
-                                             </font>
-                                          </Button>
-                                          <Button fx:id="readButton11111" layoutX="10.0" layoutY="52.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="90.0" prefWidth="90.0" text="Button" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                                             <font>
-                                                <Font size="16.0" />
-                                             </font>
-                                          </Button>
-                                          <Button fx:id="readButton111111" layoutX="10.0" layoutY="52.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="90.0" prefWidth="90.0" text="Button" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                                             <font>
-                                                <Font size="16.0" />
-                                             </font>
-                                          </Button>
-                                          <Button fx:id="readButton1111111" layoutX="10.0" layoutY="309.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="90.0" prefWidth="90.0" text="Button" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                                             <font>
-                                                <Font size="16.0" />
-                                             </font>
-                                          </Button>
-                                          <Button fx:id="readButton11111111" layoutX="10.0" layoutY="52.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="90.0" prefWidth="90.0" text="Button" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                                             <font>
-                                                <Font size="16.0" />
-                                             </font>
-                                          </Button>
-                                       </children>
-                                    </GridPane>
-                                 </children>
-                              </StackPane>
+                              <StackPane fx:id="homeTabStackPane" prefWidth="1200.0" />
                           </content>
                         </Tab>
                         <Tab text="Таблица">

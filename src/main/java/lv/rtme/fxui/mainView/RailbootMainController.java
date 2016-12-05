@@ -7,14 +7,13 @@ package lv.rtme.fxui.mainView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableRow;
@@ -29,7 +28,7 @@ import javafx.scene.layout.StackPane;
 import javax.annotation.PostConstruct;
 import lv.rtme.ConfigurationControllers;
 import lv.rtme.entities.CodesOrders;
-import lv.rtme.entities.Persons;
+import lv.rtme.fxui.MainViewUtils;
 import lv.rtme.fxui.UtilBeansCollection;
 import lv.rtme.fxui.models.CodesOrderModel;
 import lv.rtme.reportsService.ReportPrintService;
@@ -38,8 +37,6 @@ import lv.rtme.repositories.PersonsRepository;
 import lv.rtme.repositories.StationRepository;
 import lv.rtme.services.CodesTableService;
 import lv.rtme.services.ReadAndPopulate;
-import org.controlsfx.glyphfont.FontAwesome;
-import org.controlsfx.glyphfont.Glyph;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,8 +53,6 @@ public class RailbootMainController {
     private HBox topCenterHBox;
     @FXML
     private TextField searchTextField;
-    @FXML
-    private TextField searchForTextField;
     @FXML
     private Button notOrderedButton;
      
@@ -82,14 +77,15 @@ public class RailbootMainController {
     private TableColumn<CodesOrderModel, String> container;
     @FXML
     private TableColumn<CodesOrderModel, String> rate;
-    @FXML
-    private StackPane startTabStackPane;
-    @FXML
-    private Button readButton;
+ 
     @FXML
     private HBox toolHBox;
     @FXML
-    private Tab mainTab;
+    private Tab homeTab;
+    @FXML
+    private StackPane homeTabStackPane;
+    @FXML
+    private Button showAllButton;
     
       
     /*---------AUTOWIRED---------*/
@@ -110,6 +106,8 @@ public class RailbootMainController {
      MainViewControllers.View topPaneView;
     @Autowired
     UtilBeansCollection utils;
+    @Autowired
+    MainViewUtils mvu;
     @Autowired
     ReportPrintService printer;
     @Autowired
@@ -133,6 +131,9 @@ public class RailbootMainController {
 
     private TableRow<CodesOrderModel> row;
     private ObservableList<CodesOrderModel> data;
+    @FXML
+    private TabPane mainTabPane;
+    
     
    
     
@@ -146,10 +147,12 @@ public class RailbootMainController {
     @PostConstruct
     public void init() {
         
-        readButton.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.EDIT));
+        mvu.showHomeTab();
+        
+        
         
         topCenterHBox.getChildren().addAll(topPaneView.getView().getChildrenUnmodifiable());
-        readFromExcell();
+       
         setCellValueFactoryForColumns();
         
         
@@ -190,7 +193,6 @@ public class RailbootMainController {
         });
     
     
-    setSearch();
    
     }
             
@@ -204,53 +206,13 @@ public class RailbootMainController {
         codesOrdersTable.setItems(data) ;
        
     }
-   /* reading from excell  */
-    private void readFromExcell() {
-         readButton.setOnAction((ActionEvent event) -> {
-             readerX.init();
-             List<Persons> persons =   personsRepository.findAll();
-             for (Persons person : persons) {
-                 if(person!=null){
-                     String search = "";
-                     String sample = person.getSampleName();
-                     int l = sample.length();
-                     if(l>=30){l=30;};
-                     search = search.concat(sample.substring(0, l));
-                     person.setSearchName(search);
-                     personsRepository.save(person);
-                 }
-             }
-             setSearch();
-             readButton.setDisable(true);
-             
-         });
-    }
 
-   /* setting setting SearchString field in @link CodesOrder */
-    private void setSearch() {
-        List<CodesOrders> list = codesOrdersRepository.findAll();
-        String search = "";
-        for (CodesOrders codesOrders : list) {
-            search = search.concat(codesOrders.getFileID().concat(codesOrders.getProvider()));
-            String cargo = codesOrders.getCargo();
-            StringTokenizer cargoTok = new StringTokenizer(cargo);
-            while (cargoTok.hasMoreElements()) {
-                String nextElement = (String) cargoTok.nextElement();
-                if (nextElement.length() > 4) {
-                    search = search.concat(nextElement);
-                }
-            }
-            
-            search = search.concat(codesOrders.getConsignee().getSampleName()).concat(codesOrders.getStationOfDestination().getStationName());
-            codesOrders.setSearchString(search);
-            codesOrdersRepository.save(codesOrders);
-            search = "";
-        }
-    }
+
+  
 
     
-    public StackPane getMainTabPane() {
-        return startTabStackPane;
+    public StackPane getHomeTabStackPane() {
+        return homeTabStackPane;
     }
 
     private void setCellValueFactoryForColumns() {
@@ -262,6 +224,14 @@ public class RailbootMainController {
         container.setCellValueFactory((CellDataFeatures<CodesOrderModel, String> p) -> p.getValue().getUnitProperty());
         rate.setCellValueFactory((CellDataFeatures<CodesOrderModel, String> p) -> p.getValue().getRateProperty());
     }
+
+    public Tab getHomeTab() {
+       return homeTab;
+    }
+    public TabPane getHomeTabPane() {
+       return mainTabPane;
+    }
+   
 
     
  }

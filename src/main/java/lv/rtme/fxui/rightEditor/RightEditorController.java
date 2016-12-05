@@ -25,8 +25,12 @@ import javax.annotation.PostConstruct;
 import lv.rtme.entities.CodesOrders;
 import lv.rtme.entities.Persons;
 import lv.rtme.entities.Station;
+import lv.rtme.fxui.MainViewUtils;
 import lv.rtme.fxui.UtilBeansCollection;
+import lv.rtme.fxui.mainView.MainViewControllers;
+import lv.rtme.fxui.mainView.TopPaneController;
 import lv.rtme.fxui.models.CodesOrderModel;
+import lv.rtme.repositories.CodesOrdersRepository;
 import lv.rtme.repositories.PersonsRepository;
 import lv.rtme.repositories.StationRepository;
 import org.controlsfx.control.textfield.AutoCompletionBinding;
@@ -95,6 +99,13 @@ public class RightEditorController implements Initializable {
   @Qualifier("coModel")
     @Autowired
     private CodesOrderModel model;
+  @Autowired
+    private CodesOrdersRepository codesOrdersRepository;
+  @Qualifier("topPaneView")
+  @Autowired
+  MainViewControllers.View topPaneView;
+     @Autowired
+    MainViewUtils mvu;
     /**
      * Initializes the controller class.
      */
@@ -210,13 +221,35 @@ public class RightEditorController implements Initializable {
         rateCurrencyField.setText(model.getCodesOrders().getRateCurrency());
         providerField.setText(model.getCodesOrders().getProvider());
         payRoadsField.setText(model.getCodesOrders().getRoadsToPay());
-        weightField.setText(model.getCodesOrders().getWeight());
 }
 
     private void setSaveButtonAction() {
         saveButton.setOnAction(event -> { 
        CodesOrders order = model.getCodesOrders();
+       order.setFileID(fileField.getText());
+        if(stDispCombo.getValue()!=null){
+        order.setStationOfDispatch(stDispCombo.getValue());}
         
+        if(stDestCombo.getValue()!=null){
+        order.setStationOfDestination(stDestCombo.getValue());}
+        
+        if(consiNameCombo.getValue()!=null){
+            order.setConsignee(consiNameCombo.getValue());
+        }
+        order.setCargo(cargoArea.getText());
+        order.setUnit(containerField.getText());
+        order.setWagon(wagonField.getText());
+        order.setWeight(weightField.getText());
+        order.setRate(rateField.getText());
+        order.setRateCurrency(rateCurrencyField.getText());
+        order.setProvider(providerField.getText());
+        order.setRoadsToPay(payRoadsField.getText());
+      codesOrdersRepository.save(order);
+            TopPaneController tpc=(TopPaneController) topPaneView.getController();
+            tpc.updateState();
+            tpc.getRecordInfo();
+            mvu.showHomeTab();
+      
     });
     }
    
