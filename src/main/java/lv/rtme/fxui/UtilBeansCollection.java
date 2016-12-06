@@ -22,9 +22,7 @@ import org.springframework.stereotype.Component;
 public class UtilBeansCollection {
   @Autowired
  private StationRepository  stationRepository;
- 
-    
-    
+  
         public ObservableList<Station> strbean(){
                 
         ObservableList<Station> list = FXCollections.observableArrayList();

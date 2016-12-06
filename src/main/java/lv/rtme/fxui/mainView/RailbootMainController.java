@@ -148,6 +148,7 @@ public class RailbootMainController {
     public void init() {
         
         mvu.showHomeTab();
+        mvu.setCombosItems();
         
         
         

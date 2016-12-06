@@ -61,6 +61,7 @@ public class HomeViewController implements Initializable {
     private CodesOrdersRepository codesOrdersRepository;
       @Autowired
     MainViewUtils mvu;
+     
 
     /**
      * Initializes the controller class.
@@ -95,6 +96,9 @@ public class HomeViewController implements Initializable {
                  }
              }
              setSearch();
+             
+           
+             mvu.setCombosItems();
              readButton.setDisable(true);
              
          });
@@ -132,7 +136,7 @@ public class HomeViewController implements Initializable {
          mvu.showHomeTab();
          CodesOrders newCo= new CodesOrders();
          
-         mvu.getCodesOrderModel().initEmpty(newCo);
+         mvu.getCodesOrderModel().init(newCo);
          mvu.returnHomeTabStackPane().getChildren().clear();
          Parent coEditorView = mvu.getCoEditorView();
          mvu.returnHomeTabStackPane().getChildren().addAll(coEditorView);

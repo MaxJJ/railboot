@@ -6,13 +6,9 @@
 package lv.rtme.fxui.rightEditor;
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -20,6 +16,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
 import javafx.util.StringConverter;
 import javax.annotation.PostConstruct;
 import lv.rtme.entities.CodesOrders;
@@ -89,62 +86,62 @@ public class RightEditorController implements Initializable {
     private Button addConsigneeButton;
     @FXML
     private TextArea cargoArea;
-     @Autowired
+    @FXML
+    private HBox toolHboxCoEditor;
+    @FXML
+    private Button newButtonCoEditor;
+    @FXML
+    private Button copyButtonCoEditor;
+    @FXML
+    private Button cancelButtonCoEditor;
+    
+    @Autowired
     UtilBeansCollection utils;
-     @Autowired
+    @Autowired
     private PersonsRepository personsRepository;
-     @Autowired
+    @Autowired
     private StationRepository stationRepository;
-     private ObservableList<Station> stationsComboListist = FXCollections.observableArrayList();
-  @Qualifier("coModel")
+    @Qualifier("coModel")
     @Autowired
     private CodesOrderModel model;
-  @Autowired
+    @Autowired
     private CodesOrdersRepository codesOrdersRepository;
-  @Qualifier("topPaneView")
-  @Autowired
-  MainViewControllers.View topPaneView;
-     @Autowired
+    @Qualifier("topPaneView")
+    @Autowired
+    MainViewControllers.View topPaneView;
+    @Autowired
     MainViewUtils mvu;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+    }
 
     @SuppressWarnings("unchecked")
     @PostConstruct
     public void init() {
-        
+
         setSaveButtonAction();
-        
-          stationsComboListist.addAll(stationRepository.findAll());
-  stationsComboListist.addListener((ListChangeListener.Change<? extends Station> change) -> {
-      stDestCombo.getItems().clear();
-      stDestCombo.itemsProperty().setValue(stationsComboListist);
-         });
-  
-        stDestCombo.itemsProperty().setValue(stationsComboListist);
-        stDestCombo.converterProperty().setValue(getStationConverter());
         stDestCombo.setEditable(true);
         TextFields.bindAutoCompletion(stDestCombo.getEditor(), (AutoCompletionBinding.ISuggestionRequest param) -> {
             return stationRepository.findByStationNameLikeIgnoreCase("%" + param.getUserText() + "%");
         }, getStationConverter());
+        TextFields.bindAutoCompletion(stDispCombo.getEditor(), (AutoCompletionBinding.ISuggestionRequest param) -> {
+            return stationRepository.findByStationNameLikeIgnoreCase("%" + param.getUserText() + "%");
+        }, getStationConverter());
+        
+        
         TextFields.bindAutoCompletion(consiNameCombo.getEditor(), (AutoCompletionBinding.ISuggestionRequest param) -> {
             return personsRepository.findBySampleNameLike("%" + param.getUserText() + "%");
         }, getPersonsConverter());
-        
-        
-        stDispCombo.itemsProperty().setValue(utils.strbean());
+
         stDispCombo.converterProperty().setValue(getStationConverter());
-        
+
         consiNameCombo.converterProperty().setValue(getPersonsConverter());
         consiNameCombo.setEditable(true);
-        ObservableList<String> list = FXCollections.observableArrayList();
-        List<Persons> pl = personsRepository.findAllByOrderBySearchNameAsc();
-        consiNameCombo.getItems().addAll(pl);
 
         consiNameCombo.valueProperty().addListener(new ChangeListener<Persons>() {
             @Override
@@ -154,60 +151,53 @@ public class RightEditorController implements Initializable {
             }
         });
     }
-       private StringConverter<Station> getStationConverter(){
-        
+
+    private StringConverter<Station> getStationConverter() {
+
         return new StringConverter<Station>() {
             @Override
             public String toString(Station object) {
-             String name = null;
-                if(object!=null){
-                name = object.getStationName();}
-                else {name="pizdec!";}
+                String name = null;
+                if (object != null) {
+                    name = object.getStationName();
+                } else {
+                    name = "pizdec!";
+                }
                 return name;
             }
+
             @Override
             public Station fromString(String string) {
-                
+
                 return stationRepository.findByStationName(string).get(0);
             }
         };
     }
-    
-    private StringConverter<Persons> getPersonsConverter(){
-        
+
+    private StringConverter<Persons> getPersonsConverter() {
+
         return new StringConverter<Persons>() {
             @Override
             public String toString(Persons object) {
-             String name = null;
-                if(object!=null){
-                name = object.getSearchName();}
-                else {name="pizdec!";}
+                String name = null;
+                if (object != null) {
+                    name = object.getSearchName();
+                } else {
+                    name = "pizdec!";
+                }
                 return name;
             }
+
             @Override
             public Persons fromString(String string) {
-                
+
                 return personsRepository.findBySearchName(string).get(0);
             }
         };
     }
-    
-    public void setFields(){
-//        fileField.setText(model.getCodesOrders().getFileID());
-//        fileField.setEditable(false);
-//        stDispCombo.setValue(model.getCodesOrders().getStationOfDispatch());
-//        stDestCombo.setValue(model.getCodesOrders().getStationOfDestination());
-//        consiNameCombo.setValue(model.getCodesOrders().getConsignee());
-//        cargoArea.setText(model.getCodesOrders().getCargo());
-//        containerField.setText(model.getCodesOrders().getUnit());
-//        wagonField.setText(model.getCodesOrders().getWagon());
-//        weightField.setText(model.getCodesOrders().getWeight());
-//        rateField.setText(model.getCodesOrders().getRate());
-//        rateCurrencyField.setText(model.getCodesOrders().getRateCurrency());
-//        providerField.setText(model.getCodesOrders().getProvider());
-//        payRoadsField.setText(model.getCodesOrders().getRoadsToPay());
-//        weightField.setText(model.getCodesOrders().getWeight());
-        
+
+    public void setFields() {
+
         fileField.textProperty().bindBidirectional(model.getFileIdProperty());
         fileField.setEditable(false);
         stDispCombo.valueProperty().bindBidirectional(model.getDispatchStationObjectProperty());
@@ -221,36 +211,52 @@ public class RightEditorController implements Initializable {
         rateCurrencyField.setText(model.getCodesOrders().getRateCurrency());
         providerField.setText(model.getCodesOrders().getProvider());
         payRoadsField.setText(model.getCodesOrders().getRoadsToPay());
-}
+    }
 
     private void setSaveButtonAction() {
-        saveButton.setOnAction(event -> { 
-       CodesOrders order = model.getCodesOrders();
-       order.setFileID(fileField.getText());
-        if(stDispCombo.getValue()!=null){
-        order.setStationOfDispatch(stDispCombo.getValue());}
-        
-        if(stDestCombo.getValue()!=null){
-        order.setStationOfDestination(stDestCombo.getValue());}
-        
-        if(consiNameCombo.getValue()!=null){
-            order.setConsignee(consiNameCombo.getValue());
-        }
-        order.setCargo(cargoArea.getText());
-        order.setUnit(containerField.getText());
-        order.setWagon(wagonField.getText());
-        order.setWeight(weightField.getText());
-        order.setRate(rateField.getText());
-        order.setRateCurrency(rateCurrencyField.getText());
-        order.setProvider(providerField.getText());
-        order.setRoadsToPay(payRoadsField.getText());
-      codesOrdersRepository.save(order);
-            TopPaneController tpc=(TopPaneController) topPaneView.getController();
+        saveButton.setOnAction(event -> {
+            System.out.println(model.getPreviuosCodesOrders().getValue().getCargo());
+            CodesOrders order = model.getCodesOrders();
+            order.setFileID(fileField.getText());
+            if (stDispCombo.getValue() != null) {
+                order.setStationOfDispatch(stDispCombo.getValue());
+            }
+
+            if (stDestCombo.getValue() != null) {
+                order.setStationOfDestination(stDestCombo.getValue());
+            }
+
+            if (consiNameCombo.getValue() != null) {
+                order.setConsignee(consiNameCombo.getValue());
+            }
+            order.setCargo(cargoArea.getText());
+            order.setUnit(containerField.getText());
+            order.setWagon(wagonField.getText());
+            order.setWeight(weightField.getText());
+            order.setRate(rateField.getText());
+            order.setRateCurrency(rateCurrencyField.getText());
+            order.setProvider(providerField.getText());
+            order.setRoadsToPay(payRoadsField.getText());
+            codesOrdersRepository.save(order);
+            TopPaneController tpc = (TopPaneController) topPaneView.getController();
             tpc.updateState();
             tpc.getRecordInfo();
             mvu.showHomeTab();
-      
-    });
+
+        });
     }
-   
+
+    public ComboBox<Station> getStDispCombo() {
+        return stDispCombo;
+    }
+
+    public ComboBox<Station> getStDestCombo() {
+        return stDestCombo;
+    }
+
+    public ComboBox<Persons> getConsiNameCombo() {
+        return consiNameCombo;
+    }
+
+ 
 }

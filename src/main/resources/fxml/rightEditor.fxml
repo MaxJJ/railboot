@@ -6,7 +6,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
@@ -17,15 +16,40 @@
 
 <FlowPane fx:id="rightFlowPane" hgap="4.0" maxWidth="-Infinity" prefWidth="900.0" prefWrapLength="1200.0" rowValignment="TOP" vgap="4.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lv.rtme.fxui.rightEditor.RightEditorController">
    <children>
-      <ToolBar minWidth="-Infinity" prefHeight="40.0" prefWidth="900.0">
-        <items>
+      <HBox fx:id="toolHboxCoEditor" maxWidth="-Infinity" minHeight="-Infinity" prefWidth="900.0" spacing="6.0">
+         <children>
             <Button fx:id="saveButton" mnemonicParsing="false" text="Сохранить">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-        </items>
-      </ToolBar>
+            <HBox alignment="TOP_RIGHT" spacing="6.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <Button fx:id="newButtonCoEditor" mnemonicParsing="false" text="Создать новый">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="copyButtonCoEditor" mnemonicParsing="false" text="Копировать">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="cancelButtonCoEditor" alignment="TOP_LEFT" mnemonicParsing="false" text="Отменить изменения" textAlignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+               </children>
+               <HBox.margin>
+                  <Insets right="8.0" />
+               </HBox.margin>
+            </HBox>
+         </children>
+         <FlowPane.margin>
+            <Insets />
+         </FlowPane.margin>
+      </HBox>
       <VBox prefHeight="350.0" prefWidth="350.0" spacing="3.0">
          <children>
             <HBox alignment="TOP_CENTER">
@@ -233,7 +257,6 @@
             <Insets bottom="6.0" right="6.0" />
          </FlowPane.margin>
       </GridPane>
-      <VBox prefHeight="350.0" prefWidth="350.0" />
    </children>
    <padding>
       <Insets left="6.0" top="6.0" />

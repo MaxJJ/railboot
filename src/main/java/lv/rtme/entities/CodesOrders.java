@@ -1,5 +1,6 @@
 package lv.rtme.entities;
 
+import java.io.File;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,7 +24,6 @@ public class CodesOrders {
     
     @OneToOne
     @JoinColumn(name = "dispatchstation_fk")
-  
     private Station stationOfDispatch;
 
     @OneToOne
@@ -34,25 +34,39 @@ public class CodesOrders {
     @JoinColumn(name = "consignee_fk")
     private Persons consignee;
     
+    private String customTag;
+    
     @Lob
     private String cargo;
     private String weight;
+    private Double cargoWeightDouble;
     
     private String wagon;
+    private String unit;
+    private Double containerTare;
+    private Double cargoTotalGross;
+    
     private String provider;
     private String rate;
+    private Double rateDouble;
     private String rateCurrency;
     private Double guardRate;
     private String guardCurrency;
-    private String unit;
     private String roadsToPay;
+    
+    private Double totalRate;
+    
     private boolean isOrdered;
+    private boolean isRequested;
     
     private Date orderedOnDate;
+    private Date requestedOnDate;
+    
+    private File fileFilder;
 
-    private Integer containerTare;
-    private String customTag;
     private String reservationName;
+    
+    
 
     @Override
     public String toString() {
@@ -223,11 +237,11 @@ public class CodesOrders {
         this.guardCurrency = guardCurrency;
     }
 
-    public Integer getContainerTare() {
+    public Double getContainerTare() {
         return containerTare;
     }
 
-    public void setContainerTare(Integer containerTare) {
+    public void setContainerTare(Double containerTare) {
         this.containerTare = containerTare;
     }
 
@@ -237,6 +251,62 @@ public class CodesOrders {
 
     public void setCustomTag(String customTag) {
         this.customTag = customTag;
+    }
+
+    public Double getCargoWeightDouble() {
+        return cargoWeightDouble;
+    }
+
+    public void setCargoWeightDouble(Double cargoWeightDouble) {
+        this.cargoWeightDouble = cargoWeightDouble;
+    }
+
+    public Double getCargoTotalGross() {
+        return cargoTotalGross;
+    }
+
+    public void setCargoTotalGross(Double cargoTotalGross) {
+        this.cargoTotalGross = cargoTotalGross;
+    }
+
+    public Double getRateDouble() {
+        return rateDouble;
+    }
+
+    public void setRateDouble(Double rateDouble) {
+        this.rateDouble = rateDouble;
+    }
+
+    public Double getTotalRate() {
+        return totalRate;
+    }
+
+    public void setTotalRate(Double totalRate) {
+        this.totalRate = totalRate;
+    }
+
+    public boolean isIsRequested() {
+        return isRequested;
+    }
+
+    public void setIsRequested(boolean isRequested) {
+        this.isRequested = isRequested;
+    }
+
+    public Date getRequestedOnDate() {
+        return requestedOnDate;
+    }
+
+    public void setRequestedOnDate(Date requestedOnDate) {
+        this.requestedOnDate = requestedOnDate;
+    }
+
+    public File getFileFilder() {
+        return fileFilder;
+    }
+
+    public void setFileFilder(File fileFilder) {
+        this.fileFilder = fileFilder;
     }
 
   
