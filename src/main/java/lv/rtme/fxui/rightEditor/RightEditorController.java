@@ -24,7 +24,7 @@ import lv.rtme.entities.Persons;
 import lv.rtme.entities.Station;
 import lv.rtme.fxui.MainViewUtils;
 import lv.rtme.fxui.UtilBeansCollection;
-import lv.rtme.fxui.mainView.MainViewControllers;
+import lv.rtme.fxui.mainView.ApplicationViewsAndControllers;
 import lv.rtme.fxui.mainView.TopPaneController;
 import lv.rtme.fxui.models.CodesOrderModel;
 import lv.rtme.repositories.CodesOrdersRepository;
@@ -108,7 +108,7 @@ public class RightEditorController implements Initializable {
     private CodesOrdersRepository codesOrdersRepository;
     @Qualifier("topPaneView")
     @Autowired
-    MainViewControllers.View topPaneView;
+    ApplicationViewsAndControllers.View topPaneView;
     @Autowired
     MainViewUtils mvu;
 
@@ -239,8 +239,8 @@ public class RightEditorController implements Initializable {
             order.setRoadsToPay(payRoadsField.getText());
             codesOrdersRepository.save(order);
             TopPaneController tpc = (TopPaneController) topPaneView.getController();
-            tpc.updateState();
-            tpc.getRecordInfo();
+//            tpc.updateState();
+//            tpc.getRecordInfo();
             mvu.showHomeTab();
 
         });

@@ -11,16 +11,26 @@ import org.springframework.context.annotation.Configuration;
  * Controllers and Views for MainView
   */
 @Configuration
-public class MainViewControllers {
+public class ApplicationViewsAndControllers {
 
     @Bean(name = "topPaneView")
     public View getTopPaneView() throws IOException {
         return loadView("fxml/topPaneMainView.fxml");
     }
+      @Bean(name = "topPaneSelectedItemView")
+    public View getTopPaneSelectedItemView() throws IOException {
+        return loadView("fxml/selectedViewTopPane.fxml");
+    }
+    
     
       @Bean
     public TopPaneController getTopPaneController() throws IOException {
         return (TopPaneController) getTopPaneView().getController();
+    }
+    
+      @Bean
+    public SelectedItemTopPaneController getTopPaneSelectedItemController() throws IOException {
+        return (SelectedItemTopPaneController) getTopPaneSelectedItemView().getController();
     }
     
     

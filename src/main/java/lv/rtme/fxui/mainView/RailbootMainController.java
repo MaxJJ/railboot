@@ -19,9 +19,6 @@ import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -30,6 +27,7 @@ import lv.rtme.ConfigurationControllers;
 import lv.rtme.entities.CodesOrders;
 import lv.rtme.fxui.MainViewUtils;
 import lv.rtme.fxui.UtilBeansCollection;
+import lv.rtme.fxui.mainView.actions.RailbootMainActions;
 import lv.rtme.fxui.models.CodesOrderModel;
 import lv.rtme.reportsService.ReportPrintService;
 import lv.rtme.repositories.CodesOrdersRepository;
@@ -103,20 +101,22 @@ public class RailbootMainController {
     private ConfigurationControllers.View rightEditorView;
     @Qualifier("topPaneView")
      @Autowired
-     MainViewControllers.View topPaneView;
+     ApplicationViewsAndControllers.View topPaneView;
     @Autowired
     UtilBeansCollection utils;
     @Autowired
     MainViewUtils mvu;
+    
+    @Autowired
+    RailbootMainActions actions;
+    
     @Autowired
     ReportPrintService printer;
     @Autowired
     private CodesOrdersRepository repository;
     @Autowired
     private CodesTableService service;
-    @Qualifier("coModel")
-    @Autowired
-    private CodesOrderModel model;
+    
     @Autowired
     private StationRepository stationRepository;
     @Autowired
@@ -147,6 +147,8 @@ public class RailbootMainController {
     @PostConstruct
     public void init() {
         
+        actions.initialSetting();
+        
         mvu.showHomeTab();
         mvu.setCombosItems();
         
@@ -169,29 +171,7 @@ public class RailbootMainController {
         });
        
       
-    codesOrdersTable.setOnMousePressed((MouseEvent event) -> {
-        if (event.isPrimaryButtonDown() && event.getClickCount() == 1) {
-            
-           CodesOrders coCheck =  codesOrdersTable.getSelectionModel().getSelectedItem().getCodesOrders();
-           if(coCheck !=null && !coCheck.getFileID().isEmpty()){
-            model.init(coCheck);
-         TopPaneController topPaneController = (TopPaneController) topPaneView.getController();   
-       topPaneController.getRecordInfo();
-           }
-        }
-        });
-    
-    codesOrdersTable.setOnKeyPressed((KeyEvent event) -> {
-        if (event.getCode()==KeyCode.ENTER || event.getCode()==KeyCode.SPACE) {
-            
-           CodesOrders coCheck =  codesOrdersTable.getSelectionModel().getSelectedItem().getCodesOrders();
-           if(coCheck !=null && !coCheck.getFileID().isEmpty()){
-            model.init(coCheck);
-         TopPaneController topPaneController = (TopPaneController) topPaneView.getController();   
-       topPaneController.getRecordInfo();
-           }
-        }
-        });
+   
     
     
    
@@ -232,8 +212,13 @@ public class RailbootMainController {
     public TabPane getHomeTabPane() {
        return mainTabPane;
     }
+
+    public TableView<CodesOrderModel> getCodesOrdersTable() {
+        return codesOrdersTable;
+    }
    
 
+    
     
  }
         

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<HBox maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="130.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lv.rtme.fxui.mainView.SelectedItemTopPaneController">
+   <children>
+      <VBox fx:id="recordInfoVBox" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="130.0" prefWidth="500.0">
+         <children>
+            <HBox fx:id="firstHBox" minHeight="-Infinity" prefHeight="30.0" spacing="6.0">
+               <children>
+                  <Label fx:id="idLabel" textFill="#0f0475">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="tagLabel" layoutX="10.0" layoutY="10.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" minHeight="-Infinity" prefHeight="30.0">
+               <children>
+                  <Label fx:id="stDispLabel" maxWidth="-Infinity" prefWidth="250.0">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="stDestLabel" layoutX="10.0" layoutY="10.0" maxWidth="-Infinity" prefWidth="250.0">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox layoutX="10.0" layoutY="10.0" minHeight="-Infinity" prefHeight="30.0" spacing="6.0">
+               <children>
+                  <Label fx:id="providerLabel">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="roadsLabel" layoutX="10.0" layoutY="10.0">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="70.0" minHeight="-Infinity" prefHeight="30.0" spacing="6.0">
+               <children>
+                  <Label fx:id="wagonLabel" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="250.0">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="containerLabel" layoutX="10.0" layoutY="10.0" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="250.0">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox fx:id="buttonsHBox" spacing="4.0" />
+         </children>
+      </VBox>
+      <VBox>
+         <children>
+            <GridPane maxHeight="-Infinity" maxWidth="-Infinity">
+              <columnConstraints>
+                <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="76.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="80.0" minWidth="-Infinity" prefWidth="80.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="-Infinity" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="200.0" prefWidth="200.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="-Infinity" prefHeight="20.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="-Infinity" prefHeight="20.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="-Infinity" prefHeight="20.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label alignment="CENTER_RIGHT" text="БРУТТО :" textAlignment="RIGHT" GridPane.halignment="RIGHT" />
+                  <Label text="КРЕПЛЕНИЕ :" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+                  <Label text="ТАРА :" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+                  <Label fx:id="grossWeightLabel" GridPane.columnIndex="1" />
+                  <Label fx:id="lashingLabel" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label fx:id="tareLabel" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label text="СТАВКА :" GridPane.columnIndex="3" GridPane.halignment="RIGHT" />
+                  <Label text="ОХРАНА :" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+                  <Label fx:id="rateLabel" GridPane.columnIndex="4" />
+                  <Label fx:id="guardRateLabel" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+               </children>
+            </GridPane>
+            <Separator maxWidth="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefWidth="500.0" />
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+         </children>
+      </VBox>
+   </children>
+</HBox>

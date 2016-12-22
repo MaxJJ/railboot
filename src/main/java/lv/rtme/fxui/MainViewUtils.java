@@ -12,7 +12,7 @@ import javafx.scene.layout.StackPane;
 import lv.rtme.ConfigurationControllers;
 import lv.rtme.entities.Persons;
 import lv.rtme.entities.Station;
-import lv.rtme.fxui.mainView.MainViewControllers;
+import lv.rtme.fxui.mainView.ApplicationViewsAndControllers;
 import lv.rtme.fxui.mainView.RailbootMainController;
 import lv.rtme.fxui.models.CodesOrderModel;
 import lv.rtme.fxui.rightEditor.RightEditorController;
@@ -32,7 +32,7 @@ public class MainViewUtils {
 
     @Qualifier("homeView")
     @Autowired
-    private MainViewControllers.View homeView;
+    private ApplicationViewsAndControllers.View homeView;
 
     @Qualifier("railbootMainView")
     @Autowired
