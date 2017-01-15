@@ -10,19 +10,18 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <HBox maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="130.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lv.rtme.fxui.mainView.SelectedItemTopPaneController">
    <children>
       <VBox fx:id="recordInfoVBox" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="130.0" prefWidth="500.0">
          <children>
             <HBox fx:id="firstHBox" minHeight="-Infinity" prefHeight="30.0" spacing="6.0">
                <children>
-                  <Label fx:id="idLabel" textFill="#0f0475">
+                  <Label fx:id="idLabel" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="100.0" textFill="#0f0475">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="tagLabel" layoutX="10.0" layoutY="10.0">
+                  <Label fx:id="tagLabel" layoutX="10.0" layoutY="10.0" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="400.0">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -45,12 +44,12 @@
             </HBox>
             <HBox layoutX="10.0" layoutY="10.0" minHeight="-Infinity" prefHeight="30.0" spacing="6.0">
                <children>
-                  <Label fx:id="providerLabel">
+                  <Label fx:id="providerLabel" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="250.0">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="roadsLabel" layoutX="10.0" layoutY="10.0">
+                  <Label fx:id="roadsLabel" layoutX="10.0" layoutY="10.0" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="250.0">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -104,6 +103,22 @@
             </GridPane>
             <Separator maxWidth="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefWidth="500.0" />
             <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+            <GridPane>
+              <columnConstraints>
+                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label text="СТАВКА ЗАПРОШЕНА: " />
+                  <Label fx:id="requestedOnLabel" GridPane.columnIndex="1" />
+                  <Label text="КОДЫ ЗАКАЗАНЫ : " GridPane.rowIndex="1" />
+                  <Label fx:id="orderedOnLabel" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+               </children>
+            </GridPane>
          </children>
       </VBox>
    </children>

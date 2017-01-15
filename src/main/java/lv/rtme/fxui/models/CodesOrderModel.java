@@ -113,6 +113,7 @@ public class CodesOrderModel {
             this.consigneeObjectProperty.setValue(new Persons());
         }
       
+        
       this.customTagProperty.setValue(codesOrders.getCustomTag());
       
       this.cargoProperty.setValue(codesOrders.getCargo());

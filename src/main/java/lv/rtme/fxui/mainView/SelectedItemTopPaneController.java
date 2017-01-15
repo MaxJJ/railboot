@@ -49,6 +49,10 @@ public class SelectedItemTopPaneController {
     private Label rateLabel;
     @FXML
     private Label guardRateLabel;
+    @FXML
+    private Label requestedOnLabel;
+    @FXML
+    private Label orderedOnLabel;
     
     
  public void initialize() {  }

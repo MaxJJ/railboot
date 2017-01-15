@@ -13,6 +13,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javax.annotation.PostConstruct;
+import lv.rtme.entities.CodesOrders;
 import lv.rtme.fxui.mainView.ApplicationViewsAndControllers;
 import lv.rtme.fxui.mainView.SelectedItemTopPaneController;
 import lv.rtme.fxui.models.CodesOrderModel;
@@ -52,8 +53,8 @@ public class SelectedItemTopPaneActions {
      recordInfoVBox().setVisible(true);
         firstHBox().setVisible(true);
       
-        idLabel().setText(model.getCodesOrders().getFileID());
-        tagLabel().setText(model.getCodesOrders().getCustomTag());
+        idLabel().setText(codesOrders().getFileID());
+        tagLabel().setText(codesOrders().getCustomTag());
 //        stDispLabel.setText(model.getCodesOrders().getStationOfDispatch().getStationName());
 
         stDispLabel().textProperty().bind(model.getStationOfDispatchProperty());
@@ -65,6 +66,10 @@ public class SelectedItemTopPaneActions {
         roadsLabel().setText(model.getCodesOrders().getRoadsToPay());
        roadsLabel().setGraphic(new Glyph("FontAwesome",FontAwesome.Glyph.TRAIN));
        
+       wagonLabel().setText(codesOrders().getWagon());
+       containerLabel().setText(codesOrders().getUnit());
+       
+       grossWeightLabel().setText(codesOrders().getWeight());
        
        
        tagLabel().onMouseEnteredProperty().set(new EventHandler<MouseEvent>() {
@@ -135,6 +140,24 @@ public class SelectedItemTopPaneActions {
 
     private Label roadsLabel() {
        return  selectedItemTopPaneController.getRoadsLabel();
+    }
+
+    private Label wagonLabel() {
+       return selectedItemTopPaneController.getWagonLabel();
+    }
+
+    private CodesOrders codesOrders() {
+        return model.getCodesOrders();
+    }
+
+    private Label containerLabel() {
+       
+        return selectedItemTopPaneController.getContainerLabel();
+    }
+
+    private Label grossWeightLabel() {
+        
+        return selectedItemTopPaneController.getGrossWeightLabel();
     }
     
 }

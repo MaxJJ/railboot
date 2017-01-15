@@ -57,10 +57,20 @@ public class TopPaneActions {
 
    public void showInfo() {
    Parent infoView = selectedItemTopPaneActions.getSelectedItemView();
-       topPaneController.getCenterStackPane().getChildren().clear();
+     clearIt();
        topPaneController.getCenterStackPane().getChildren().add(infoView);
     }
+    public void showMessage(String message) {
+       
+       Text messageText = new Text(message);
+      clearIt();
+      topPaneController.getCenterStackPane().getChildren().add(messageText);
+    }
    
+    private void clearIt(){
+        
+        topPaneController.getCenterStackPane().getChildren().clear();
+    }
    
     private Text dateText() {
        return topPaneController.getDateText();
@@ -73,6 +83,11 @@ public class TopPaneActions {
     private Label notOrderedLabel() {
         return topPaneController.getNotOrderedLabel();
     }
+
+    public TopPaneController getTopPaneController() {
+        return topPaneController;
+    }
+
 
     
     

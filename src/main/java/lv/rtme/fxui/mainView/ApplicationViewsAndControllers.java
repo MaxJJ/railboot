@@ -22,12 +22,29 @@ public class ApplicationViewsAndControllers {
         return loadView("fxml/selectedViewTopPane.fxml");
     }
     
+       @Bean(name = "mainTableView")
+    public View getMainTableView() throws IOException {
+        return loadView("fxml/mainTable.fxml");
+    }
+         @Bean(name = "mainEditorView")
+    public View getMainEditorView() throws IOException {
+        return loadView("fxml/mainEditor.fxml");
+    }
     
+    
+      @Bean
+    public MainEditorController getMainEditorController() throws IOException {
+        return (MainEditorController) getMainEditorView().getController();
+    }
       @Bean
     public TopPaneController getTopPaneController() throws IOException {
         return (TopPaneController) getTopPaneView().getController();
     }
     
+      @Bean
+    public MainTableViewController getMainTableController() throws IOException {
+        return (MainTableViewController) getMainTableView().getController();
+    }
       @Bean
     public SelectedItemTopPaneController getTopPaneSelectedItemController() throws IOException {
         return (SelectedItemTopPaneController) getTopPaneSelectedItemView().getController();
