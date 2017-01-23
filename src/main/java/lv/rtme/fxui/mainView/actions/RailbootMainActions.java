@@ -5,10 +5,7 @@
  */
 package lv.rtme.fxui.mainView.actions;
 
-import javafx.scene.control.Button;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TableView;
-import javafx.scene.text.Text;
 import javax.annotation.PostConstruct;
 import lv.rtme.ConfigurationControllers;
 import lv.rtme.fxui.mainView.ApplicationViewsAndControllers;
@@ -62,62 +59,19 @@ public class RailbootMainActions {
     
     public void initialSetting() {
 
-        railbootMainController.getHomeTab().setContent(mainTableViewActions.showMainTableView());
-  setNewButton();
-  setEditButton();
-
+//        railbootMainController.getHomeTab().setContent(mainTableViewActions.showMainTableView());
+//  setNewButton();
+//  setEditButton();
+//
     }
 
     private TableView<CodesOrderModel> codesOrdersTable() {
         return railbootMainController.getCodesOrdersTable();
     }
 
-    private void deleteButton() {
 
-        railbootMainController.getDeleteButton().setOnAction((event) -> {
-
-            String text = "ФАЙЛ " + model.getCodesOrders().getFileID() + " УДАЛЕН";
-            codesOrdersRepository.delete(model.getCodesOrders());
-            topPaneActions.updateState();
-            topPaneActions.getTopPaneController().getCenterStackPane().getChildren().clear();
-            topPaneActions.getTopPaneController().getCenterStackPane().getChildren().add(new Text(text));
-
-        });
     }
 
-    private void setNewButton() {
-        newButton().setOnAction((event) -> {
-            
-            topPaneActions.showMessage("НОВЫЙ ФАЙЛ");
-            
-            homeTab().setContent(mainEditorActions.showEmpty());
-
-        });
-    }
-
-    private void setEditButton() {
-     
- editButton().setOnAction((event)->{
-     
-     topPaneActions.showMessage("РЕДАКТИРУЕТСЯ ФАЙЛ - "+model.getFileIdProperty().getValueSafe());
-      homeTab().setContent(mainEditorActions.showFilledWith(model.getCodesOrders()));
-      
-    
- });
-    }
-    private Button newButton() {
-      
-        return railbootMainController.getNewButton();
-    }
-
-    private Tab homeTab() {
-        
-     return railbootMainController.getHomeTab();
-    }
-
-    private Button editButton() {
-      return railbootMainController.getEditButton();
-    }
 
 
  
@@ -125,4 +79,4 @@ public class RailbootMainActions {
     
     
     
-}
+

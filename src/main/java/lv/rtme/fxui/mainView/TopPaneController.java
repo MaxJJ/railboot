@@ -29,9 +29,6 @@ public class TopPaneController {
      @Qualifier("stationsEditor")
     @Autowired
     private ConfigurationControllers.View stationsEditorView;
-     @Qualifier("rightEditor")
-    @Autowired
-    private ConfigurationControllers.View rightEditorView; 
      @Qualifier("railbootMainView")
     @Autowired
     private ConfigurationControllers.View mainView; 

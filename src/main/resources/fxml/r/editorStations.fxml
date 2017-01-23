@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lv.rtme.fxui.mainView.MainEditorController">
+   <children>
+      <VBox spacing="6.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Hyperlink alignment="TOP_LEFT" text="СТАНЦИЯ ОТПРАВЛЕНИЯ">
+               <VBox.margin>
+                  <Insets left="10.0" top="10.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Hyperlink>
+            <Hyperlink alignment="TOP_LEFT" layoutX="20.0" layoutY="20.0" text="СТАНЦИЯ НАЗНАЧЕНИЯ">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="10.0" />
+               </VBox.margin>
+            </Hyperlink>
+            <HBox spacing="6.0">
+               <children>
+                  <TextField HBox.hgrow="ALWAYS" />
+                  <Button mnemonicParsing="false" text="Сохранить" />
+               </children>
+               <VBox.margin>
+                  <Insets left="12.0" right="12.0" top="10.0" />
+               </VBox.margin>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </HBox>
+            <ListView VBox.vgrow="ALWAYS">
+               <VBox.margin>
+                  <Insets bottom="20.0" left="12.0" right="12.0" />
+               </VBox.margin>
+            </ListView>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

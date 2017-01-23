@@ -36,6 +36,8 @@ public class CodesOrderModel {
 
     private CodesOrders codesOrders;
     
+    
+    
      //----------- FX Properties  ---------------------------------
     private LongProperty idLongProperty = new SimpleLongProperty();
     

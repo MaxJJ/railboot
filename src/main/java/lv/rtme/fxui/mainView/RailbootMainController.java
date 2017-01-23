@@ -6,22 +6,19 @@
 package lv.rtme.fxui.mainView;
 
 import java.util.ArrayList;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TableRow;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.ToolBar;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javax.annotation.PostConstruct;
+import lombok.Getter;
 import lv.rtme.ConfigurationControllers;
 import lv.rtme.fxui.MainViewUtils;
 import lv.rtme.fxui.UtilBeansCollection;
 import lv.rtme.fxui.mainView.actions.RailbootMainActions;
+import lv.rtme.fxui.mainView.settings.RailbootMainViewSettings;
 import lv.rtme.fxui.models.CodesOrderModel;
 import lv.rtme.reportsService.ReportPrintService;
 import lv.rtme.services.ReadAndPopulate;
@@ -38,18 +35,16 @@ public class RailbootMainController {
     
       
     /*---------AUTOWIRED---------*/
+    @Autowired
+    private RailbootMainViewSettings set;
+    
     
     @Autowired
     ReadAndPopulate readerX;
     @Qualifier("stationsEditor")
     @Autowired
     private ConfigurationControllers.View stationsEditorView;
-    @Qualifier("personsEditor")
-    @Autowired
-    private ConfigurationControllers.View personsEditorView;
-    @Qualifier("rightEditor")
-    @Autowired
-    private ConfigurationControllers.View rightEditorView;
+    
     @Qualifier("topPaneView")
      @Autowired
      ApplicationViewsAndControllers.View topPaneView;
@@ -68,50 +63,28 @@ public class RailbootMainController {
     private Logger logger = LoggerFactory.getLogger(RailbootMainController.class);
     private ArrayList<Node> oblist = new ArrayList<>();
     /* FXML FIELDS */
-   
-    @FXML
-    private HBox topCenterHBox;
-     
-    @FXML
-    private Button newButton;
-  
+    @FXML @Getter
     private TableView<CodesOrderModel> codesOrdersTable;
  
-    @FXML
-    private HBox toolHBox;
-    @FXML
-    private Tab homeTab;
-    @FXML
-    private StackPane homeTabStackPane;
+    @FXML @Getter
+    private TextField searchTextField;
+    @FXML @Getter
+    private AnchorPane tableAnchorPane;
+    @FXML @Getter
+    private TableColumn<CodesOrderModel, String> fileID;
+    @FXML @Getter
+    private TableColumn<CodesOrderModel, String> stDispatch;
+    @FXML @Getter
+    private TableColumn<CodesOrderModel, String> stDestination;
+    @FXML @Getter
+    private TableColumn<CodesOrderModel, String> cargo;
+    @FXML @Getter
+    private TableColumn<CodesOrderModel, String> wagon;
+    @FXML @Getter
+    private TableColumn<CodesOrderModel, String> container;
+    @FXML @Getter
+    private TableColumn<CodesOrderModel, String> rate;
     
-
-    private TableRow<CodesOrderModel> row;
-    private ObservableList<CodesOrderModel> data;
-    @FXML
-    private TabPane mainTabPane;
-    @FXML
-    private Button deleteButton;
-    @FXML
-    private Button copyButton;
-    @FXML
-    private Button cancelButton;
-    @FXML
-    private Button requestButton;
-    @FXML
-    private Button printCodesButton;
-    @FXML
-    private Tab stationsTab;
-    @FXML
-    private Tab personsTab;
-    @FXML
-    private Button editButton;
-    @FXML
-    private ToolBar requestToolBar;
-    
-    
-   
-    
-  
     /*-----------------------------------------------------------------------------------------*/
 
    public void initialize() {  }
@@ -120,66 +93,14 @@ public class RailbootMainController {
     @SuppressWarnings("unchecked")
     @PostConstruct
     public void init() {
-        
-        actions.initialSetting();
-        
-        mvu.showHomeTab();
-        mvu.setCombosItems();
-        
-        
-        
-        topCenterHBox.getChildren().addAll(topPaneView.getView().getChildrenUnmodifiable());
-       
      
-        
+        set.table();
+        set.searchTextField();
    
     }
             
 
     
-    public StackPane getHomeTabStackPane() {
-        return homeTabStackPane;
-    }
-
-
-    public Tab getHomeTab() {
-       return homeTab;
-    }
-    public TabPane getHomeTabPane() {
-       return mainTabPane;
-    }
-
-    public TableView<CodesOrderModel> getCodesOrdersTable() {
-        return codesOrdersTable;
-    }
-
-    public Button getDeleteButton() {
-        return deleteButton;
-    }
-
-    public Button getNewButton() {
-        return newButton;
-    }
-
-    public Button getCopyButton() {
-        return copyButton;
-    }
-
-    public Button getCancelButton() {
-        return cancelButton;
-    }
-
-    public Tab getStationsTab() {
-        return stationsTab;
-    }
-
-    public Button getEditButton() {
-        return editButton;
-    }
-
-    public Tab getPersonsTab() {
-        return personsTab;
-    }
    
 
     

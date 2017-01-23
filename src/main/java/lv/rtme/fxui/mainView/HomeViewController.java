@@ -12,7 +12,6 @@ import java.util.StringTokenizer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javax.annotation.PostConstruct;
 import lv.rtme.entities.CodesOrders;
@@ -74,7 +73,6 @@ public class HomeViewController implements Initializable {
     @SuppressWarnings("unchecked")
     @PostConstruct
     public void init(){
-        setButtonsPropsAndActions();
         readFromExcell();
         readButton.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.EDIT));
         
@@ -98,7 +96,7 @@ public class HomeViewController implements Initializable {
              setSearch();
              
            
-             mvu.setCombosItems();
+       
              readButton.setDisable(true);
              
          });
@@ -126,23 +124,7 @@ public class HomeViewController implements Initializable {
     }
 
 
-    private void setButtonsPropsAndActions() {
-        setHomeNewButton();
-         
-    }
 
-    private void setHomeNewButton() {
-        homeNewButton.setOnAction(event ->{
-         mvu.showHomeTab();
-         CodesOrders newCo= new CodesOrders();
-         
-         mvu.getCodesOrderModel().init(newCo);
-         mvu.returnHomeTabStackPane().getChildren().clear();
-         Parent coEditorView = mvu.getCoEditorView();
-         mvu.returnHomeTabStackPane().getChildren().addAll(coEditorView);
-         mvu.returnHomeTab().setText("Новый");
-            
-        });
     }
     
-}
+

@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javax.annotation.PostConstruct;
 import lv.rtme.fxui.mainView.RailbootMainController;
 import lv.rtme.fxui.personsEditorView.PersonsEditorController;
-import lv.rtme.fxui.rightEditor.RightEditorController;
 import lv.rtme.fxui.stationsEditorView.StationEditorActions;
 import lv.rtme.fxui.stationsEditorView.StationsEditorController;
 import org.springframework.context.annotation.Bean;
@@ -24,7 +24,7 @@ public class ConfigurationControllers {
 
     @Bean(name = "railbootMainView")
     public View getMainView() throws IOException {
-        return loadView("fxml/railbootMain.fxml");
+        return loadView("fxml/r/mainView.fxml");
     }
     
     @Bean(name = "stationsEditor")
@@ -34,10 +34,6 @@ public class ConfigurationControllers {
     @Bean(name = "personsEditor")
     public View getPersonsEditorView() throws IOException {
         return loadView("fxml/personsEditor.fxml");
-    }
-    @Bean(name = "rightEditor")
-    public View getRightEditorView() throws IOException {
-        return loadView("fxml/rightEditor.fxml");
     }
     
     
@@ -50,7 +46,7 @@ public class ConfigurationControllers {
 //    public MainController getMainController() throws IOException {
 //        return (MainController) getMainView().getController();
 //    }
-    
+     @PostConstruct
       @Bean
     public RailbootMainController getMainController() throws IOException {
         return (RailbootMainController) getMainView().getController();
@@ -64,10 +60,6 @@ public class ConfigurationControllers {
     @Bean
     public PersonsEditorController getPersonsEditorController() throws IOException {
         return (PersonsEditorController) getPersonsEditorView().getController();
-    }
-    @Bean
-    public RightEditorController getRightEditorController() throws IOException {
-        return (RightEditorController) getRightEditorView().getController();
     }
     
    @Bean(name = "actions")
