@@ -42,6 +42,7 @@ public class CodesTableService {
 
     public void setInList(List<CodesOrders> inList) {
         this.inList = inList;
+       
     }
 
     public ObservableList<CodesOrderModel> getData() {

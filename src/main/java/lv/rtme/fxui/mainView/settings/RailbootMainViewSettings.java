@@ -52,6 +52,7 @@ public class RailbootMainViewSettings {
                 controller.getCodesOrdersTable().getItems().clear();
                 List<CodesOrders> que = codesOrdersRepository.findBySearchStringLikeIgnoreCase("%" + newValue + "%");
                 controller.getCodesOrdersTable().setItems(observableCodesOrderModelList(que));
+                
             }
         });
     }
