@@ -6,6 +6,7 @@
 package lv.rtme.fxui.mainView;
 
 import java.util.ArrayList;
+import java.util.List;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.TableColumn;
@@ -15,12 +16,15 @@ import javafx.scene.layout.AnchorPane;
 import javax.annotation.PostConstruct;
 import lombok.Getter;
 import lv.rtme.ConfigurationControllers;
+import lv.rtme.entities.CodesOrders;
 import lv.rtme.fxui.MainViewUtils;
 import lv.rtme.fxui.UtilBeansCollection;
 import lv.rtme.fxui.mainView.actions.RailbootMainActions;
 import lv.rtme.fxui.mainView.settings.RailbootMainViewSettings;
 import lv.rtme.fxui.models.CodesOrderModel;
+import lv.rtme.fxui.models.CodesOrdersProperties;
 import lv.rtme.reportsService.ReportPrintService;
+import lv.rtme.repositories.CodesOrdersRepository;
 import lv.rtme.services.ReadAndPopulate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +41,8 @@ public class RailbootMainController {
     /*---------AUTOWIRED---------*/
     @Autowired
     private RailbootMainViewSettings set;
-    
+    @Autowired
+    CodesOrdersRepository codesOrdersRepository;
     
     @Autowired
     ReadAndPopulate readerX;
@@ -64,26 +69,26 @@ public class RailbootMainController {
     private ArrayList<Node> oblist = new ArrayList<>();
     /* FXML FIELDS */
     @FXML @Getter
-    private TableView<CodesOrderModel> codesOrdersTable;
+    private TableView<CodesOrdersProperties> codesOrdersTable;
  
     @FXML @Getter
     private TextField searchTextField;
     @FXML @Getter
     private AnchorPane tableAnchorPane;
     @FXML @Getter
-    private TableColumn<CodesOrderModel, String> fileID;
+    private TableColumn<CodesOrdersProperties, String> fileID;
     @FXML @Getter
-    private TableColumn<CodesOrderModel, String> stDispatch;
+    private TableColumn<CodesOrdersProperties, String> stDispatch;
     @FXML @Getter
-    private TableColumn<CodesOrderModel, String> stDestination;
+    private TableColumn<CodesOrdersProperties, String> stDestination;
     @FXML @Getter
-    private TableColumn<CodesOrderModel, String> cargo;
+    private TableColumn<CodesOrdersProperties, String> cargo;
     @FXML @Getter
-    private TableColumn<CodesOrderModel, String> wagon;
+    private TableColumn<CodesOrdersProperties, String> wagon;
     @FXML @Getter
-    private TableColumn<CodesOrderModel, String> container;
+    private TableColumn<CodesOrdersProperties, String> container;
     @FXML @Getter
-    private TableColumn<CodesOrderModel, String> rate;
+    private TableColumn<CodesOrdersProperties, String> rate;
     
     /*-----------------------------------------------------------------------------------------*/
 
@@ -93,6 +98,16 @@ public class RailbootMainController {
     @SuppressWarnings("unchecked")
     @PostConstruct
     public void init() {
+     readerX.init();
+     List<CodesOrders> x = codesOrdersRepository.findAll();
+        for (CodesOrders codesOrders : x) {
+            
+           String st="";
+           st=st.concat(codesOrders.getFileID().concat(codesOrders.getProvider()));
+           codesOrders.setSearchString(st);
+           codesOrdersRepository.save(codesOrders);
+            
+        }
      
         set.table();
         set.searchTextField();

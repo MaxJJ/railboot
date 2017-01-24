@@ -107,12 +107,14 @@ public class CodesOrdersProperties {
 
     
     public CodesOrdersProperties() {
+        co.setValue(new CodesOrders());
         addCOListener();
     
     }
     public CodesOrdersProperties(CodesOrders codesOrders) {
-        
+        addCOListener();
         co.setValue(codesOrders);
+//        co.setValue(codesOrders);
     }
     
     public void setCodesOrders(CodesOrders orders){
@@ -124,7 +126,58 @@ public class CodesOrdersProperties {
         co.addListener(new ChangeListener<CodesOrders>() {
             @Override
             public void changed(ObservableValue<? extends CodesOrders> observable, CodesOrders oldValue, CodesOrders newValue) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+               
+                   getIdLongProperty().setValue(newValue.getId());
+      getFileIdProperty().setValue(newValue.getFileID());
+     getSearchStringProperty().setValue(newValue.getSearchString());
+      
+        if (newValue.getStationOfDispatch()!=null) {
+            getStationOfDispatchProperty().setValue(newValue.getStationOfDispatch().getStationName());
+      getDispatchStationObjectProperty().setValue(newValue.getStationOfDispatch());
+        } else {
+            getStationOfDispatchProperty().setValue("");
+      getDispatchStationObjectProperty().setValue(new Station());
+        }
+        if (newValue.getStationOfDestination()!=null) {
+            getStationOfDestinationProperty().setValue(newValue.getStationOfDestination().getStationName());
+            getDestinationStationObjectProperty().setValue(newValue.getStationOfDestination());
+        } else {
+            getStationOfDestinationProperty().setValue("");
+            getDestinationStationObjectProperty().setValue(new Station());
+        }
+      
+        if (newValue.getConsignee()!=null) {
+            getConsigneeProperty().setValue(newValue.getConsignee().getSampleName());
+            getConsigneeObjectProperty().setValue(newValue.getConsignee());
+        } else {
+            getConsigneeProperty().setValue("");
+            getConsigneeObjectProperty().setValue(new Persons());
+        }
+      
+        
+      getCustomTagProperty().setValue(newValue.getCustomTag());
+      
+      getCargoProperty().setValue(newValue.getCargo());
+      getWeightProperty().setValue(newValue.getWeight());
+      getCargoWeightDoubleProperty().setValue(newValue.getCargoWeightDouble());
+      
+      getWagonProperty().setValue(newValue.getWagon());
+      getUnitProperty().setValue(newValue.getUnit());
+      getContainerTareDoubleProperty().setValue(newValue.getContainerTare());
+      getCargoTotalGrossDoubleProperty().setValue(newValue.getCargoTotalGross());
+      
+      getProviderProperty().setValue(newValue.getProvider());
+     getRateProperty().setValue(newValue.getRate());
+      getRateDoubleProperty().setValue(newValue.getRateDouble());
+      getRateCurrencyProperty().setValue(newValue.getRateCurrency());
+      getGuardRateDoubleProperty().setValue(newValue.getGuardRate());
+      getGuardCurrencyProperty().setValue(newValue.getGuardCurrency());
+      getRoadsToPayProperty().setValue(newValue.getRoadsToPay());
+      
+      getIsOrderedProperty().setValue(newValue.isIsOrdered());
+      getIsRequestedProperty().setValue(newValue.isIsRequested());
+      getOrderedOnDateProperty().setValue(newValue.getOrderedOnDate());
+      getRequestedOnDateProperty().setValue(newValue.getRequestedOnDate());
             }
         });
     }

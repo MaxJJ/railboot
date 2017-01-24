@@ -5,6 +5,8 @@
  */
 package lv.rtme.fxui.models;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -19,5 +21,12 @@ public class ModelsConfig {
     public CodesOrdersProperties getCOProps(){
         
         return new CodesOrdersProperties();
+    }
+    
+    @Bean
+    public TableItemsProperty getTableItems(){
+        
+       return new TableItemsProperty();
+        
     }
 }

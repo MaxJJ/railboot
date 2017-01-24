@@ -104,7 +104,7 @@ public class XclReader {
             System.out.println("++++++++++++++++name : " + name);
         }
         
-               for (int i = 2; i <= 190; i++) {
+               for (int i = 2; i <= 235; i++) {
                  
              stations.add(myExcelSheet.getRow(i).getCell(2).getStringCellValue());
                    

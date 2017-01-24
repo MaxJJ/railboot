@@ -12,6 +12,8 @@ import javafx.scene.control.TableColumn;
 import lv.rtme.entities.CodesOrders;
 import lv.rtme.fxui.mainView.RailbootMainController;
 import lv.rtme.fxui.models.CodesOrderModel;
+import lv.rtme.fxui.models.CodesOrdersProperties;
+import lv.rtme.fxui.models.TableItemsProperty;
 import lv.rtme.repositories.CodesOrdersRepository;
 import lv.rtme.services.CodesTableService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,18 +32,22 @@ public class RailbootMainViewSettings {
     private CodesTableService service;
     @Autowired
     CodesOrdersRepository codesOrdersRepository;
+    @Autowired
+    CodesOrdersProperties codesOrdersProperties;
+    @Autowired
+    TableItemsProperty tableItemsProperty;
     
     public void table() {
-        System.out.println(controller+"----------11111111111111-----------------------------");
-        System.out.println(controller.getCodesOrdersTable()+"-------------2222222222222222------------");
-      controller.getCodesOrdersTable().setItems(observableCodesOrderModelList(codesOrdersRepository.findAll()));
-        controller.getFileID().setCellValueFactory((TableColumn.CellDataFeatures<CodesOrderModel, String> p) -> p.getValue().getFileIdProperty());
-        controller.getCargo().setCellValueFactory((TableColumn.CellDataFeatures<CodesOrderModel, String> p) -> p.getValue().getCargoProperty());
-        controller.getStDispatch().setCellValueFactory((TableColumn.CellDataFeatures<CodesOrderModel, String> p) -> p.getValue().getStationOfDispatchProperty());
-        controller.getStDestination().setCellValueFactory((TableColumn.CellDataFeatures<CodesOrderModel, String> p) -> p.getValue().getStationOfDestinationProperty());
-        controller.getWagon().setCellValueFactory((TableColumn.CellDataFeatures<CodesOrderModel, String> p) -> p.getValue().getWagonProperty());
-        controller.getContainer().setCellValueFactory((TableColumn.CellDataFeatures<CodesOrderModel, String> p) -> p.getValue().getUnitProperty());
-        controller.getRate().setCellValueFactory((TableColumn.CellDataFeatures<CodesOrderModel, String> p) -> p.getValue().getRateProperty());
+//      controller.getCodesOrdersTable().setItems(observableCodesOrderModelList(codesOrdersRepository.findAll()));
+       tableItemsProperty.setInList(codesOrdersRepository.findAll());
+      controller.getCodesOrdersTable().setItems(tableItemsProperty.getItemsProperty().getValue());
+        controller.getFileID().setCellValueFactory((TableColumn.CellDataFeatures<CodesOrdersProperties, String> p) -> p.getValue().getFileIdProperty());
+        controller.getCargo().setCellValueFactory((TableColumn.CellDataFeatures<CodesOrdersProperties, String> p) -> p.getValue().getCargoProperty());
+        controller.getStDispatch().setCellValueFactory((TableColumn.CellDataFeatures<CodesOrdersProperties, String> p) -> p.getValue().getStationOfDispatchProperty());
+        controller.getStDestination().setCellValueFactory((TableColumn.CellDataFeatures<CodesOrdersProperties, String> p) -> p.getValue().getStationOfDestinationProperty());
+        controller.getWagon().setCellValueFactory((TableColumn.CellDataFeatures<CodesOrdersProperties, String> p) -> p.getValue().getWagonProperty());
+        controller.getContainer().setCellValueFactory((TableColumn.CellDataFeatures<CodesOrdersProperties, String> p) -> p.getValue().getUnitProperty());
+        controller.getRate().setCellValueFactory((TableColumn.CellDataFeatures<CodesOrdersProperties, String> p) -> p.getValue().getRateProperty());
         
     }
     
@@ -51,7 +57,8 @@ public class RailbootMainViewSettings {
             if (newValue.length() > 2) {
                 controller.getCodesOrdersTable().getItems().clear();
                 List<CodesOrders> que = codesOrdersRepository.findBySearchStringLikeIgnoreCase("%" + newValue + "%");
-                controller.getCodesOrdersTable().setItems(observableCodesOrderModelList(que));
+                tableItemsProperty.setInList(que);
+                controller.getCodesOrdersTable().setItems(tableItemsProperty.getItemsProperty().getValue());
                 
             }
         });
