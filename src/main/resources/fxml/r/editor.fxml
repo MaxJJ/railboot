@@ -10,45 +10,42 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lv.rtme.fxui.mainView.MainEditorController">
-   <children>
-      <SplitPane fx:id="splitPane" dividerPositions="0.3" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <items>
-          <AnchorPane fx:id="topAnchor">
+
+<SplitPane fx:id="splitPane" dividerPositions="0.3" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lv.rtme.fxui.mainView.MainEditorController">
+  <items>
+    <AnchorPane fx:id="topAnchor">
+         <children>
+            <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <VBox alignment="TOP_CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="180.0" style="-fx-border-width: 2 0 0 0; -fx-border-color: red;" HBox.hgrow="NEVER">
                      <children>
-                        <VBox alignment="TOP_CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="180.0" style="-fx-border-width: 2 0 0 0; -fx-border-color: red;" HBox.hgrow="NEVER">
-                           <children>
-                              <Hyperlink alignment="CENTER" prefWidth="180.0" text="ФАЙЛ" />
-                              <Hyperlink alignment="CENTER" contentDisplay="CENTER" text="СТАНЦИИ" />
-                              <Hyperlink alignment="CENTER" contentDisplay="CENTER" layoutX="28.0" layoutY="33.0" text="ПОЛУЧАТЕЛЬ" />
-                              <Hyperlink alignment="CENTER" contentDisplay="CENTER" layoutX="28.0" layoutY="56.0" text="ТРАНСПОРТ" />
-                              <Hyperlink alignment="CENTER" contentDisplay="CENTER" layoutX="22.0" layoutY="79.0" text="ГРУЗ" />
-                              <Hyperlink alignment="CENTER" contentDisplay="CENTER" layoutX="43.0" layoutY="102.0" text="ТАРИФ" />
-                           </children>
-                        </VBox>
-                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
-                           <children>
-                              <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <children>
-                                    <Label text="#" />
-                                    <TextField />
-                                    <Label layoutX="22.0" layoutY="16.0" text="Описание" />
-                                    <TextArea prefHeight="200.0" prefWidth="200.0" wrapText="true" />
-                                 </children>
-                                 <padding>
-                                    <Insets left="12.0" right="12.0" top="6.0" />
-                                 </padding>
-                              </VBox>
-                           </children>
-                        </AnchorPane>
+                        <Hyperlink alignment="CENTER" prefWidth="180.0" text="ФАЙЛ" />
+                        <Hyperlink alignment="CENTER" contentDisplay="CENTER" text="СТАНЦИИ" />
+                        <Hyperlink alignment="CENTER" contentDisplay="CENTER" layoutX="28.0" layoutY="33.0" text="ПОЛУЧАТЕЛЬ" />
+                        <Hyperlink alignment="CENTER" contentDisplay="CENTER" layoutX="28.0" layoutY="56.0" text="ТРАНСПОРТ" />
+                        <Hyperlink alignment="CENTER" contentDisplay="CENTER" layoutX="22.0" layoutY="79.0" text="ГРУЗ" />
+                        <Hyperlink alignment="CENTER" contentDisplay="CENTER" layoutX="43.0" layoutY="102.0" text="ТАРИФ" />
                      </children>
-                  </HBox>
+                  </VBox>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <Label text="#" />
+                              <TextField />
+                              <Label layoutX="22.0" layoutY="16.0" text="Описание" />
+                              <TextArea prefHeight="200.0" prefWidth="200.0" wrapText="true" />
+                           </children>
+                           <padding>
+                              <Insets left="12.0" right="12.0" top="6.0" />
+                           </padding>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
                </children>
-            </AnchorPane>
-          <AnchorPane fx:id="bottomAnchor" />
-        </items>
-      </SplitPane>
-   </children>
-</AnchorPane>
+            </HBox>
+         </children>
+      </AnchorPane>
+    <AnchorPane fx:id="bottomAnchor" />
+  </items>
+</SplitPane>

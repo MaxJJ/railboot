@@ -12,7 +12,16 @@ import org.springframework.context.annotation.Configuration;
   */
 @Configuration
 public class ApplicationViewsAndControllers {
-
+  
+     @Bean(name = "editor")
+    public View getEditorView() throws IOException {
+        return loadView("fxml/r/editor.fxml");
+    }
+       @Bean
+    public MainEditorController getMainEditorController() throws IOException {
+        return (MainEditorController) getEditorView().getController();
+    }
+/*------------------------------------------------------------------------*/
     @Bean(name = "topPaneView")
     public View getTopPaneView() throws IOException {
         return loadView("fxml/topPaneMainView.fxml");
@@ -32,10 +41,10 @@ public class ApplicationViewsAndControllers {
     }
     
     
-      @Bean
-    public MainEditorController getMainEditorController() throws IOException {
-        return (MainEditorController) getMainEditorView().getController();
-    }
+//      @Bean
+//    public MainEditorController getMainEditorController() throws IOException {
+//        return (MainEditorController) getMainEditorView().getController();
+//    }
       @Bean
     public TopPaneController getTopPaneController() throws IOException {
         return (TopPaneController) getTopPaneView().getController();

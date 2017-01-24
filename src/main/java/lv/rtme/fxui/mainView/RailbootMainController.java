@@ -6,9 +6,10 @@
 package lv.rtme.fxui.mainView;
 
 import java.util.ArrayList;
-import java.util.List;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -16,12 +17,10 @@ import javafx.scene.layout.AnchorPane;
 import javax.annotation.PostConstruct;
 import lombok.Getter;
 import lv.rtme.ConfigurationControllers;
-import lv.rtme.entities.CodesOrders;
 import lv.rtme.fxui.MainViewUtils;
 import lv.rtme.fxui.UtilBeansCollection;
 import lv.rtme.fxui.mainView.actions.RailbootMainActions;
 import lv.rtme.fxui.mainView.settings.RailbootMainViewSettings;
-import lv.rtme.fxui.models.CodesOrderModel;
 import lv.rtme.fxui.models.CodesOrdersProperties;
 import lv.rtme.reportsService.ReportPrintService;
 import lv.rtme.repositories.CodesOrdersRepository;
@@ -74,8 +73,6 @@ public class RailbootMainController {
     @FXML @Getter
     private TextField searchTextField;
     @FXML @Getter
-    private AnchorPane tableAnchorPane;
-    @FXML @Getter
     private TableColumn<CodesOrdersProperties, String> fileID;
     @FXML @Getter
     private TableColumn<CodesOrdersProperties, String> stDispatch;
@@ -89,6 +86,18 @@ public class RailbootMainController {
     private TableColumn<CodesOrdersProperties, String> container;
     @FXML @Getter
     private TableColumn<CodesOrdersProperties, String> rate;
+    @FXML @Getter
+    private MenuButton fileMenuButton;
+    @FXML @Getter
+    private MenuItem fileMenuButtonEdit;
+    @FXML @Getter
+    private MenuItem fileMenuButtonCopy;
+    @FXML @Getter
+    private MenuItem fileMenuButtonOrder;
+    @FXML @Getter
+    private MenuItem fileMenuButtonRequestRate;
+    @FXML @Getter
+    private AnchorPane appAnchorPane;
     
     /*-----------------------------------------------------------------------------------------*/
 
@@ -98,19 +107,20 @@ public class RailbootMainController {
     @SuppressWarnings("unchecked")
     @PostConstruct
     public void init() {
-     readerX.init();
-     List<CodesOrders> x = codesOrdersRepository.findAll();
-        for (CodesOrders codesOrders : x) {
-            
-           String st="";
-           st=st.concat(codesOrders.getFileID().concat(codesOrders.getProvider()));
-           codesOrders.setSearchString(st);
-           codesOrdersRepository.save(codesOrders);
-            
-        }
+//     readerX.init();
+//     List<CodesOrders> x = codesOrdersRepository.findAll();
+//        for (CodesOrders codesOrders : x) {
+//            
+//           String st="";
+//           st=st.concat(codesOrders.getFileID().concat(codesOrders.getProvider()));
+//           codesOrders.setSearchString(st);
+//           codesOrdersRepository.save(codesOrders);
+//            
+//        }
      
         set.table();
         set.searchTextField();
+        set.fileMenuButtonItems();
    
     }
             

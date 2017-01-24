@@ -9,16 +9,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitPane;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
+import javax.annotation.PostConstruct;
 import lombok.Getter;
 
 /**
@@ -28,50 +21,6 @@ import lombok.Getter;
  */
 public class MainEditorController implements Initializable {
 
-    @FXML @Getter
-    private FlowPane rightFlowPane;
-    @FXML @Getter
-    private HBox toolHboxCoEditor;
-    @FXML @Getter
-    private Button saveButton;
-    @FXML @Getter
-    private TextField fileField;
-    
-    @FXML @Getter
-    private TextField wagonField;
-    @FXML @Getter
-    private TextField weightField;
-    @FXML @Getter
-    private TextField containerField;
-    @FXML @Getter
-    private TextField tareField;
-    
-    @FXML @Getter
-    private MenuButton stDispMenuButton;
-    @FXML @Getter
-    private MenuItem stDispChange;
-    @FXML @Getter
-    private MenuButton stDestMenuButton;
-    @FXML @Getter
-    private MenuItem stDiestChange;
-    @FXML @Getter
-    private MenuButton consigneeMenuButton;
-    @FXML @Getter
-    private MenuItem consigneeChange;
-    @FXML @Getter
-    private TextArea consigneeTextArea;
-    @FXML @Getter
-    private TextArea cargoTextArea;
-    @FXML @Getter
-    private TextArea descriptionTextArea;
-    @FXML @Getter
-    private CheckBox isContainerised;
-    @FXML @Getter
-    private MenuButton paymentsMenuButton;
-    @FXML @Getter
-    private MenuItem paymentsChange;
-    @FXML @Getter
-    private TextArea paymentsTextArea;
     @FXML @Getter
     private SplitPane splitPane;
     @FXML @Getter
@@ -87,7 +36,11 @@ public class MainEditorController implements Initializable {
         // TODO
     }    
 
-    
+     @SuppressWarnings("unchecked")
+    @PostConstruct
+    public void init() {
+        
+    }
     
     
 }

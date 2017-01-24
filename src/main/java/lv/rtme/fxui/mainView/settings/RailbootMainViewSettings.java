@@ -7,15 +7,16 @@ package lv.rtme.fxui.mainView.settings;
 
 import java.util.List;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import lv.rtme.entities.CodesOrders;
 import lv.rtme.fxui.mainView.RailbootMainController;
-import lv.rtme.fxui.models.CodesOrderModel;
+import lv.rtme.fxui.mainView.actions.RailbootMainActions;
 import lv.rtme.fxui.models.CodesOrdersProperties;
 import lv.rtme.fxui.models.TableItemsProperty;
 import lv.rtme.repositories.CodesOrdersRepository;
-import lv.rtme.services.CodesTableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -28,17 +29,17 @@ public class RailbootMainViewSettings {
 
     @Autowired
     private RailbootMainController controller;
-    @Autowired
-    private CodesTableService service;
+   
     @Autowired
     CodesOrdersRepository codesOrdersRepository;
     @Autowired
     CodesOrdersProperties codesOrdersProperties;
     @Autowired
     TableItemsProperty tableItemsProperty;
+    @Autowired
+    RailbootMainActions act;
     
     public void table() {
-//      controller.getCodesOrdersTable().setItems(observableCodesOrderModelList(codesOrdersRepository.findAll()));
        tableItemsProperty.setInList(codesOrdersRepository.findAll());
       controller.getCodesOrdersTable().setItems(tableItemsProperty.getItemsProperty().getValue());
         controller.getFileID().setCellValueFactory((TableColumn.CellDataFeatures<CodesOrdersProperties, String> p) -> p.getValue().getFileIdProperty());
@@ -49,6 +50,7 @@ public class RailbootMainViewSettings {
         controller.getContainer().setCellValueFactory((TableColumn.CellDataFeatures<CodesOrdersProperties, String> p) -> p.getValue().getUnitProperty());
         controller.getRate().setCellValueFactory((TableColumn.CellDataFeatures<CodesOrdersProperties, String> p) -> p.getValue().getRateProperty());
         
+        setTableSelectionHandlers();
     }
     
     public void searchTextField() {
@@ -63,16 +65,24 @@ public class RailbootMainViewSettings {
             }
         });
     }
-    
-/**
- * 
- * @return ObservableList<CodesOrderModel>
- */
-    private ObservableList<CodesOrderModel> observableCodesOrderModelList(List<CodesOrders> list) {
+
+    private void setTableSelectionHandlers() {
         
-        service.setInList(list);
-        return service.getData();
+            controller.getCodesOrdersTable().setOnMousePressed((MouseEvent event) -> {
+        if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {  act.whenCodesOrdersIsSelected();}
+        });
+    
+    controller.getCodesOrdersTable().setOnKeyPressed((KeyEvent event) -> {
+        if (event.getCode()==KeyCode.ENTER || event.getCode()==KeyCode.SPACE) {  act.whenCodesOrdersIsSelected();}
+        }); 
     }
+
+    public void fileMenuButtonItems() {
+       
+        controller.getFileMenuButtonEdit().setOnAction((eh)->{act.whenFileMenuButtonEditIsClicked();});
+    }
+
+    
 
     
 }

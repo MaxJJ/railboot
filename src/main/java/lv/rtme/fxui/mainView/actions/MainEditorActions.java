@@ -6,10 +6,7 @@
 package lv.rtme.fxui.mainView.actions;
 
 import javafx.scene.Node;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.TextField;
 import javax.annotation.PostConstruct;
-import lv.rtme.entities.CodesOrders;
 import lv.rtme.fxui.mainView.ApplicationViewsAndControllers;
 import lv.rtme.fxui.mainView.MainEditorController;
 import lv.rtme.fxui.models.CodesOrderModel;
@@ -44,29 +41,8 @@ public class MainEditorActions {
         return mainEditorView.getView();
     }
     
-     public Node showFilledWith(CodesOrders codesOrders) {
-        setEditorFields(codesOrders);
-        return mainEditorView.getView();
-    }
 
-    private void setEditorFields(CodesOrders codesOrders) {
-       
-//       fileField().setText(codesOrders.getFileID());
-       
-       fileField().textProperty().bindBidirectional(model.getFileIdProperty());
-       
-               
-               }
 
-    private TextField fileField() {
-        
-        return mainEditorController.getFileField();
-    }
-
-    private MenuButton stDispMenuButton() {
-        
-        return mainEditorController.getStDispMenuButton();
-    }
     
     
     
