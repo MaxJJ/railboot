@@ -6,6 +6,9 @@
 package lv.rtme.fxui.mainView.actions;
 
 import javafx.scene.control.MenuButton;
+import javafx.scene.control.SplitPane;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import lv.rtme.entities.CodesOrders;
 import lv.rtme.fxui.mainView.ApplicationViewsAndControllers;
 import lv.rtme.fxui.mainView.MainEditorController;
@@ -54,9 +57,19 @@ public class RailbootMainActions {
     }
 
     public void whenFileMenuButtonEditIsClicked() {
-      
-        controller.getAppAnchorPane().getChildren().clear();
-        controller.getAppAnchorPane().getChildren().add(editorView.getView());
+      AnchorPane appAnchorPane = controller.getAppAnchorPane();
+      SplitPane editor = controllerMainEditor.getSplitPane();
+        appAnchorPane.getChildren().clear();
+        appAnchorPane.getChildren().add(editorView.getView());
+       appAnchorPane.setTopAnchor(editor, 0.0);
+       appAnchorPane.setLeftAnchor(editor, 0.0);
+       appAnchorPane.setRightAnchor(editor, 0.0);
+       appAnchorPane.setBottomAnchor(editor, 0.0);
+       
+        controllerMainEditor.getFileTextFlow().getChildren().add(new Text(codesOrdersProperties.getCo().getValue().getFileID()));
+        controllerMainEditor.getStationsTextFlow().getChildren().addAll(new Text(codesOrdersProperties.getCo().getValue().getFileID()),
+               new Text(" СТАНЦИЯ ОТПРАВЛЕНИЯ "),new Text(codesOrdersProperties.getCo().getValue().getStationOfDispatch().getStationName()) );
+       
     }
 
  

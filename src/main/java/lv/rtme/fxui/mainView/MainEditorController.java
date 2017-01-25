@@ -11,8 +11,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javax.annotation.PostConstruct;
 import lombok.Getter;
+import lv.rtme.fxui.models.CodesOrdersProperties;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * FXML Controller class
@@ -21,12 +25,17 @@ import lombok.Getter;
  */
 public class MainEditorController implements Initializable {
 
+    
+       @Autowired
+    CodesOrdersProperties codesOrdersProperties;
     @FXML @Getter
     private SplitPane splitPane;
     @FXML @Getter
     private AnchorPane topAnchor;
     @FXML @Getter
-    private AnchorPane bottomAnchor;
+    private TextFlow fileTextFlow;
+    @FXML @Getter
+    private TextFlow stationsTextFlow;
 
     /**
      * Initializes the controller class.
@@ -40,6 +49,7 @@ public class MainEditorController implements Initializable {
     @PostConstruct
     public void init() {
         
+       
     }
     
     

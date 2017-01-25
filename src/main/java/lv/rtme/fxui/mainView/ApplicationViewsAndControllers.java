@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javax.annotation.PostConstruct;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -12,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
   */
 @Configuration
 public class ApplicationViewsAndControllers {
-  
+  @PostConstruct
      @Bean(name = "editor")
     public View getEditorView() throws IOException {
         return loadView("fxml/r/editor.fxml");
@@ -21,6 +22,16 @@ public class ApplicationViewsAndControllers {
     public MainEditorController getMainEditorController() throws IOException {
         return (MainEditorController) getEditorView().getController();
     }
+    
+     @Bean(name = "eFile")
+    public Parent getFileEditor() throws IOException {
+        return loadPartView("fxml/r/editorFile.fxml");
+    }
+     @Bean(name = "eFile")
+    public Parent getStationsEditor() throws IOException {
+        return loadPartView("fxml/r/editorFile.fxml");
+    }
+    
 /*------------------------------------------------------------------------*/
     @Bean(name = "topPaneView")
     public View getTopPaneView() throws IOException {
@@ -78,6 +89,20 @@ public class ApplicationViewsAndControllers {
             
             loader.load(fxmlStream);
             return new View(loader.getRoot(), loader.getController());
+        } finally {
+            if (fxmlStream != null) {
+                fxmlStream.close();
+            }
+        }
+    }
+    protected Parent loadPartView(String url) throws IOException {
+        InputStream fxmlStream = null;
+        try {
+            fxmlStream = getClass().getClassLoader().getResourceAsStream(url);
+            FXMLLoader loader = new FXMLLoader();
+            
+            loader.load(fxmlStream);
+            return  loader.getRoot();
         } finally {
             if (fxmlStream != null) {
                 fxmlStream.close();

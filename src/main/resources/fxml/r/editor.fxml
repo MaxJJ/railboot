@@ -1,23 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.TextFlow?>
 
-
-<SplitPane fx:id="splitPane" dividerPositions="0.3" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lv.rtme.fxui.mainView.MainEditorController">
+<SplitPane fx:id="splitPane" dividerPositions="0.5317195325542571" prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lv.rtme.fxui.mainView.MainEditorController">
   <items>
     <AnchorPane fx:id="topAnchor">
          <children>
             <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <VBox alignment="TOP_CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="180.0" style="-fx-border-width: 2 0 0 0; -fx-border-color: red;" HBox.hgrow="NEVER">
+                  <VBox alignment="TOP_CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="180.0" HBox.hgrow="NEVER">
                      <children>
                         <Hyperlink alignment="CENTER" prefWidth="180.0" text="ФАЙЛ" />
                         <Hyperlink alignment="CENTER" contentDisplay="CENTER" text="СТАНЦИИ" />
@@ -26,10 +31,13 @@
                         <Hyperlink alignment="CENTER" contentDisplay="CENTER" layoutX="22.0" layoutY="79.0" text="ГРУЗ" />
                         <Hyperlink alignment="CENTER" contentDisplay="CENTER" layoutX="43.0" layoutY="102.0" text="ТАРИФ" />
                      </children>
+                     <HBox.margin>
+                        <Insets top="10.0" />
+                     </HBox.margin>
                   </VBox>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                  <StackPane alignment="TOP_LEFT" HBox.hgrow="ALWAYS">
                      <children>
-                        <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <VBox focusTraversable="true" prefHeight="200.0" prefWidth="100.0">
                            <children>
                               <Label text="#" />
                               <TextField />
@@ -40,12 +48,63 @@
                               <Insets left="12.0" right="12.0" top="6.0" />
                            </padding>
                         </VBox>
+                        <VBox spacing="6.0" visible="false">
+                           <children>
+                              <Hyperlink alignment="TOP_LEFT" text="СТАНЦИЯ ОТПРАВЛЕНИЯ">
+                                 <VBox.margin>
+                                    <Insets left="10.0" top="10.0" />
+                                 </VBox.margin>
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Hyperlink>
+                              <Hyperlink alignment="TOP_LEFT" layoutX="20.0" layoutY="20.0" text="СТАНЦИЯ НАЗНАЧЕНИЯ">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets left="10.0" />
+                                 </VBox.margin>
+                              </Hyperlink>
+                              <HBox spacing="6.0">
+                                 <children>
+                                    <TextField HBox.hgrow="ALWAYS" />
+                                    <Button mnemonicParsing="false" text="Сохранить" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets left="12.0" right="12.0" top="10.0" />
+                                 </VBox.margin>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                              </HBox>
+                              <ListView VBox.vgrow="ALWAYS">
+                                 <VBox.margin>
+                                    <Insets bottom="20.0" left="12.0" right="12.0" />
+                                 </VBox.margin>
+                              </ListView>
+                           </children>
+                        </VBox>
                      </children>
-                  </AnchorPane>
+                  </StackPane>
                </children>
             </HBox>
          </children>
       </AnchorPane>
-    <AnchorPane fx:id="bottomAnchor" />
+      <ScrollPane>
+         <content>
+            <VBox>
+               <children>
+                  <Hyperlink alignment="CENTER" text="ФАЙЛ" />
+                  <TextFlow fx:id="fileTextFlow" minHeight="30.0" />
+                  <Hyperlink alignment="CENTER" layoutX="18.0" layoutY="18.0" text="СТАНЦИИ" />
+                  <TextFlow fx:id="stationsTextFlow" layoutX="18.0" layoutY="41.0" minHeight="30.0" />
+               </children>
+               <padding>
+                  <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+               </padding>
+            </VBox>
+         </content>
+      </ScrollPane>
   </items>
 </SplitPane>
