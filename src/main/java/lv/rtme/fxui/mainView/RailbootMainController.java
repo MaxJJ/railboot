@@ -15,6 +15,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javax.annotation.PostConstruct;
 import lombok.Getter;
 import lv.rtme.ConfigurationControllers;
@@ -100,6 +101,8 @@ public class RailbootMainController {
     private MenuItem fileMenuButtonRequestRate;
     @FXML @Getter
     private AnchorPane appAnchorPane;
+    @FXML @Getter
+    private VBox tableVbox;
     
     /*-----------------------------------------------------------------------------------------*/
 

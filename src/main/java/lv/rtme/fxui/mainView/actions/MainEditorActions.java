@@ -9,6 +9,7 @@ import javafx.scene.Node;
 import javax.annotation.PostConstruct;
 import lv.rtme.fxui.mainView.ApplicationViewsAndControllers;
 import lv.rtme.fxui.mainView.MainEditorController;
+import lv.rtme.fxui.mainView.settings.MainEditorSettings;
 import lv.rtme.fxui.models.CodesOrderModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -24,17 +25,14 @@ public class MainEditorActions {
        @Qualifier("mainEditorView")
     @Autowired
     private ApplicationViewsAndControllers.View mainEditorView;
-    
-    private  MainEditorController mainEditorController;
-    @Qualifier("coModel")
+       
     @Autowired
-    private CodesOrderModel model;
+    private  MainEditorController controller;
+   
     
-         @PostConstruct
-    void setController(){
-        
-        mainEditorController= (MainEditorController) mainEditorView.getController();
-    }
+    @Autowired
+    MainEditorSettings set;
+    
 
     public Node showEmpty() {
         

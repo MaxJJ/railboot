@@ -9,12 +9,15 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javax.annotation.PostConstruct;
 import lombok.Getter;
+import lv.rtme.fxui.mainView.settings.MainEditorSettings;
 import lv.rtme.fxui.models.CodesOrdersProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -28,6 +31,10 @@ public class MainEditorController implements Initializable {
     
        @Autowired
     CodesOrdersProperties codesOrdersProperties;
+        @Autowired
+    MainEditorSettings set;
+        
+        
     @FXML @Getter
     private SplitPane splitPane;
     @FXML @Getter
@@ -36,6 +43,20 @@ public class MainEditorController implements Initializable {
     private TextFlow fileTextFlow;
     @FXML @Getter
     private TextFlow stationsTextFlow;
+    @FXML @Getter
+    private TextFlow consigneeTextFlow;
+    @FXML @Getter
+    private TextFlow transportTextFlow;
+    @FXML @Getter
+    private TextFlow paymentsTextFlow;
+    @FXML @Getter
+    private TextFlow cargoTextFlow;
+    @FXML @Getter
+    private Button homeButton;
+    @FXML
+    private ScrollPane page;
+    
+    
 
     /**
      * Initializes the controller class.
@@ -49,7 +70,7 @@ public class MainEditorController implements Initializable {
     @PostConstruct
     public void init() {
         
-       
+       set.homeButton();
     }
     
     

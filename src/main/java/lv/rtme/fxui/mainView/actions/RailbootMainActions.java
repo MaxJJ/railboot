@@ -14,6 +14,7 @@ import lv.rtme.fxui.mainView.ApplicationViewsAndControllers;
 import lv.rtme.fxui.mainView.MainEditorController;
 import lv.rtme.fxui.mainView.RailbootMainController;
 import lv.rtme.fxui.models.CodesOrdersProperties;
+import lv.rtme.fxui.models.PageInfo;
 import lv.rtme.repositories.CodesOrdersRepository;
 import org.controlsfx.glyphfont.FontAwesome;
 import org.controlsfx.glyphfont.Glyph;
@@ -38,6 +39,8 @@ public class RailbootMainActions {
     CodesOrdersRepository codesOrdersRepository;
      @Autowired
     CodesOrdersProperties codesOrdersProperties;
+     @Autowired
+     PageInfo page;
      
     @Qualifier("editor")
      @Autowired
@@ -66,9 +69,9 @@ public class RailbootMainActions {
        appAnchorPane.setRightAnchor(editor, 0.0);
        appAnchorPane.setBottomAnchor(editor, 0.0);
        
-        controllerMainEditor.getFileTextFlow().getChildren().add(new Text(codesOrdersProperties.getCo().getValue().getFileID()));
-        controllerMainEditor.getStationsTextFlow().getChildren().addAll(new Text(codesOrdersProperties.getCo().getValue().getFileID()),
-               new Text(" СТАНЦИЯ ОТПРАВЛЕНИЯ "),new Text(codesOrdersProperties.getCo().getValue().getStationOfDispatch().getStationName()) );
+       page.init();
+       page.fill();
+        
        
     }
 
