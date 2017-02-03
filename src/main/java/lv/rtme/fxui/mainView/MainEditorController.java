@@ -10,9 +10,15 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
+import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javax.annotation.PostConstruct;
@@ -53,8 +59,36 @@ public class MainEditorController implements Initializable {
     private TextFlow cargoTextFlow;
     @FXML @Getter
     private Button homeButton;
-    @FXML
+    @FXML @Getter
     private ScrollPane page;
+    @FXML @Getter
+    private Hyperlink fileHLink;
+    @FXML @Getter
+    private Hyperlink stationsHLink;
+    @FXML @Getter
+    private StackPane editorsStackPane;
+    @FXML @Getter
+    private VBox fileEditorVBox;
+    @FXML @Getter
+    private TextField fileEditorFileIdTextField;
+    @FXML @Getter
+    private TextArea fileEditorDescriptionTextArea;
+    @FXML @Getter
+    private VBox stationsEditorVBox;
+    @FXML @Getter
+    private Hyperlink stationsEditorStDispHLink;
+    @FXML @Getter
+    private Hyperlink stationsEditorStDestHLink;
+    @FXML @Getter
+    private TextField stationsEditorSearchTextField;
+    @FXML @Getter
+    private Button stationsEditorSaveButton;
+    @FXML @Getter
+    private ListView<String> stationsEditorListView;
+    @FXML @Getter
+    private Hyperlink infoPageFileHLink;
+    @FXML @Getter
+    private Hyperlink infoPageStationsHLink;
     
     
 
@@ -71,6 +105,8 @@ public class MainEditorController implements Initializable {
     public void init() {
         
        set.homeButton();
+       set.editorsFieldsBindings();
+       
     }
     
     

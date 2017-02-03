@@ -49,13 +49,20 @@ public class MainEditorSettings {
      Button home=   controller.getHomeButton();
      home.setOnAction((eh)->{
          
-         CodesOrders x=new CodesOrders();
-        codesOrdersProperties.setCodesOrders(x);
+//         CodesOrders x=new CodesOrders();
+//        codesOrdersProperties.setCodesOrders(x);
         homeController.getAppAnchorPane().getChildren().clear();
         homeController.getAppAnchorPane().getChildren().add(homeController.getTableVbox());
         
      });
        
+    }
+
+    public void editorsFieldsBindings() {
+       
+        controller.getFileEditorFileIdTextField().textProperty().bindBidirectional(codesOrdersProperties.getFileIdProperty());
+        controller.getFileEditorDescriptionTextArea().textProperty().bindBidirectional(codesOrdersProperties.getCustomTagProperty());
+        
     }
     
 

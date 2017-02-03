@@ -30,7 +30,6 @@ public class TableItemsProperty {
   public TableItemsProperty() {
       
       itemsProperty.setValue(FXCollections.observableArrayList());
-//      coListProperty.setValue(ini);
       addCoListListener();
     }
     
@@ -44,10 +43,6 @@ public class TableItemsProperty {
         coListProperty.addListener(new ChangeListener<List<CodesOrders>>() {
             @Override
             public void changed(ObservableValue<? extends List<CodesOrders>> ov, List<CodesOrders> t, List<CodesOrders> t1) {
-                System.out.println("old list co-----"+t);
-                System.out.println("new list co-----"+t1);
-//                if(t!=null){ itemsProperty.getValue().clear();}
-                
                 for (CodesOrders codesOrders : t1) {
                    
                     itemsProperty.getValue().add(new CodesOrdersProperties(codesOrders) );

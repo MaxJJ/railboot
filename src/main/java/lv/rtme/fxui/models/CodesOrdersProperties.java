@@ -107,78 +107,68 @@ public class CodesOrdersProperties {
 
     
     public CodesOrdersProperties() {
-        co.setValue(new CodesOrders());
-        addCOListener();
+
+        setCodesOrders(new CodesOrders());
     
     }
     public CodesOrdersProperties(CodesOrders codesOrders) {
-        addCOListener();
-        co.setValue(codesOrders);
-//        co.setValue(codesOrders);
+setCodesOrders(codesOrders);
     }
     
     public void setCodesOrders(CodesOrders orders){
         co.setValue(orders);
-    }
-
-    private void addCOListener() {
+        
+                   getIdLongProperty().setValue(orders.getId());
+      getFileIdProperty().setValue(orders.getFileID());
+     getSearchStringProperty().setValue(orders.getSearchString());
       
-        co.addListener(new ChangeListener<CodesOrders>() {
-            @Override
-            public void changed(ObservableValue<? extends CodesOrders> observable, CodesOrders oldValue, CodesOrders newValue) {
-               
-                   getIdLongProperty().setValue(newValue.getId());
-      getFileIdProperty().setValue(newValue.getFileID());
-     getSearchStringProperty().setValue(newValue.getSearchString());
-      
-        if (newValue.getStationOfDispatch()!=null) {
-            getStationOfDispatchProperty().setValue(newValue.getStationOfDispatch().getStationName());
-      getDispatchStationObjectProperty().setValue(newValue.getStationOfDispatch());
+        if (orders.getStationOfDispatch()!=null) {
+            getStationOfDispatchProperty().setValue(orders.getStationOfDispatch().getStationName());
+      getDispatchStationObjectProperty().setValue(orders.getStationOfDispatch());
         } else {
             getStationOfDispatchProperty().setValue("");
       getDispatchStationObjectProperty().setValue(new Station());
         }
-        if (newValue.getStationOfDestination()!=null) {
-            getStationOfDestinationProperty().setValue(newValue.getStationOfDestination().getStationName());
-            getDestinationStationObjectProperty().setValue(newValue.getStationOfDestination());
+        if (orders.getStationOfDestination()!=null) {
+            getStationOfDestinationProperty().setValue(orders.getStationOfDestination().getStationName());
+            getDestinationStationObjectProperty().setValue(orders.getStationOfDestination());
         } else {
             getStationOfDestinationProperty().setValue("");
             getDestinationStationObjectProperty().setValue(new Station());
         }
       
-        if (newValue.getConsignee()!=null) {
-            getConsigneeProperty().setValue(newValue.getConsignee().getSampleName());
-            getConsigneeObjectProperty().setValue(newValue.getConsignee());
+        if (orders.getConsignee()!=null) {
+            getConsigneeProperty().setValue(orders.getConsignee().getSampleName());
+            getConsigneeObjectProperty().setValue(orders.getConsignee());
         } else {
             getConsigneeProperty().setValue("");
             getConsigneeObjectProperty().setValue(new Persons());
         }
       
         
-      getCustomTagProperty().setValue(newValue.getCustomTag());
+      getCustomTagProperty().setValue(orders.getCustomTag());
       
-      getCargoProperty().setValue(newValue.getCargo());
-      getWeightProperty().setValue(newValue.getWeight());
-      getCargoWeightDoubleProperty().setValue(newValue.getCargoWeightDouble());
+      getCargoProperty().setValue(orders.getCargo());
+      getWeightProperty().setValue(orders.getWeight());
+      getCargoWeightDoubleProperty().setValue(orders.getCargoWeightDouble());
       
-      getWagonProperty().setValue(newValue.getWagon());
-      getUnitProperty().setValue(newValue.getUnit());
-      getContainerTareDoubleProperty().setValue(newValue.getContainerTare());
-      getCargoTotalGrossDoubleProperty().setValue(newValue.getCargoTotalGross());
+      getWagonProperty().setValue(orders.getWagon());
+      getUnitProperty().setValue(orders.getUnit());
+      getContainerTareDoubleProperty().setValue(orders.getContainerTare());
+      getCargoTotalGrossDoubleProperty().setValue(orders.getCargoTotalGross());
       
-      getProviderProperty().setValue(newValue.getProvider());
-     getRateProperty().setValue(newValue.getRate());
-      getRateDoubleProperty().setValue(newValue.getRateDouble());
-      getRateCurrencyProperty().setValue(newValue.getRateCurrency());
-      getGuardRateDoubleProperty().setValue(newValue.getGuardRate());
-      getGuardCurrencyProperty().setValue(newValue.getGuardCurrency());
-      getRoadsToPayProperty().setValue(newValue.getRoadsToPay());
+      getProviderProperty().setValue(orders.getProvider());
+     getRateProperty().setValue(orders.getRate());
+      getRateDoubleProperty().setValue(orders.getRateDouble());
+      getRateCurrencyProperty().setValue(orders.getRateCurrency());
+      getGuardRateDoubleProperty().setValue(orders.getGuardRate());
+      getGuardCurrencyProperty().setValue(orders.getGuardCurrency());
+      getRoadsToPayProperty().setValue(orders.getRoadsToPay());
       
-      getIsOrderedProperty().setValue(newValue.isIsOrdered());
-      getIsRequestedProperty().setValue(newValue.isIsRequested());
-      getOrderedOnDateProperty().setValue(newValue.getOrderedOnDate());
-      getRequestedOnDateProperty().setValue(newValue.getRequestedOnDate());
-            }
-        });
+      getIsOrderedProperty().setValue(orders.isIsOrdered());
+      getIsRequestedProperty().setValue(orders.isIsRequested());
+      getOrderedOnDateProperty().setValue(orders.getOrderedOnDate());
+      getRequestedOnDateProperty().setValue(orders.getRequestedOnDate());
     }
+
 }

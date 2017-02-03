@@ -66,13 +66,14 @@ public class PageInfo {
        
          
     }
-    
+   
     public void init(){
         fileId.textProperty().bind(coProps.getFileIdProperty()); 
         descr.textProperty().bind(coProps.getCustomTagProperty());
-        stDisp.textProperty().bindBidirectional(coProps.getDispatchStationObjectProperty(), stationStringConverter());
-        stDest.textProperty().bindBidirectional(coProps.getDestinationStationObjectProperty(), stationStringConverter());
-        consignee.textProperty().bindBidirectional(coProps.getConsigneeObjectProperty(), personStringConverter());
+        
+        stDisp.textProperty().bindBidirectional(coProps.getStationOfDispatchProperty());
+        stDest.textProperty().bindBidirectional(coProps.getStationOfDestinationProperty());
+        consignee.textProperty().bindBidirectional(coProps.getConsigneeProperty());
         wagon.textProperty().bindBidirectional(coProps.getWagonProperty());
         container.textProperty().bindBidirectional(coProps.getUnitProperty());
         cargo.textProperty().bindBidirectional(coProps.getCargoProperty());
@@ -81,15 +82,16 @@ public class PageInfo {
         rate.textProperty().bindBidirectional(coProps.getRateProperty());
         
     }  
-     public Node getFileText(){
-         Group text = new Group();
-         ObservableList list = text.getChildren();
+     public List<Node> getFileText(){
+        
+         List<Node> list = new LinkedList();
          list.add(0, fileId);
+        
          list.add(1, descr);
-         return text;
+         return list;
      }       
      public List<Node> getStationsText(){
-        
+        controllerMainEditor.getStationsTextFlow().getChildren().clear();
          List<Node> list = new LinkedList();
          list.add(0, stDisp);
          list.add(1, new Text(" "));
@@ -140,7 +142,7 @@ public class PageInfo {
      
      
     public void fill() {
-       controllerMainEditor.getFileTextFlow().getChildren().add(getFileText());
+       controllerMainEditor.getFileTextFlow().getChildren().addAll(getFileText());
         controllerMainEditor.getStationsTextFlow().getChildren().addAll(getStationsText());
         controllerMainEditor.getConsigneeTextFlow().getChildren().addAll(getShipperConsigneeText());
         controllerMainEditor.getTransportTextFlow().getChildren().addAll(getTransportText());

@@ -8,6 +8,8 @@ package lv.rtme.entities;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import lombok.Getter;
+import org.springframework.data.annotation.Transient;
 
 /**
  *
@@ -30,10 +32,18 @@ public  class Station {
      private boolean isExport;
      private boolean isIn;
      private boolean isOut;
+    @Transient
+    @Getter
+     private String reservationName;
      
      
      public Station() {
     }
+     public Station(String reservName) {
+         this.reservationName=reservName;
+         this.stationName = "test Name";
+    }
+     
 
     public Long getId() {
         return id;
