@@ -19,10 +19,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javax.annotation.PostConstruct;
 import lombok.Getter;
+import lv.rtme.entities.Station;
 import lv.rtme.fxui.mainView.settings.MainEditorSettings;
 import lv.rtme.fxui.models.CodesOrdersProperties;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,7 +84,7 @@ public class MainEditorController implements Initializable {
     @FXML @Getter
     private Button stationsEditorSaveButton;
     @FXML @Getter
-    private ListView<String> stationsEditorListView;
+    private ListView<Station> stationsEditorListView;
     @FXML @Getter
     private Hyperlink infoPageFileHLink;
     @FXML @Getter
@@ -105,7 +105,9 @@ public class MainEditorController implements Initializable {
     public void init() {
         
        set.homeButton();
+       set.navigation();
        set.editorsFieldsBindings();
+       set.editors();
        
     }
     

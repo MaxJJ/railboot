@@ -6,7 +6,6 @@
 package lv.rtme.fxui.mainView;
 
 import java.util.ArrayList;
-import java.util.List;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.MenuButton;
@@ -19,7 +18,6 @@ import javafx.scene.layout.VBox;
 import javax.annotation.PostConstruct;
 import lombok.Getter;
 import lv.rtme.ConfigurationControllers;
-import lv.rtme.entities.CodesOrders;
 import lv.rtme.fxui.MainViewUtils;
 import lv.rtme.fxui.UtilBeansCollection;
 import lv.rtme.fxui.mainView.actions.RailbootMainActions;
@@ -112,16 +110,16 @@ public class RailbootMainController {
     @SuppressWarnings("unchecked")
     @PostConstruct
     public void init() {
-     readerX.init();
-     List<CodesOrders> x = codesOrdersRepository.findAll();
-        for (CodesOrders codesOrders : x) {
-            
-           String st="";
-           st=st.concat(codesOrders.getFileID().concat(codesOrders.getProvider()));
-           codesOrders.setSearchString(st);
-           codesOrdersRepository.save(codesOrders);
-            
-        }
+//     readerX.init();
+//     List<CodesOrders> x = codesOrdersRepository.findAll();
+//        for (CodesOrders codesOrders : x) {
+//            
+//           String st="";
+//           st=st.concat(codesOrders.getFileID().concat(codesOrders.getProvider()));
+//           codesOrders.setSearchString(st);
+//           codesOrdersRepository.save(codesOrders);
+//            
+//        }
      
         set.table();
         set.searchTextField();
