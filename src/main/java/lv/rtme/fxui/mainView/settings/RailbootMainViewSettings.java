@@ -12,7 +12,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import lv.rtme.entities.CodesOrders;
-import lv.rtme.fxui.mainView.RailbootMainController;
+import lv.rtme.fxui.controllers.RailbootMainController;
 import lv.rtme.fxui.mainView.actions.RailbootMainActions;
 import lv.rtme.fxui.models.CodesOrdersProperties;
 import lv.rtme.fxui.models.TableItemsProperty;

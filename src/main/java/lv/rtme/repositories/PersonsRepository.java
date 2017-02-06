@@ -17,7 +17,7 @@ public interface PersonsRepository extends CrudRepository<Persons, Long> {
     List<Persons> findAll();
     List<Persons> findAllByOrderBySearchNameAsc();
     
-    List<Persons> findBySampleNameLike(String name);
+    List<Persons> findBySampleNameLikeIgnoreCase(String name);
     List<Persons> findBySearchName(String searchname);
     
 }

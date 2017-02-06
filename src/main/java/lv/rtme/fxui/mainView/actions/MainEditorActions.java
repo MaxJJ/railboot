@@ -6,8 +6,8 @@
 package lv.rtme.fxui.mainView.actions;
 
 import javafx.scene.Node;
-import lv.rtme.fxui.mainView.ApplicationViewsAndControllers;
-import lv.rtme.fxui.mainView.MainEditorController;
+import lv.rtme.fxui.ApplicationViewsAndControllers;
+import lv.rtme.fxui.controllers.MainEditorController;
 import lv.rtme.fxui.mainView.settings.MainEditorSettings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -20,9 +20,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class MainEditorActions {
     
-       @Qualifier("mainEditorView")
-    @Autowired
-    private ApplicationViewsAndControllers.View mainEditorView;
+  
        
     @Autowired
     private  MainEditorController controller;
@@ -31,11 +29,6 @@ public class MainEditorActions {
     @Autowired
     MainEditorSettings set;
     
-
-    public Node showEmpty() {
-        
-        return mainEditorView.getView();
-    }
 
     public void whenFileLinkClicked() {
         
@@ -49,11 +42,18 @@ public class MainEditorActions {
         controller.getStationsEditorVBox().setVisible(true);
     }
 
+    public void whenConsigneeLinkClicked() {
+        setAllInvisible();
+        controller.getConsigneeEditorVBox().setVisible(true);
+    }
+    
     private void setAllInvisible() {
        
         controller.getFileEditorVBox().setVisible(false);
         controller.getStationsEditorVBox().setVisible(false);
+        controller.getConsigneeEditorVBox().setVisible(false);
     }
+
     
 
 

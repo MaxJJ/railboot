@@ -17,7 +17,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.TextFlow?>
 
-<SplitPane fx:id="splitPane" dividerPositions="0.5317195325542571" prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lv.rtme.fxui.mainView.MainEditorController">
+<SplitPane fx:id="splitPane" dividerPositions="0.5317195325542571" prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lv.rtme.fxui.controllers.MainEditorController">
   <items>
     <AnchorPane fx:id="topAnchor">
          <children>
@@ -27,7 +27,7 @@
                      <children>
                         <Hyperlink fx:id="fileHLink" alignment="CENTER" prefWidth="180.0" text="ФАЙЛ" />
                         <Hyperlink fx:id="stationsHLink" alignment="CENTER" contentDisplay="CENTER" text="СТАНЦИИ" />
-                        <Hyperlink alignment="CENTER" contentDisplay="CENTER" layoutX="28.0" layoutY="33.0" text="ПОЛУЧАТЕЛЬ" />
+                        <Hyperlink fx:id="consigneeHLink" alignment="CENTER" contentDisplay="CENTER" layoutX="28.0" layoutY="33.0" text="ПОЛУЧАТЕЛЬ" />
                         <Hyperlink alignment="CENTER" contentDisplay="CENTER" layoutX="28.0" layoutY="56.0" text="ТРАНСПОРТ" />
                         <Hyperlink alignment="CENTER" contentDisplay="CENTER" layoutX="22.0" layoutY="79.0" text="ГРУЗ" />
                         <Hyperlink alignment="CENTER" contentDisplay="CENTER" layoutX="43.0" layoutY="102.0" text="ТАРИФ" />
@@ -49,7 +49,7 @@
                               <Insets left="12.0" right="12.0" top="6.0" />
                            </padding>
                         </VBox>
-                        <VBox fx:id="stationsEditorVBox" spacing="6.0">
+                        <VBox fx:id="stationsEditorVBox" spacing="6.0" visible="false">
                            <children>
                               <Hyperlink fx:id="stationsEditorStDispHLink" alignment="TOP_LEFT" text="СТАНЦИЯ ОТПРАВЛЕНИЯ">
                                  <VBox.margin>
@@ -82,6 +82,21 @@
                               <ListView fx:id="stationsEditorListView" VBox.vgrow="ALWAYS">
                                  <VBox.margin>
                                     <Insets bottom="20.0" left="12.0" right="12.0" />
+                                 </VBox.margin>
+                              </ListView>
+                           </children>
+                        </VBox>
+                        <VBox fx:id="consigneeEditorVBox">
+                           <padding>
+                              <Insets left="12.0" right="12.0" top="6.0" />
+                           </padding>
+                           <children>
+                              <Label text="Получатель" />
+                              <TextArea fx:id="consigneeEditorTextArea" prefHeight="150.0" />
+                              <Hyperlink fx:id="consigneeEditorSaveHlink" text="сохранить" />
+                              <ListView fx:id="consigneeEditorListView" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                                 <VBox.margin>
+                                    <Insets bottom="15.0" />
                                  </VBox.margin>
                               </ListView>
                            </children>

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package lv.rtme.fxui.mainView;
+package lv.rtme.fxui.controllers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -22,6 +22,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.TextFlow;
 import javax.annotation.PostConstruct;
 import lombok.Getter;
+import lv.rtme.entities.Persons;
 import lv.rtme.entities.Station;
 import lv.rtme.fxui.mainView.settings.MainEditorSettings;
 import lv.rtme.fxui.models.CodesOrdersProperties;
@@ -89,6 +90,16 @@ public class MainEditorController implements Initializable {
     private Hyperlink infoPageFileHLink;
     @FXML @Getter
     private Hyperlink infoPageStationsHLink;
+    @FXML @Getter
+    private Hyperlink consigneeHLink;
+    @FXML @Getter
+    private VBox consigneeEditorVBox;
+    @FXML @Getter
+    private TextArea consigneeEditorTextArea;
+    @FXML @Getter
+    private Hyperlink consigneeEditorSaveHlink;
+    @FXML @Getter
+    private ListView<Persons> consigneeEditorListView;
     
     
 

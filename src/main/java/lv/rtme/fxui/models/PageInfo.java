@@ -25,7 +25,7 @@ import javax.annotation.PostConstruct;
 import lombok.Getter;
 import lv.rtme.entities.Persons;
 import lv.rtme.entities.Station;
-import lv.rtme.fxui.mainView.MainEditorController;
+import lv.rtme.fxui.controllers.MainEditorController;
 import org.controlsfx.glyphfont.FontAwesome;
 import org.controlsfx.glyphfont.Glyph;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,7 +83,7 @@ public class PageInfo {
         
     }  
      public List<Node> getFileText(){
-        
+        controllerMainEditor.getFileTextFlow().getChildren().clear();
          List<Node> list = new LinkedList();
          list.add(0, fileId);
         
@@ -101,14 +101,14 @@ public class PageInfo {
          return list;
      } 
      public List<Node> getShipperConsigneeText(){
-        
+        controllerMainEditor.getConsigneeTextFlow().getChildren().clear();
          List<Node> list = new LinkedList();
          list.add(0, consignee);
         
          return list;
      } 
      public List<Node> getTransportText(){
-        
+        controllerMainEditor.getTransportTextFlow().getChildren().clear();
          List<Node> list = new LinkedList();
          VBox box=new VBox();
          box.getChildren().add(wagon);
@@ -120,7 +120,7 @@ public class PageInfo {
          return list;
      } 
      public List<Node> getPaymentsText(){
-        
+        controllerMainEditor.getPaymentsTextFlow().getChildren().clear();
          List<Node> list = new LinkedList();
          VBox box=new VBox();
          box.getChildren().add(new TextFlow(provider,new Text(" "),roads));
@@ -132,7 +132,7 @@ public class PageInfo {
          return list;
      } 
      public List<Node> getCargoText(){
-        
+        controllerMainEditor.getCargoTextFlow().getChildren().clear();
          List<Node> list = new LinkedList();
          list.add(0, cargo);
         

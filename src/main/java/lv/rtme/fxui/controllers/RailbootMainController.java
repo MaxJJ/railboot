@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package lv.rtme.fxui.mainView;
+package lv.rtme.fxui.controllers;
 
 import java.util.ArrayList;
 import javafx.fxml.FXML;
@@ -17,9 +17,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javax.annotation.PostConstruct;
 import lombok.Getter;
-import lv.rtme.ConfigurationControllers;
-import lv.rtme.fxui.MainViewUtils;
-import lv.rtme.fxui.UtilBeansCollection;
 import lv.rtme.fxui.mainView.actions.RailbootMainActions;
 import lv.rtme.fxui.mainView.settings.RailbootMainViewSettings;
 import lv.rtme.fxui.models.CodesOrdersProperties;
@@ -29,7 +26,6 @@ import lv.rtme.services.ReadAndPopulate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 
 
@@ -46,17 +42,7 @@ public class RailbootMainController {
     
     @Autowired
     ReadAndPopulate readerX;
-    @Qualifier("stationsEditor")
-    @Autowired
-    private ConfigurationControllers.View stationsEditorView;
     
-    @Qualifier("topPaneView")
-     @Autowired
-     ApplicationViewsAndControllers.View topPaneView;
-    @Autowired
-    UtilBeansCollection utils;
-    @Autowired
-    MainViewUtils mvu;
     
     @Autowired
     RailbootMainActions actions;
