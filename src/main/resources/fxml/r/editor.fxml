@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
@@ -9,6 +10,7 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
@@ -17,7 +19,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.TextFlow?>
 
-<SplitPane fx:id="splitPane" dividerPositions="0.5317195325542571" prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lv.rtme.fxui.controllers.MainEditorController">
+<SplitPane fx:id="splitPane" dividerPositions="0.5317195325542571" prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lv.rtme.fxui.controllers.MainEditorController">
   <items>
     <AnchorPane fx:id="topAnchor">
          <children>
@@ -28,9 +30,9 @@
                         <Hyperlink fx:id="fileHLink" alignment="CENTER" prefWidth="180.0" text="ФАЙЛ" />
                         <Hyperlink fx:id="stationsHLink" alignment="CENTER" contentDisplay="CENTER" text="СТАНЦИИ" />
                         <Hyperlink fx:id="consigneeHLink" alignment="CENTER" contentDisplay="CENTER" layoutX="28.0" layoutY="33.0" text="ПОЛУЧАТЕЛЬ" />
-                        <Hyperlink alignment="CENTER" contentDisplay="CENTER" layoutX="28.0" layoutY="56.0" text="ТРАНСПОРТ" />
-                        <Hyperlink alignment="CENTER" contentDisplay="CENTER" layoutX="22.0" layoutY="79.0" text="ГРУЗ" />
-                        <Hyperlink alignment="CENTER" contentDisplay="CENTER" layoutX="43.0" layoutY="102.0" text="ТАРИФ" />
+                        <Hyperlink fx:id="transportHLink" alignment="CENTER" contentDisplay="CENTER" layoutX="28.0" layoutY="56.0" text="ТРАНСПОРТ" />
+                        <Hyperlink fx:id="cargoHLink" alignment="CENTER" contentDisplay="CENTER" layoutX="22.0" layoutY="79.0" text="ГРУЗ" />
+                        <Hyperlink fx:id="paymentsHLink" alignment="CENTER" contentDisplay="CENTER" layoutX="43.0" layoutY="102.0" text="ТАРИФ" />
                      </children>
                      <HBox.margin>
                         <Insets top="10.0" />
@@ -86,7 +88,7 @@
                               </ListView>
                            </children>
                         </VBox>
-                        <VBox fx:id="consigneeEditorVBox">
+                        <VBox fx:id="consigneeEditorVBox" visible="false">
                            <padding>
                               <Insets left="12.0" right="12.0" top="6.0" />
                            </padding>
@@ -99,6 +101,72 @@
                                     <Insets bottom="15.0" />
                                  </VBox.margin>
                               </ListView>
+                           </children>
+                        </VBox>
+                        <VBox fx:id="transportEditorVBox" spacing="3.0" visible="false">
+                           <children>
+                              <Label text="Вагон" />
+                              <TextField fx:id="transportEditorWagonTextField" />
+                              <CheckBox fx:id="transportEditorIsContainerisedCheck" mnemonicParsing="false" text="Контейнер" />
+                              <TextField fx:id="transportEditorContainerTextField" layoutX="22.0" layoutY="36.0" promptText="КОНТЕЙНЕР" />
+                           </children>
+                           <padding>
+                              <Insets left="12.0" right="12.0" top="6.0" />
+                           </padding>
+                        </VBox>
+                        <VBox fx:id="transportEditorVBox1" layoutX="10.0" layoutY="10.0" spacing="3.0" visible="false">
+                           <children>
+                              <CheckBox fx:id="cargoEditorIsLongCheck" mnemonicParsing="false" text="Доплист" />
+                              <TextArea fx:id="cargoEditorTextArea" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+                           </children>
+                           <padding>
+                              <Insets left="12.0" right="12.0" top="6.0" />
+                           </padding>
+                           <StackPane.margin>
+                              <Insets bottom="12.0" />
+                           </StackPane.margin>
+                        </VBox>
+                        <VBox fx:id="transportEditorVBox11" layoutX="10.0" layoutY="10.0" spacing="3.0">
+                           <padding>
+                              <Insets left="12.0" right="12.0" top="6.0" />
+                           </padding>
+                           <children>
+                              <Label text="Период перевозки" />
+                              <TextField fx:id="paymentsEditorPeriodTextField" />
+                              <Label layoutX="22.0" layoutY="16.0" text="Оплачиваемые дороги" />
+                              <TextField fx:id="paymentsEditorRoadsTextField" layoutX="22.0" layoutY="36.0" />
+                              <Label layoutX="22.0" layoutY="64.0" text="Вес" />
+                              <TextField fx:id="paymentsEditorWeightTextField" layoutX="22.0" layoutY="84.0" />
+                              <Label layoutX="22.0" layoutY="112.0" text="Комментарии" />
+                              <TextArea fx:id="paymentsEditorCommentsTextArea" maxHeight="100.0" minHeight="60.0" prefHeight="70.0" />
+                              <HBox spacing="3.0">
+                                 <children>
+                                    <VBox>
+                                       <children>
+                                          <Label text="Агент" />
+                                          <TextField fx:id="paymentsEditorAgentTextField" />
+                                       </children>
+                                    </VBox>
+                                    <VBox layoutX="10.0" layoutY="10.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Label text="Ставка" />
+                                          <TextField fx:id="paymentsEditorRateTextField" />
+                                       </children>
+                                    </VBox>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets bottom="3.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <TitledPane fx:id="paymentsEditorRequestTitledPane" expanded="false" text="Запросить ставку" VBox.vgrow="ALWAYS">
+                                <content>
+                                  <AnchorPane>
+                                       <children>
+                                          <TextArea fx:id="paymentsEditorRequestTextArea" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                       </children>
+                                    </AnchorPane>
+                                </content>
+                              </TitledPane>
                            </children>
                         </VBox>
                      </children>

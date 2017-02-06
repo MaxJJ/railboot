@@ -5,12 +5,9 @@
  */
 package lv.rtme.fxui.mainView.actions;
 
-import javafx.scene.Node;
-import lv.rtme.fxui.ApplicationViewsAndControllers;
 import lv.rtme.fxui.controllers.MainEditorController;
 import lv.rtme.fxui.mainView.settings.MainEditorSettings;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 /**
@@ -47,12 +44,21 @@ public class MainEditorActions {
         controller.getConsigneeEditorVBox().setVisible(true);
     }
     
+    public void whenTransportLinkClicked() {
+       setAllInvisible();
+        controller.getTransportEditorVBox().setVisible(true);
+        
+    }
+    
+    
     private void setAllInvisible() {
        
         controller.getFileEditorVBox().setVisible(false);
         controller.getStationsEditorVBox().setVisible(false);
         controller.getConsigneeEditorVBox().setVisible(false);
+        controller.getTransportEditorVBox().setVisible(false);
     }
+
 
     
 

@@ -10,12 +10,14 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -100,6 +102,44 @@ public class MainEditorController implements Initializable {
     private Hyperlink consigneeEditorSaveHlink;
     @FXML @Getter
     private ListView<Persons> consigneeEditorListView;
+    @FXML @Getter
+    private Hyperlink transportHLink;
+    @FXML @Getter
+    private TextField transportEditorWagonTextField;
+    @FXML @Getter
+    private CheckBox transportEditorIsContainerisedCheck;
+    @FXML @Getter
+    private TextField transportEditorContainerTextField;
+    @FXML @Getter
+    private VBox transportEditorVBox;
+    @FXML @Getter
+    private Hyperlink cargoHLink;
+    @FXML @Getter
+    private Hyperlink paymentsHLink;
+    @FXML @Getter
+    private VBox transportEditorVBox1;
+    @FXML @Getter
+    private CheckBox cargoEditorIsLongCheck;
+    @FXML @Getter
+    private TextArea cargoEditorTextArea;
+    @FXML @Getter
+    private VBox transportEditorVBox11;
+    @FXML @Getter
+    private TextField paymentsEditorPeriodTextField;
+    @FXML @Getter
+    private TextField paymentsEditorRoadsTextField;
+    @FXML @Getter
+    private TextField paymentsEditorWeightTextField;
+    @FXML @Getter
+    private TextArea paymentsEditorCommentsTextArea;
+    @FXML @Getter
+    private TextField paymentsEditorAgentTextField;
+    @FXML @Getter
+    private TextField paymentsEditorRateTextField;
+    @FXML @Getter
+    private TitledPane paymentsEditorRequestTitledPane;
+    @FXML @Getter
+    private TextArea paymentsEditorRequestTextArea;
     
     
 

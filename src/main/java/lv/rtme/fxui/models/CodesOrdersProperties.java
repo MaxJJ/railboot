@@ -16,8 +16,6 @@ import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import lombok.Getter;
 import lv.rtme.entities.CodesOrders;
 import lv.rtme.entities.Persons;
@@ -96,6 +94,8 @@ public class CodesOrdersProperties {
     private BooleanProperty isOrderedProperty = new SimpleBooleanProperty();
     @Getter
     private BooleanProperty isRequestedProperty = new SimpleBooleanProperty();
+    @Getter
+    private BooleanProperty isContainerisedProperty = new SimpleBooleanProperty();
     
     @Getter
     private ObjectProperty<Date> orderedOnDateProperty = new SimpleObjectProperty();
@@ -154,6 +154,7 @@ setCodesOrders(codesOrders);
       
       getWagonProperty().setValue(orders.getWagon());
       getUnitProperty().setValue(orders.getUnit());
+      getIsContainerisedProperty().setValue(orders.isIsContainerised());
       getContainerTareDoubleProperty().setValue(orders.getContainerTare());
       getCargoTotalGrossDoubleProperty().setValue(orders.getCargoTotalGross());
       

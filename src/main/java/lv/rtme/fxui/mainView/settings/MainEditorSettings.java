@@ -5,27 +5,13 @@
  */
 package lv.rtme.fxui.mainView.settings;
 
-import java.util.List;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.cell.TextFieldListCell;
-import javafx.util.StringConverter;
-import lv.rtme.entities.Station;
 import lv.rtme.fxui.controllers.MainEditorController;
 import lv.rtme.fxui.controllers.RailbootMainController;
 import lv.rtme.fxui.mainView.actions.MainEditorActions;
 import lv.rtme.fxui.models.CodesOrdersProperties;
 import lv.rtme.fxui.models.TableItemsProperty;
 import lv.rtme.repositories.CodesOrdersRepository;
-import lv.rtme.repositories.StationRepository;
-import org.controlsfx.control.textfield.CustomTextField;
-import org.controlsfx.control.textfield.TextFields;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -56,6 +42,8 @@ public class MainEditorSettings {
     FileEditorSettings setFileEditors;
     @Autowired
     ConsigneeEditorSettings setConsigneeEditors;
+    @Autowired
+    TransportEditorSettings setTransportEditors;
 
     public void homeButton() {
         
@@ -78,6 +66,9 @@ public class MainEditorSettings {
         controller.getStationsEditorStDispHLink().textProperty().bindBidirectional(codesOrdersProperties.getStationOfDispatchProperty());
         controller.getStationsEditorStDestHLink().textProperty().bindBidirectional(codesOrdersProperties.getStationOfDestinationProperty());
         controller.getConsigneeEditorTextArea().textProperty().bindBidirectional(codesOrdersProperties.getConsigneeProperty());
+        controller.getTransportEditorWagonTextField().textProperty().bindBidirectional(codesOrdersProperties.getWagonProperty());
+        controller.getTransportEditorContainerTextField().textProperty().bindBidirectional(codesOrdersProperties.getUnitProperty());
+        controller.getTransportEditorIsContainerisedCheck().selectedProperty().bindBidirectional(codesOrdersProperties.getIsContainerisedProperty());
         
     }
 
@@ -85,6 +76,7 @@ public class MainEditorSettings {
        controller.getFileHLink().setOnAction((eh)->{act.whenFileLinkClicked();});
        controller.getStationsHLink().setOnAction((eh)->{act.whenStationLinkClicked();});
        controller.getConsigneeHLink().setOnAction((eh)->{act.whenConsigneeLinkClicked();});
+       controller.getTransportHLink().setOnAction((eh)->{act.whenTransportLinkClicked();});
         
     }
 
@@ -92,6 +84,7 @@ public class MainEditorSettings {
   
      setStationsEditors.editor();
      setConsigneeEditors.editor();
+     setTransportEditors.editor();
     }
 
     private void setStationsEditor() {

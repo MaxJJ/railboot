@@ -58,6 +58,7 @@ public class CodesOrders {
     
     private boolean isOrdered;
     private boolean isRequested;
+    private boolean isContainerised;
     
     private Date orderedOnDate;
     private Date requestedOnDate;
@@ -307,6 +308,14 @@ public class CodesOrders {
 
     public void setFileFilder(File fileFilder) {
         this.fileFilder = fileFilder;
+    }
+
+    public boolean isIsContainerised() {
+        return isContainerised;
+    }
+
+    public void setIsContainerised(boolean isContainerised) {
+        this.isContainerised = isContainerised;
     }
 
   
