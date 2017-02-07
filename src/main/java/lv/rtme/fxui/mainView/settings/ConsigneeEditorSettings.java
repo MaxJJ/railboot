@@ -25,24 +25,25 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class ConsigneeEditorSettings {
+
     @Autowired
     private MainEditorController controller;
     @Autowired
     CodesOrdersRepository codesOrdersRepository;
     @Autowired
     PersonsRepository personsRepository;
-    
+
     @Autowired
     CodesOrdersProperties codesOrdersProperties;
 
     void editor() {
-      
+
         controller.getConsigneeEditorTextArea().setEditable(true);
-        controller.getConsigneeEditorListView().setCellFactory((val)->{ 
-            TextFieldListCell cell = new TextFieldListCell(new StringConverter<Persons>(){
+        controller.getConsigneeEditorListView().setCellFactory((val) -> {
+            TextFieldListCell cell = new TextFieldListCell(new StringConverter<Persons>() {
                 @Override
                 public String toString(Persons object) {
-                    
+
                     return object.getSampleName();
                 }
 
@@ -50,30 +51,27 @@ public class ConsigneeEditorSettings {
                 public Persons fromString(String string) {
                     throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
                 }
-                
-                
+
             });
-            
-                    return cell;
+
+            return cell;
         });
-        
         
         controller.getConsigneeEditorTextArea().textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-              
-                List<Persons> list = personsRepository.findBySampleNameLikeIgnoreCase("%"+newValue+"%");
+
+                List<Persons> list = personsRepository.findBySampleNameLikeIgnoreCase("%" + newValue + "%");
                 controller.getConsigneeEditorListView().getItems().clear();
                 controller.getConsigneeEditorListView().getItems().addAll(list);
-                
             }
         });
-        
-        controller.getConsigneeEditorListView().setOnKeyPressed((keh)->{ 
-            
-            if(keh.getCode()==KeyCode.ENTER){
-                
-            String value=    controller.getConsigneeEditorListView().getSelectionModel().getSelectedItem().getSampleName();
+
+        controller.getConsigneeEditorListView().setOnKeyPressed((keh) -> {
+
+            if (keh.getCode() == KeyCode.ENTER) {
+
+                String value = controller.getConsigneeEditorListView().getSelectionModel().getSelectedItem().getSampleName();
                 controller.getConsigneeEditorTextArea().setText(value);
             }
         });

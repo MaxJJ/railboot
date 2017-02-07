@@ -59,17 +59,11 @@ public class CodesOrdersProperties {
     private StringProperty cargoProperty = new SimpleStringProperty();
     @Getter
     private StringProperty weightProperty = new SimpleStringProperty();
-    @Getter
-    private DoubleProperty cargoWeightDoubleProperty = new SimpleDoubleProperty();
 
     @Getter
     private StringProperty wagonProperty = new SimpleStringProperty();
     @Getter
     private StringProperty unitProperty = new SimpleStringProperty();
-    @Getter
-    private DoubleProperty containerTareDoubleProperty = new SimpleDoubleProperty();
-    @Getter
-    private DoubleProperty cargoTotalGrossDoubleProperty = new SimpleDoubleProperty();
     
     
 
@@ -78,15 +72,11 @@ public class CodesOrdersProperties {
     @Getter
     private StringProperty rateProperty = new SimpleStringProperty();
     @Getter
-    private DoubleProperty rateDoubleProperty = new SimpleDoubleProperty();
-    @Getter
-    private StringProperty rateCurrencyProperty = new SimpleStringProperty();
-    @Getter
-    private DoubleProperty guardRateDoubleProperty = new SimpleDoubleProperty();
-    @Getter
-    private StringProperty guardCurrencyProperty = new SimpleStringProperty();
-    @Getter
     private StringProperty roadsToPayProperty = new SimpleStringProperty();
+    @Getter
+    private StringProperty paymentsCommentsProperty = new SimpleStringProperty();
+    @Getter
+    private StringProperty periodProperty = new SimpleStringProperty();
 
 
 
@@ -150,26 +140,54 @@ setCodesOrders(codesOrders);
       
       getCargoProperty().setValue(orders.getCargo());
       getWeightProperty().setValue(orders.getWeight());
-      getCargoWeightDoubleProperty().setValue(orders.getCargoWeightDouble());
       
       getWagonProperty().setValue(orders.getWagon());
       getUnitProperty().setValue(orders.getUnit());
       getIsContainerisedProperty().setValue(orders.isIsContainerised());
-      getContainerTareDoubleProperty().setValue(orders.getContainerTare());
-      getCargoTotalGrossDoubleProperty().setValue(orders.getCargoTotalGross());
       
       getProviderProperty().setValue(orders.getProvider());
      getRateProperty().setValue(orders.getRate());
-      getRateDoubleProperty().setValue(orders.getRateDouble());
-      getRateCurrencyProperty().setValue(orders.getRateCurrency());
-      getGuardRateDoubleProperty().setValue(orders.getGuardRate());
-      getGuardCurrencyProperty().setValue(orders.getGuardCurrency());
       getRoadsToPayProperty().setValue(orders.getRoadsToPay());
       
       getIsOrderedProperty().setValue(orders.isIsOrdered());
       getIsRequestedProperty().setValue(orders.isIsRequested());
       getOrderedOnDateProperty().setValue(orders.getOrderedOnDate());
       getRequestedOnDateProperty().setValue(orders.getRequestedOnDate());
+      
+      getPaymentsCommentsProperty().setValue(orders.getPaymentsComments());
+      getPeriodProperty().setValue(orders.getPeriodToPay());
     }
 
+    public CodesOrders getUpdatedCodesOrders() {
+        CodesOrders updated = getCo().getValue();
+
+        updated.setFileID(getFileIdProperty().getValueSafe());
+
+        String search = "";
+        search = search.concat(getFileIdProperty().getValueSafe()).
+                concat(getCustomTagProperty().getValueSafe());
+
+        updated.setSearchString(search);
+        updated.setStationOfDispatch(getDispatchStationObjectProperty().getValue());
+        updated.setStationOfDestination(getDestinationStationObjectProperty().getValue());
+        updated.setConsignee(getConsigneeObjectProperty().getValue());
+        updated.setCustomTag(getCustomTagProperty().getValue());
+        updated.setCargo(getCargoProperty().getValueSafe());
+        updated.setWeight(getWeightProperty().getValueSafe());
+        updated.setWagon(getWagonProperty().getValueSafe());
+        updated.setUnit(getUnitProperty().getValueSafe());
+        updated.setIsContainerised(getIsContainerisedProperty().getValue());
+        updated.setProvider(getProviderProperty().getValueSafe());
+        updated.setRate(getRateProperty().getValueSafe());
+        updated.setRoadsToPay(getRoadsToPayProperty().getValueSafe());
+        updated.setIsOrdered(getIsOrderedProperty().getValue());
+        updated.setIsRequested(getIsRequestedProperty().getValue());
+        updated.setOrderedOnDate(getOrderedOnDateProperty().getValue());
+        updated.setRequestedOnDate(getRequestedOnDateProperty().getValue());
+        updated.setPaymentsComments(getPaymentsCommentsProperty().getValueSafe());
+        updated.setPeriodToPay(getPeriodProperty().getValueSafe());
+
+        return updated;
+
+    }
 }

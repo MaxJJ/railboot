@@ -5,8 +5,11 @@
  */
 package lv.rtme.fxui.mainView.actions;
 
+import lv.rtme.entities.CodesOrders;
 import lv.rtme.fxui.controllers.MainEditorController;
+import lv.rtme.fxui.controllers.RailbootMainController;
 import lv.rtme.fxui.mainView.settings.MainEditorSettings;
+import lv.rtme.fxui.models.CodesOrdersProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +24,10 @@ public class MainEditorActions {
        
     @Autowired
     private  MainEditorController controller;
+    @Autowired
+    private  RailbootMainController homeController;
+    @Autowired
+    private CodesOrdersProperties codesOrdersProperties;
    
     
     @Autowired
@@ -50,21 +57,35 @@ public class MainEditorActions {
         
     }
     
+    public void whenCargoLinkClicked() {
+       setAllInvisible();
+        controller.getCargoEditorVBox().setVisible(true);
+    }
+
+    public void whenPaymentsLinkClicked() {
+       setAllInvisible();
+        controller.getPaymentsEditorVBox().setVisible(true);
+    }
     
+    public void whenHomeButtonIsClicked() {
+        homeController.getAppAnchorPane().getChildren().clear();
+        homeController.getAppAnchorPane().getChildren().add(homeController.getTableVbox());
+    }
+    
+    public void whenSaveButtonIsClicked() {
+        
+      CodesOrders co=  codesOrdersProperties.getUpdatedCodesOrders();
+      
+    }
     private void setAllInvisible() {
        
         controller.getFileEditorVBox().setVisible(false);
         controller.getStationsEditorVBox().setVisible(false);
         controller.getConsigneeEditorVBox().setVisible(false);
         controller.getTransportEditorVBox().setVisible(false);
+        controller.getCargoEditorVBox().setVisible(false);
+        controller.getPaymentsEditorVBox().setVisible(false);
     }
 
-
-    
-
-
-    
-    
-    
     
 }

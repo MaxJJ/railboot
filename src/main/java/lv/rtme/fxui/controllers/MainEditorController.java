@@ -117,13 +117,9 @@ public class MainEditorController implements Initializable {
     @FXML @Getter
     private Hyperlink paymentsHLink;
     @FXML @Getter
-    private VBox transportEditorVBox1;
-    @FXML @Getter
     private CheckBox cargoEditorIsLongCheck;
     @FXML @Getter
     private TextArea cargoEditorTextArea;
-    @FXML @Getter
-    private VBox transportEditorVBox11;
     @FXML @Getter
     private TextField paymentsEditorPeriodTextField;
     @FXML @Getter
@@ -140,6 +136,12 @@ public class MainEditorController implements Initializable {
     private TitledPane paymentsEditorRequestTitledPane;
     @FXML @Getter
     private TextArea paymentsEditorRequestTextArea;
+    @FXML @Getter
+    private VBox cargoEditorVBox;
+    @FXML @Getter
+    private VBox paymentsEditorVBox;
+    @FXML @Getter
+    private Button saveButton;
     
     
 
@@ -155,7 +157,7 @@ public class MainEditorController implements Initializable {
     @PostConstruct
     public void init() {
         
-       set.homeButton();
+       set.buttons();
        set.navigation();
        set.editorsFieldsBindings();
        set.editors();

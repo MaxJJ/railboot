@@ -44,19 +44,16 @@ public class MainEditorSettings {
     ConsigneeEditorSettings setConsigneeEditors;
     @Autowired
     TransportEditorSettings setTransportEditors;
+    @Autowired
+    CargoEditorSettings setCargoEditors;
+    @Autowired
+    PaymentsEditorSettings setPaymentsEditors;
 
-    public void homeButton() {
-        
-     Button home=   controller.getHomeButton();
-     home.setOnAction((eh)->{
-         
-//         CodesOrders x=new CodesOrders();
-//        codesOrdersProperties.setCodesOrders(x);
-        homeController.getAppAnchorPane().getChildren().clear();
-        homeController.getAppAnchorPane().getChildren().add(homeController.getTableVbox());
-        
-     });
-       
+    public void buttons() {
+
+        controller.getHomeButton().setOnAction((eh) -> {act.whenHomeButtonIsClicked(); });
+        controller.getSaveButton().setOnAction((eh) -> {act.whenSaveButtonIsClicked(); });
+
     }
 
     public void editorsFieldsBindings() {
@@ -69,6 +66,13 @@ public class MainEditorSettings {
         controller.getTransportEditorWagonTextField().textProperty().bindBidirectional(codesOrdersProperties.getWagonProperty());
         controller.getTransportEditorContainerTextField().textProperty().bindBidirectional(codesOrdersProperties.getUnitProperty());
         controller.getTransportEditorIsContainerisedCheck().selectedProperty().bindBidirectional(codesOrdersProperties.getIsContainerisedProperty());
+        controller.getCargoEditorTextArea().textProperty().bindBidirectional(codesOrdersProperties.getCargoProperty());
+        controller.getPaymentsEditorAgentTextField().textProperty().bindBidirectional(codesOrdersProperties.getProviderProperty());
+        controller.getPaymentsEditorCommentsTextArea().textProperty().bindBidirectional(codesOrdersProperties.getPaymentsCommentsProperty());
+        controller.getPaymentsEditorPeriodTextField().textProperty().bindBidirectional(codesOrdersProperties.getPeriodProperty());
+        controller.getPaymentsEditorRateTextField().textProperty().bindBidirectional(codesOrdersProperties.getRateProperty());
+        controller.getPaymentsEditorWeightTextField().textProperty().bindBidirectional(codesOrdersProperties.getWeightProperty());
+        controller.getPaymentsEditorRoadsTextField().textProperty().bindBidirectional(codesOrdersProperties.getRoadsToPayProperty());
         
     }
 
@@ -77,6 +81,8 @@ public class MainEditorSettings {
        controller.getStationsHLink().setOnAction((eh)->{act.whenStationLinkClicked();});
        controller.getConsigneeHLink().setOnAction((eh)->{act.whenConsigneeLinkClicked();});
        controller.getTransportHLink().setOnAction((eh)->{act.whenTransportLinkClicked();});
+       controller.getCargoHLink().setOnAction((eh)->{act.whenCargoLinkClicked();});
+       controller.getPaymentsHLink().setOnAction((eh)->{act.whenPaymentsLinkClicked();});
         
     }
 
@@ -85,21 +91,10 @@ public class MainEditorSettings {
      setStationsEditors.editor();
      setConsigneeEditors.editor();
      setTransportEditors.editor();
+     setCargoEditors.editor();
+     setPaymentsEditors.editor();
+     
     }
-
-    private void setStationsEditor() {
-        
-        
-    }
-
-   
-
-   
-
-   
-    
-
-    
 
     
 }

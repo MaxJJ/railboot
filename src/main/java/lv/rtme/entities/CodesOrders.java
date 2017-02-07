@@ -21,6 +21,8 @@ public class CodesOrders {
     
     @Lob
     private String searchString;
+    @Lob
+    private String paymentsComments;
     
     @OneToOne
     @JoinColumn(name = "dispatchstation_fk")
@@ -53,6 +55,7 @@ public class CodesOrders {
     private Double guardRate;
     private String guardCurrency;
     private String roadsToPay;
+    private String periodToPay;
     
     private Double totalRate;
     
@@ -316,6 +319,22 @@ public class CodesOrders {
 
     public void setIsContainerised(boolean isContainerised) {
         this.isContainerised = isContainerised;
+    }
+
+    public String getPaymentsComments() {
+        return paymentsComments;
+    }
+
+    public void setPaymentsComments(String paymentsComments) {
+        this.paymentsComments = paymentsComments;
+    }
+
+    public String getPeriodToPay() {
+        return periodToPay;
+    }
+
+    public void setPeriodToPay(String periodToPay) {
+        this.periodToPay = periodToPay;
     }
 
   

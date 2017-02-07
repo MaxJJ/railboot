@@ -19,7 +19,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.TextFlow?>
 
-<SplitPane fx:id="splitPane" dividerPositions="0.5317195325542571" prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lv.rtme.fxui.controllers.MainEditorController">
+<SplitPane fx:id="splitPane" dividerPositions="0.5317195325542571" prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lv.rtme.fxui.controllers.MainEditorController">
   <items>
     <AnchorPane fx:id="topAnchor">
          <children>
@@ -114,7 +114,7 @@
                               <Insets left="12.0" right="12.0" top="6.0" />
                            </padding>
                         </VBox>
-                        <VBox fx:id="transportEditorVBox1" layoutX="10.0" layoutY="10.0" spacing="3.0" visible="false">
+                        <VBox fx:id="cargoEditorVBox" layoutX="10.0" layoutY="10.0" spacing="3.0" visible="false">
                            <children>
                               <CheckBox fx:id="cargoEditorIsLongCheck" mnemonicParsing="false" text="Доплист" />
                               <TextArea fx:id="cargoEditorTextArea" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
@@ -126,7 +126,7 @@
                               <Insets bottom="12.0" />
                            </StackPane.margin>
                         </VBox>
-                        <VBox fx:id="transportEditorVBox11" layoutX="10.0" layoutY="10.0" spacing="3.0">
+                        <VBox fx:id="paymentsEditorVBox" layoutX="10.0" layoutY="10.0" spacing="3.0">
                            <padding>
                               <Insets left="12.0" right="12.0" top="6.0" />
                            </padding>
@@ -160,11 +160,7 @@
                               </HBox>
                               <TitledPane fx:id="paymentsEditorRequestTitledPane" expanded="false" text="Запросить ставку" VBox.vgrow="ALWAYS">
                                 <content>
-                                  <AnchorPane>
-                                       <children>
-                                          <TextArea fx:id="paymentsEditorRequestTextArea" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                       </children>
-                                    </AnchorPane>
+                                    <TextArea fx:id="paymentsEditorRequestTextArea" />
                                 </content>
                               </TitledPane>
                            </children>
@@ -180,6 +176,7 @@
             <ToolBar prefHeight="40.0" prefWidth="200.0">
               <items>
                 <Button fx:id="homeButton" mnemonicParsing="false" text="Home" />
+                  <Button fx:id="saveButton" mnemonicParsing="false" text="Сохранить" />
               </items>
             </ToolBar>
             <ScrollPane fx:id="page" VBox.vgrow="ALWAYS">
