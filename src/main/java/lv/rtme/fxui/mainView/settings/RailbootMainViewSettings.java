@@ -40,8 +40,11 @@ public class RailbootMainViewSettings {
     RailbootMainActions act;
     
     public void table() {
+        act.disactivateFileButton();
        tableItemsProperty.setInList(codesOrdersRepository.findAll());
-      controller.getCodesOrdersTable().setItems(tableItemsProperty.getItemsProperty().getValue());
+       controller.getCodesOrdersTable().getItems().clear();
+//      controller.getCodesOrdersTable().setItems(tableItemsProperty.getItemsProperty().getValue());
+      controller.getCodesOrdersTable().getItems().addAll(tableItemsProperty.getItemsProperty().getValue());
         controller.getFileID().setCellValueFactory((TableColumn.CellDataFeatures<CodesOrdersProperties, String> p) -> p.getValue().getFileIdProperty());
         controller.getCargo().setCellValueFactory((TableColumn.CellDataFeatures<CodesOrdersProperties, String> p) -> p.getValue().getCargoProperty());
         controller.getStDispatch().setCellValueFactory((TableColumn.CellDataFeatures<CodesOrdersProperties, String> p) -> p.getValue().getStationOfDispatchProperty());
@@ -49,6 +52,7 @@ public class RailbootMainViewSettings {
         controller.getWagon().setCellValueFactory((TableColumn.CellDataFeatures<CodesOrdersProperties, String> p) -> p.getValue().getWagonProperty());
         controller.getContainer().setCellValueFactory((TableColumn.CellDataFeatures<CodesOrdersProperties, String> p) -> p.getValue().getUnitProperty());
         controller.getRate().setCellValueFactory((TableColumn.CellDataFeatures<CodesOrdersProperties, String> p) -> p.getValue().getRateProperty());
+        controller.getDescriptionColumn().setCellValueFactory((TableColumn.CellDataFeatures<CodesOrdersProperties, String> p) -> p.getValue().getCustomTagProperty());
         
         setTableSelectionHandlers();
     }

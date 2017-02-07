@@ -7,11 +7,9 @@ package lv.rtme.fxui.models;
 
 import java.util.Date;
 import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.LongProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -27,7 +25,7 @@ import lv.rtme.entities.Station;
  */
 public class CodesOrdersProperties {
     @Getter
-    private ObjectProperty<CodesOrders> co = new SimpleObjectProperty<>();
+    private final ObjectProperty<CodesOrders> co = new SimpleObjectProperty<>();
     
     @Getter
       private LongProperty idLongProperty = new SimpleLongProperty();

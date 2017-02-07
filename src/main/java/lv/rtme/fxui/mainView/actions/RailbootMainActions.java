@@ -8,7 +8,6 @@ package lv.rtme.fxui.mainView.actions;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.text.Text;
 import lv.rtme.entities.CodesOrders;
 import lv.rtme.fxui.ApplicationViewsAndControllers;
 import lv.rtme.fxui.controllers.MainEditorController;
@@ -16,8 +15,6 @@ import lv.rtme.fxui.controllers.RailbootMainController;
 import lv.rtme.fxui.models.CodesOrdersProperties;
 import lv.rtme.fxui.models.PageInfo;
 import lv.rtme.repositories.CodesOrdersRepository;
-import org.controlsfx.glyphfont.FontAwesome;
-import org.controlsfx.glyphfont.Glyph;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -55,8 +52,15 @@ public class RailbootMainActions {
     public void activateFileButton() {
       MenuButton mb = controller.getFileMenuButton();
         mb.disableProperty().setValue(Boolean.FALSE);
-        mb.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.EDIT));
-        mb.textProperty().setValue("ФАЙЛ "+codesOrdersProperties.getCo().getValue().getFileID()); 
+       mb.setText("ФАЙЛ "+codesOrdersProperties.getCo().getValue().getFileID());
+       
+       
+    }
+    public void disactivateFileButton() {
+      MenuButton mbx = controller.getFileMenuButton();
+        mbx.disableProperty().setValue(Boolean.TRUE);
+       
+        mbx.setText(""); 
     }
 
     public void whenFileMenuButtonEditIsClicked() {

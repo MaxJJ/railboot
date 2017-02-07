@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="450.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lv.rtme.fxui.controllers.RailbootMainController">
+<AnchorPane prefHeight="450.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lv.rtme.fxui.controllers.RailbootMainController">
    <children>
       <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -47,7 +47,7 @@
                            <children>
                               <Button defaultButton="true" mnemonicParsing="false" text="Создать" />
                               <TextField fx:id="searchTextField" prefWidth="350.0" promptText="ПОИСК" />
-                              <MenuButton fx:id="fileMenuButton" disable="true" mnemonicParsing="false" prefWidth="180.0" text="Файл ">
+                              <MenuButton fx:id="fileMenuButton" contentDisplay="TOP" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="200.0" text="Файл ">
                                 <items>
                                   <MenuItem fx:id="fileMenuButtonEdit" mnemonicParsing="false" text="Изменить" />
                                     <MenuItem fx:id="fileMenuButtonCopy" mnemonicParsing="false" text="Копировать" />
@@ -70,7 +70,7 @@
                             <TableColumn fx:id="fileID" maxWidth="-1.0" minWidth="80.0" prefWidth="-1.0" text="ФАЙЛ" />
                             <TableColumn fx:id="stDispatch" prefWidth="297.0" text="ОТПРАВЛЕНИЕ" />
                               <TableColumn fx:id="stDestination" prefWidth="321.0" text="НАЗНАЧЕНИЕ" />
-                              <TableColumn prefWidth="75.0" text="ОПИСАНИЕ" />
+                              <TableColumn fx:id="descriptionColumn" prefWidth="75.0" text="ОПИСАНИЕ" />
                               <TableColumn fx:id="cargo" prefWidth="75.0" text="ГРУЗ" />
                               <TableColumn fx:id="wagon" prefWidth="75.0" text="ВАГОН" visible="false" />
                               <TableColumn fx:id="container" prefWidth="75.0" text="КОНТЕЙНЕР" visible="false" />

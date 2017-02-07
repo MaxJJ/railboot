@@ -10,6 +10,7 @@ import lv.rtme.fxui.controllers.MainEditorController;
 import lv.rtme.fxui.controllers.RailbootMainController;
 import lv.rtme.fxui.mainView.settings.MainEditorSettings;
 import lv.rtme.fxui.models.CodesOrdersProperties;
+import lv.rtme.repositories.CodesOrdersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -28,6 +29,8 @@ public class MainEditorActions {
     private  RailbootMainController homeController;
     @Autowired
     private CodesOrdersProperties codesOrdersProperties;
+    @Autowired
+    CodesOrdersRepository codesOrdersRepository;
    
     
     @Autowired
@@ -75,6 +78,11 @@ public class MainEditorActions {
     public void whenSaveButtonIsClicked() {
         
       CodesOrders co=  codesOrdersProperties.getUpdatedCodesOrders();
+      codesOrdersRepository.save(co);
+      homeController.init();
+      whenHomeButtonIsClicked();
+      
+      
       
     }
     private void setAllInvisible() {
