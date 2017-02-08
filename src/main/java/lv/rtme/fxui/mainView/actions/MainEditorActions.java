@@ -5,6 +5,11 @@
  */
 package lv.rtme.fxui.mainView.actions;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import lv.rtme.entities.CodesOrders;
 import lv.rtme.fxui.controllers.MainEditorController;
 import lv.rtme.fxui.controllers.RailbootMainController;
@@ -12,6 +17,7 @@ import lv.rtme.fxui.mainView.settings.MainEditorSettings;
 import lv.rtme.fxui.models.CodesOrdersProperties;
 import lv.rtme.repositories.CodesOrdersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
@@ -35,6 +41,9 @@ public class MainEditorActions {
     
     @Autowired
     MainEditorSettings set;
+    
+    @Value("${jsondox.url}")
+    private String folder;
     
 
     public void whenFileLinkClicked() {
@@ -75,9 +84,21 @@ public class MainEditorActions {
         homeController.getAppAnchorPane().getChildren().add(homeController.getTableVbox());
     }
     
-    public void whenSaveButtonIsClicked() {
+    public void whenSaveButtonIsClicked() throws IOException {
         
       CodesOrders co=  codesOrdersProperties.getUpdatedCodesOrders();
+      new Runnable() {
+          @Override
+          public void run() {
+              try {
+                  ObjectMapper mapper = new ObjectMapper();
+                  mapper.writeValue(new File(folder+"\\"+co.getFileID()), co);
+              } catch (IOException ex) {
+                  Logger.getLogger(MainEditorActions.class.getName()).log(Level.SEVERE, null, ex);
+              }
+          }
+      }.run();
+     
       codesOrdersRepository.save(co);
       homeController.init();
       whenHomeButtonIsClicked();
