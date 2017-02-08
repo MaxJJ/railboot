@@ -84,27 +84,19 @@ public class MainEditorActions {
         homeController.getAppAnchorPane().getChildren().add(homeController.getTableVbox());
     }
     
-    public void whenSaveButtonIsClicked() throws IOException {
+    public void whenSaveButtonIsClicked(){
         
       CodesOrders co=  codesOrdersProperties.getUpdatedCodesOrders();
-      new Runnable() {
-          @Override
-          public void run() {
-              try {
-                  ObjectMapper mapper = new ObjectMapper();
-                  mapper.writeValue(new File(folder+"\\"+co.getFileID()), co);
-              } catch (IOException ex) {
-                  Logger.getLogger(MainEditorActions.class.getName()).log(Level.SEVERE, null, ex);
-              }
-          }
-      }.run();
      
+                  ObjectMapper mapper = new ObjectMapper();
+        try {
+            mapper.writeValue(new File(folder+"\\"+co.getFileID()+".json"), co);
+        } catch (IOException ex) {
+            Logger.getLogger(MainEditorActions.class.getName()).log(Level.SEVERE, null, ex);
+        }
       codesOrdersRepository.save(co);
       homeController.init();
       whenHomeButtonIsClicked();
-      
-      
-      
     }
     private void setAllInvisible() {
        
