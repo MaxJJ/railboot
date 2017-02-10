@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2017-02-10T00:04:48 -->
+<!-- 2017-02-10T13:08:11 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="codes_order" pageWidth="595" pageHeight="842" whenNoDataType="NoPages" columnWidth="497" leftMargin="56" rightMargin="42" topMargin="14" bottomMargin="8" uuid="79af2604-54ae-42be-bddb-9767b11dd50d">
 	<property name="com.jaspersoft.studio.unit." value="mm"/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.xml"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="com.jaspersoft.studio.unit.pageHeight" value="mm"/>
 	<property name="com.jaspersoft.studio.unit.pageWidth" value="mm"/>
 	<property name="com.jaspersoft.studio.unit.topMargin" value="mm"/>
@@ -77,7 +77,7 @@
 						<property name="com.jaspersoft.studio.unit.x" value="mm"/>
 						<property name="com.jaspersoft.studio.unit.y" value="mm"/>
 					</reportElement>
-					<imageExpression><![CDATA["rls_logo_50.png"]]></imageExpression>
+					<imageExpression><![CDATA["C:/Users/User/Documents/NetBeansProjects/railboot/src/main/resources/jrxml/rls_logo_50.png"]]></imageExpression>
 				</image>
 			</frame>
 			<frame>
@@ -552,8 +552,7 @@
 					<textElement>
 						<font fontName="Calibri" size="11"/>
 					</textElement>
-					<textFieldExpression><![CDATA["TextField"
-]]></textFieldExpression>
+					<textFieldExpression><![CDATA["TextField"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
 					<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="248" y="19" width="248" height="32" uuid="4b304b59-9e59-46f5-9410-55ce8b745a65">
