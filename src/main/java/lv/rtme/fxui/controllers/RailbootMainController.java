@@ -22,7 +22,7 @@ import lv.rtme.entities.CodesOrders;
 import lv.rtme.fxui.mainView.actions.RailbootMainActions;
 import lv.rtme.fxui.mainView.settings.RailbootMainViewSettings;
 import lv.rtme.fxui.models.CodesOrdersProperties;
-import lv.rtme.reportsService.ReportPrintService;
+import lv.rtme.services.ReportPrintService;
 import lv.rtme.repositories.CodesOrdersRepository;
 import lv.rtme.services.ReadAndPopulate;
 import org.slf4j.Logger;

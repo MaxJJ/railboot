@@ -5,20 +5,14 @@
  */
 package lv.rtme.fxui.mainView.actions;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import lv.rtme.entities.CodesOrders;
 import lv.rtme.fxui.controllers.MainEditorController;
 import lv.rtme.fxui.controllers.RailbootMainController;
 import lv.rtme.fxui.mainView.settings.MainEditorSettings;
 import lv.rtme.fxui.models.CodesOrdersProperties;
-import lv.rtme.reportsService.ReportPrintService;
+import lv.rtme.services.ReportPrintService;
 import lv.rtme.repositories.CodesOrdersRepository;
-import net.sf.jasperreports.engine.JRException;
+import lv.rtme.services.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -42,6 +36,8 @@ public class MainEditorActions {
     CodesOrdersRepository codesOrdersRepository;
    @Autowired
    ReportPrintService printService;
+   @Autowired 
+   FileService fileService;
     
     @Autowired
     MainEditorSettings set;
@@ -89,19 +85,13 @@ public class MainEditorActions {
     }
     
     public void whenSaveButtonIsClicked() {
-        
-      CodesOrders co=  codesOrdersProperties.getUpdatedCodesOrders();
-     
-                  ObjectMapper mapper = new ObjectMapper();
-        try {
-            mapper.writeValue(new File(folder+"\\"+co.getFileID()+".json"), co);
-        } catch (IOException ex) {
-            Logger.getLogger(MainEditorActions.class.getName()).log(Level.SEVERE, null, ex);
-        }
-      codesOrdersRepository.save(co);
-      printService.printThis(co.getFileID());
-      homeController.init();
-      whenHomeButtonIsClicked();
+       
+        CodesOrders co = codesOrdersProperties.getUpdatedCodesOrders();
+        codesOrdersRepository.save(co);
+        fileService.saveAsJson(co.getFileID(), co);
+        printService.printThis(co.getFileID());
+        homeController.init();
+        whenHomeButtonIsClicked();
     }
     private void setAllInvisible() {
        
