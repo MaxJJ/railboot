@@ -41,12 +41,14 @@ public class RailbootMainViewSettings {
     
     public void table() {
         act.disactivateFileButton();
-       tableItemsProperty.setInList(codesOrdersRepository.findAll());
-       controller.getCodesOrdersTable().getItems().clear();
+//       controller.getCodesOrdersTable().getItems().clear();
+//       tableItemsProperty.setInList(codesOrdersRepository.findAll());
 //      controller.getCodesOrdersTable().setItems(tableItemsProperty.getItemsProperty().getValue());
-      controller.getCodesOrdersTable().getItems().addAll(tableItemsProperty.getItemsProperty().getValue());
+//      controller.getCodesOrdersTable().getItems().addAll(tableItemsProperty.getItemsProperty().getValue());
+      
         controller.getFileID().setCellValueFactory((TableColumn.CellDataFeatures<CodesOrdersProperties, String> p) -> p.getValue().getFileIdProperty());
         controller.getCargo().setCellValueFactory((TableColumn.CellDataFeatures<CodesOrdersProperties, String> p) -> p.getValue().getCargoProperty());
+        
         controller.getStDispatch().setCellValueFactory((TableColumn.CellDataFeatures<CodesOrdersProperties, String> p) -> p.getValue().getStationOfDispatchProperty());
         controller.getStDestination().setCellValueFactory((TableColumn.CellDataFeatures<CodesOrdersProperties, String> p) -> p.getValue().getStationOfDestinationProperty());
         controller.getWagon().setCellValueFactory((TableColumn.CellDataFeatures<CodesOrdersProperties, String> p) -> p.getValue().getWagonProperty());
@@ -60,13 +62,11 @@ public class RailbootMainViewSettings {
     public void searchTextField() {
       
          controller.getSearchTextField().textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            if (newValue.length() > 2) {
+           
                 controller.getCodesOrdersTable().getItems().clear();
                 List<CodesOrders> que = codesOrdersRepository.findBySearchStringLikeIgnoreCase("%" + newValue + "%");
                 tableItemsProperty.setInList(que);
                 controller.getCodesOrdersTable().setItems(tableItemsProperty.getItemsProperty().getValue());
-                
-            }
         });
     }
 

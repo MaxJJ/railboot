@@ -6,7 +6,6 @@
 package lv.rtme.fxui.controllers;
 
 import java.util.ArrayList;
-import java.util.List;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.MenuButton;
@@ -18,13 +17,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javax.annotation.PostConstruct;
 import lombok.Getter;
-import lv.rtme.entities.CodesOrders;
 import lv.rtme.fxui.mainView.actions.RailbootMainActions;
 import lv.rtme.fxui.mainView.settings.RailbootMainViewSettings;
 import lv.rtme.fxui.models.CodesOrdersProperties;
-import lv.rtme.services.ReportPrintService;
 import lv.rtme.repositories.CodesOrdersRepository;
 import lv.rtme.services.ReadAndPopulate;
+import lv.rtme.services.ReportPrintService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -111,14 +109,18 @@ public class RailbootMainController {
 //            
 //        }
      
-        set.table();
+        setTable();
         set.searchTextField();
         set.fileMenuButtonItems();
    
     }
             
 
-    
+    public void setTable(){
+        
+        set.table();
+        set.fileMenuButtonItems();
+    }
    
 
     
