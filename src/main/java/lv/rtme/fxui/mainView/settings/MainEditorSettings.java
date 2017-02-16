@@ -53,6 +53,7 @@ public class MainEditorSettings {
 
         controller.getHomeButton().setOnAction((eh) -> {act.whenHomeButtonIsClicked(); });
         controller.getSaveButton().setOnAction((eh) -> {act.whenSaveButtonIsClicked(); });
+        controller.getPrintButton().setOnAction((eh)-> {act.whenPrintButtonIsClicked();});
 
     }
 

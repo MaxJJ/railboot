@@ -142,6 +142,8 @@ public class MainEditorController implements Initializable {
     private VBox paymentsEditorVBox;
     @FXML @Getter
     private Button saveButton;
+    @FXML @Getter
+    private Button printButton;
     
     
 
@@ -151,6 +153,7 @@ public class MainEditorController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+       
     }    
 
      @SuppressWarnings("unchecked")
