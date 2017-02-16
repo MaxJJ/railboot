@@ -12,7 +12,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lv.rtme.entities.CodesOrders;
 import lv.rtme.fxui.controllers.MainEditorController;
@@ -34,7 +33,8 @@ import org.springframework.stereotype.Component;
 public class MainEditorActions {
     
   
-       
+//     @Autowired
+//     private Desktop desktop;
     @Autowired
     private  MainEditorController controller;
     @Autowired
@@ -53,6 +53,9 @@ public class MainEditorActions {
     
     @Value("${jsondox.url}")
     private String folder;
+    
+    @Value("${codesdocx.url}")
+    private String dox;
     
 
     public void whenFileLinkClicked() {
@@ -114,22 +117,30 @@ public class MainEditorActions {
                  
 //                 mainStage.initModality(Modality.APPLICATION_MODAL);
  fileChooser.setTitle("Open Resource File");
+ fileChooser.setInitialDirectory(new File(dox));
+ fileChooser.setInitialFileName(dox+"\\" +codesOrdersProperties.getFileIdProperty().getValueSafe()+".pdf");
+ 
  fileChooser.getExtensionFilters().addAll(
-         new ExtensionFilter("Text Files", "*.txt"),
+//         new ExtensionFilter("Text Files", "*.txt"),
          new ExtensionFilter("PDF", "*.pdf"),
-         new ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"),
-         new ExtensionFilter("Audio Files", "*.wav", "*.mp3", "*.aac"),
+//         new ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"),
+//         new ExtensionFilter("Audio Files", "*.wav", "*.mp3", "*.aac"),
          new ExtensionFilter("All Files", "*.*"));
+ 
+ 
  File selectedFile = fileChooser.showOpenDialog(mainStage);
  
 
  
  if (selectedFile != null) {
-//     mainStage.show();
 System.out.println(selectedFile);
 
                      try {
-                         Desktop.getDesktop().open(selectedFile);
+                         
+                         
+//                         Desktop.getDesktop().open(selectedFile);
+                         Desktop.getDesktop().print(selectedFile);
+                        
                      } catch (IOException ex) {
                          Logger.getLogger(MainEditorActions.class.getName()).log(Level.SEVERE, null, ex);
                      }

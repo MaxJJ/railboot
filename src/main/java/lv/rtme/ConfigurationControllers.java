@@ -19,6 +19,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ConfigurationControllers {
 
+//    @Bean
+//    public Desktop thisDesktop(){
+//        
+//        return Desktop.getDesktop();
+//    }
     @Bean(name = "railbootMainView")
     public View getMainView() throws IOException {
         return loadView("fxml/r/mainView.fxml");
