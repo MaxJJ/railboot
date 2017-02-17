@@ -8,6 +8,7 @@ package lv.rtme.fxui.controllers;
 import java.util.ArrayList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
@@ -89,6 +90,8 @@ public class RailbootMainController {
     private AnchorPane appAnchorPane;
     @FXML @Getter
     private VBox tableVbox;
+    @FXML @Getter
+    private Button createButton;
     
     /*-----------------------------------------------------------------------------------------*/
 
@@ -112,6 +115,7 @@ public class RailbootMainController {
         setTable();
         set.searchTextField();
         set.fileMenuButtonItems();
+        set.buttonCreate();
    
     }
             

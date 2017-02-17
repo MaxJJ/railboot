@@ -114,23 +114,31 @@ setCodesOrders(codesOrders);
             getStationOfDispatchProperty().setValue(orders.getStationOfDispatch().getStationName());
       getDispatchStationObjectProperty().setValue(orders.getStationOfDispatch());
         } else {
-            getStationOfDispatchProperty().setValue("");
-      getDispatchStationObjectProperty().setValue(new Station());
+            getStationOfDispatchProperty().setValue("СТАНЦИЯ ОТПРАВЛЕНИЯ");
+            Station stDisp = new Station();
+            stDisp.setStationName("СТАНЦИЯ ОТПРАВЛЕНИЯ");
+            getDispatchStationObjectProperty().setValue(stDisp);
+      
+      
         }
         if (orders.getStationOfDestination()!=null) {
             getStationOfDestinationProperty().setValue(orders.getStationOfDestination().getStationName());
             getDestinationStationObjectProperty().setValue(orders.getStationOfDestination());
         } else {
-            getStationOfDestinationProperty().setValue("");
-            getDestinationStationObjectProperty().setValue(new Station());
+            getStationOfDestinationProperty().setValue("СТАНЦИЯ НАЗНАЧЕНИЯ");
+             Station stDest = new Station();
+            stDest.setStationName("СТАНЦИЯ НАЗНАЧЕНИЯ");
+            getDestinationStationObjectProperty().setValue(stDest);
         }
       
         if (orders.getConsignee()!=null) {
             getConsigneeProperty().setValue(orders.getConsignee().getSampleName());
             getConsigneeObjectProperty().setValue(orders.getConsignee());
         } else {
-            getConsigneeProperty().setValue("");
-            getConsigneeObjectProperty().setValue(new Persons());
+            getConsigneeProperty().setValue("ПОЛУЧАТЕЛЬ");
+            Persons consignee =new Persons();
+            consignee.setSampleName("ПОЛУЧАТЕЛЬ");
+            getConsigneeObjectProperty().setValue(consignee);
         }
       
         

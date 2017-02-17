@@ -60,7 +60,7 @@ public class RailbootMainViewSettings {
     }
     
     public void searchTextField() {
-      
+      act.fillTableAll();
          controller.getSearchTextField().textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
            
                 controller.getCodesOrdersTable().getItems().clear();
@@ -84,6 +84,11 @@ public class RailbootMainViewSettings {
     public void fileMenuButtonItems() {
        
         controller.getFileMenuButtonEdit().setOnAction((eh)->{act.whenFileMenuButtonEditIsClicked();});
+    }
+
+    public void buttonCreate() {
+       
+        controller.getCreateButton().setOnAction((eh)->{act.whenCreateButtonisClicked();});
     }
 
     

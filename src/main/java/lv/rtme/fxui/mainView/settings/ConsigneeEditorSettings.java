@@ -35,6 +35,8 @@ public class ConsigneeEditorSettings {
 
     @Autowired
     CodesOrdersProperties codesOrdersProperties;
+    
+    private Persons consignee;
 
     void editor() {
 
@@ -70,7 +72,7 @@ public class ConsigneeEditorSettings {
         controller.getConsigneeEditorListView().setOnKeyPressed((keh) -> {
 
             if (keh.getCode() == KeyCode.ENTER) {
-
+codesOrdersProperties.getConsigneeObjectProperty().setValue(controller.getConsigneeEditorListView().getSelectionModel().getSelectedItem());
                 String value = controller.getConsigneeEditorListView().getSelectionModel().getSelectedItem().getSampleName();
                 controller.getConsigneeEditorTextArea().setText(value);
             }
